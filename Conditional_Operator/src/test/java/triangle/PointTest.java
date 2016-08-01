@@ -11,7 +11,7 @@ import static org.junit.Assert.*;
 public class PointTest {
     
 	@Test	
-    public void WhenRightCoordinatShouldReturnDistance() {
+    public void WhenRightCoordinateShouldReturnDistance() {
 		//assign block
 		Point firstpoint = new Point(0.0,2.0);
 		
@@ -26,7 +26,7 @@ public class PointTest {
     }
 
 	@Test
-    public void WhenUncorectCoordinatShouldReturnDistance() {
+    public void WhenWrongCoordinateShouldReturnDistance() {
 		//assign block
 		Point firstpoint = new Point(0.0,0.0);
 		

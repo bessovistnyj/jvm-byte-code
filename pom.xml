@@ -1,8 +1,22 @@
 <project>
  	<modelVersion>4.0.0</modelVersion>
 	<groupId>ru.napadovskiu</groupId>	 	
-	<artifactId>jvm-byte-code</artifactId>
+	<artifactId>Java_Junior</artifactId>
 	<version>1.0</version>
-	<packaging>jar</packaging>
+	<packaging>pom</packaging>
+	
+	<modules>
+		<module>Conditional_Operator</module>
+		<module>jvm-byte-code</module>
+	</modules>
+	
+	  <dependencies>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.12</version>
+        </dependency>
+   </dependencies>
+	
 
 </project>

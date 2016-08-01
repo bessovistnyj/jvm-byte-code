@@ -11,7 +11,7 @@ import static org.junit.Assert.*;
 public class TriangleTest {
     
 	@Test	
-    public void WhenRightCoordinatShuoldReturnArea() {
+    public void whenRightCoordinateShouldReturnArea() {
 		//assign block
 		Point vertexA = new Point(0,0.0);
 		Point vertexB = new Point(0,3);
@@ -28,7 +28,7 @@ public class TriangleTest {
     }
 
 	@Test	
-    public void WhenUncorectCoordinatShouldReturnArea() {
+    public void whenWrongCoordinateShouldReturnArea() {
 		//assign block
 		Point vertexA = new Point(0.0,0.0);
 		Point vertexB = new Point(0.0,0.0);

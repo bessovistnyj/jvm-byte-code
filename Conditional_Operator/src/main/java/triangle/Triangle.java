@@ -11,18 +11,6 @@ public class Triangle {
 		this.c = c;
 	}
 
-	public boolean valiadTriangle(double sideA, double sideB, double sideC) {
-		boolean flagValidTriangle;
-		
-		if ((sideA + sideB) > sideC & (sideB + sideC) > sideA & (sideC + sideA) > sideB) {
-    		flagValidTriangle = true;
-		}
-		else {
-			flagValidTriangle = false;
-		}
-		return flagValidTriangle;
-	} 
-	
 	public double area() {
 		double sideA = this.a.distanceTo(this.b);
 		double sideB = this.a.distanceTo(this.c);
@@ -30,9 +18,8 @@ public class Triangle {
 		
 		double area;	
 		
-		boolean validtriangle = valiadTriangle(sideA,sideB,sideC);
 		
-		if(validtriangle){
+		if ((sideA + sideB) > sideC & (sideB + sideC) > sideA & (sideC + sideA) > sideB) {
 			double perimeter = (sideA+sideB+sideC)/2;
 			area = Math.sqrt(perimeter*(perimeter-sideA)*(perimeter-sideB)*(perimeter-sideC));
 			
