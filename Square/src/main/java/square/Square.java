@@ -18,7 +18,7 @@ public class Square {
 			return result;
 		}
 	
-	public void main(String[] args){
+	public static void main(String[] args){
 		int x1   = 	Integer.valueOf(args[3]);
 		int x2   = 	Integer.valueOf(args[4]);
 		int step = 	Integer.valueOf(args[5]);
