@@ -19,7 +19,6 @@ public class Factorial {
 	*/
 
 	public int calculate() {
-		int result;
 		int tmpCount = 1;
 		if (this.number !=0){
 			for(int count = 1; count <= this.number; count++){
