@@ -12,9 +12,7 @@ public class Square {
 	}
 
 	public float calculate(int x) {
-		float result;
-
-			return (float) (this.a * Math.pow(x,2)+ this.b * x + this.c);
+		return (float) (this.a * Math.pow(x,2)+ this.b * x + this.c);
 		}
 	
 	public static void main(String[] args){
