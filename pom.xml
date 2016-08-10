@@ -9,6 +9,7 @@
 		<module>Conditional_Operator</module>
 		<module>jvm-byte-code</module>
 		<module>Square</module>
+		<module>Arrays</module>
 	</modules>
 	
 	  <dependencies>
