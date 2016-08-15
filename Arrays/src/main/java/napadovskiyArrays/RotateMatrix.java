@@ -1,7 +1,7 @@
 package napadovskiyArrays;
 
 /**
-	*Class RotateMatrix для поворота массива
+	*Class RotateMatrix РґР»СЏ РїРѕРІРѕСЂРѕС‚Р° РјР°СЃСЃРёРІР°
 	*@author napadovskiy
 	*@since 08.08.2016
 	*@version 1
@@ -9,7 +9,7 @@ package napadovskiyArrays;
 
 class RotateMatrix {
 	/**
-		*поворот массива
+		*РїРѕРІРѕСЂРѕС‚ РјР°СЃСЃРёРІР°
 	*/
     public int[][] rotateArray(int[][] matrix) {
 		int[][] newMatrix = new int[matrix.length][matrix.length];
