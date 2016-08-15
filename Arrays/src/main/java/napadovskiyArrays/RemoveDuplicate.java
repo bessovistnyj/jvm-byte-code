@@ -46,7 +46,6 @@ public class RemoveDuplicate {
 		*@param value;
 		*@return findeElement;
 		*find value in tempString 
-		*and decrement numberOfUniqueElements
 		*If found then it is not necessary to add 
 	*/     
 
