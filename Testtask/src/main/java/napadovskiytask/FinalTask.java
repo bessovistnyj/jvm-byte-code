@@ -1,7 +1,20 @@
 package napadovskiytask;
 
+/**
+	*Class FinalTask для проверки вхождения подстроки в строке
+	*@author napadovskiy
+	*@since 17.08.2016
+	*@version 1
+*/
+
 public class FinalTask{
-	
+	 /**
+		*@param origin
+		*@param sub
+		*@return findString return true if origin contains sub and false if not
+		
+	*/     
+
 	
 	public boolean findSubString(String origin, String sub){
 		
