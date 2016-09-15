@@ -1,16 +1,15 @@
 package ru.napadovskiu.items;
 
 /**
- //*Class BubbleSort для сортировки массива
+ //*Class Item
  *@author napadovskiy
- *@since 12.09.2016
+ *@since 13.09.2016
  *@version 1
- */
+*/
 
 public class Item {
     private String id;
     private String name;
-  //  private Long creteDate;
     private String description;
 
     public Item(){
@@ -20,10 +19,9 @@ public class Item {
     public Item(String name, String desc){
         this.name = name;
         this.description = desc;
-        // this.creteDate = crateDate;
     }
 
-    public void setId(String id){
+  	public void setId(String id){
         this.id = id;
     }
 
@@ -39,10 +37,6 @@ public class Item {
     public String getId(){
         return this.id;
     }
-
-//    public Long getCreateDate(){
-//        return this.creteDate;
-//    }
 
     public String getDescription(){
         return this.description;
