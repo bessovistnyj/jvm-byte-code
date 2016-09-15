@@ -11,6 +11,7 @@
 		<module>Square</module>
 		<module>Arrays</module>
 		<module>Testtask</module>
+		<module>Tracker</module>
 	</modules>
 	
 	  <dependencies>
