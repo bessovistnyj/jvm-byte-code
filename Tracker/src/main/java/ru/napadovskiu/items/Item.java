@@ -1,13 +1,13 @@
-package ru.napadovskiy.item
+package ru.napadovskiu.items;
 
 /**
- //*Class BubbleSort для сортировки массива
+ //*Class BubbleSort РґР»СЏ СЃРѕСЂС‚РёСЂРѕРІРєРё РјР°СЃСЃРёРІР°
  *@author napadovskiy
  *@since 12.09.2016
  *@version 1
  */
 
-public  class Item {
+public class Item {
     private String id;
     private String name;
   //  private Long creteDate;
@@ -52,4 +52,4 @@ public  class Item {
         return this.name;
     }
 
-
+}
