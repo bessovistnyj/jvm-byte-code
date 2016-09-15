@@ -1,12 +1,16 @@
 <project>
  	<modelVersion>4.0.0</modelVersion>
-	<groupId>ru.napadovskiu</groupId>	 	
-	<artifactId>tracker</artifactId>
-	<name>tracker</name>
-	<version>1.0</version>
-	<packaging>pom</packaging>
+	<artifactId>Tracker</artifactId>
+	<packaging>jar</packaging>
 
-	  <dependencies>
+	<parent>
+		<groupId>ru.napadovskiu</groupId>
+		<artifactId>Java_Junior</artifactId>
+		<version>1.0</version>
+	</parent>
+	
+
+	<dependencies>
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
