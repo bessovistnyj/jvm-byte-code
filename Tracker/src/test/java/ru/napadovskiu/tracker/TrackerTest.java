@@ -20,21 +20,7 @@ public class TrackerTest{
 		Item firstItem 	= new Item("firstItem","descriptionFirstItem");
 		testTracker.addNewItem(firstItem);
 		
-		Item secondItem = new Item("secondItem","descriptionSecondItem");
-		testTracker.addNewItem(secondItem);
-		
-		Item thirdItem 	= new Item("thirdItem","descriptionThirdItem");
-		testTracker.addNewItem(thirdItem);
-		
-		Item fourthItem	= new Item("fourthItem","descriptionfourthItem");
-		testTracker.addNewItem(fourthItem);
-		
-		Item fifthItem 	= new Item("fifthItem","descriptionfifthItem");
-		testTracker.addNewItem(fifthItem);
-		
-		Item[] testArray = new Item[] {firstItem,secondItem,thirdItem,fourthItem,fifthItem};
-		
-		assertThat(testTracker.showAllItem(), is(testArray));
+		assertThat(testTracker.showAllItem()[0], is(firstItem));
 	}	
 
 	@Test
@@ -44,22 +30,9 @@ public class TrackerTest{
 		Item firstItem 	= new Item("firstItem","descriptionFirstItem");
 		testTracker.addNewItem(firstItem);
 		
-		Item secondItem = new Item("secondItem","descriptionSecondItem");
-		testTracker.addNewItem(secondItem);
+		testTracker.deleteItem(firstItem);
 		
-		Item thirdItem 	= new Item("thirdItem","descriptionThirdItem");
-		testTracker.addNewItem(thirdItem);
-		
-		Item fourthItem	= new Item("fourthItem","descriptionfourthItem");
-		testTracker.addNewItem(fourthItem);
-		
-		Item fifthItem 	= new Item("fifthItem","descriptionfifthItem");
-		testTracker.addNewItem(fifthItem);
-		
-		testTracker.deleteItem(thirdItem);
-		Item[] testArray = new Item[] {firstItem,secondItem,fourthItem,fifthItem};
-		
-		assertThat(testTracker.showAllItem(), is(testArray));
+		assertThat(testTracker.showAllItem().length, is(0));
 	}	
 
 	@Test
@@ -68,44 +41,25 @@ public class TrackerTest{
 			
 		Item firstItem 	= new Item("firstItem","descriptionFirstItem");
 		testTracker.addNewItem(firstItem);
+
+		Item secondItem = new Item("secondItem","descriptionSecondItem");
+		testTracker.addNewItem(secondItem);
 		
-		Item fourthItem	= new Item("fourthItem","descriptionfourthItem");
-		testTracker.addNewItem(fourthItem);
+		Item[] testArray = new Item[] {firstItem};
 		
-		Item fifthItem 	= new Item("fifthItem","descriptionfifthItem");
-		testTracker.addNewItem(fifthItem);
-		
-		Item[] testArray = new Item[] {fourthItem};
-		
-		assertThat(testTracker.findItem(fourthItem.getId()), is(testArray));
+		assertThat(testTracker.findItem(secondItem.getId())[0], is(secondItem));
 	}	
 
 	@Test
 	public void whenEditItem() {
-        Tracker testTracker = new Tracker();
-
-        Item firstItem 	= new Item("firstItem","descriptionFirstItem");
-        testTracker.addNewItem(firstItem);
-
-        Item secondItem = new Item("secondItem","descriptionSecondItem");
-        testTracker.addNewItem(secondItem);
+		Tracker testTracker = new Tracker();
+		Item firstItem 	= new Item("firstItem","descriptionFirstItem");
+		testTracker.addNewItem(firstItem);
 		
-		Item editItem = new Item("editItem","descriptionEditItem");
+		Item editItem = new Item("secondItem","descriptionSecondItem");
 		editItem.setId(firstItem.getId());
-
-        testTracker.editItem(secondItem);
-
-        Item[] testArray = new Item[] {firstItem,secondItem};
-
-        Item[] ArrayItem = new Item[2];
-
-        ArrayItem =testTracker.showAllItem();
-		
-		assertThat(ArrayItem, is(testArray));
+		testTracker.editItem(editItem);
+	
+		assertThat(firstItem.getName(), is(editItem.getName()));
 	}	
-
-
-
-	
-	
 }

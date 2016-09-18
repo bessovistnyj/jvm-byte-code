@@ -11,7 +11,7 @@ import java.util.Random;
  */
  
 public class Tracker {
-    private Item[] TakeItems = new Item[100];
+    private Item[] takeItems = new Item[100];
     private int position = 0;
     private static  final Random RN = new Random();
 
@@ -20,15 +20,8 @@ public class Tracker {
 		*@param item
 	*/ 	
 	public void addNewItem(Item item){
-        
-		if(item.getId() == null){
-            item.setId(generateId());
-        }
-        else{
-            item.setId(item.getId());
-        }
-        this.TakeItems[position++] = item;
-		
+		item.setId(generateId());
+		this.takeItems[position++] = item;
 	}
 
 	 /**
@@ -36,18 +29,23 @@ public class Tracker {
 		*@param item
 	*/ 	
     public void deleteItem(Item item){
-        Item[] result = new Item[100];
-
-        int counter =0;
-        for(Item tmpItem: this.TakeItems){
-            if(tmpItem!=null && !tmpItem.getId().equals(item.getId())){
-                result[counter] = tmpItem;
-                counter++;
+        boolean findItem = false;
+        for(int i=0; i<this.takeItems.length;i++){
+            if(this.takeItems[i]!=null && this.takeItems[i].getId().equals(item.getId())){
+                findItem = true;
+                this.takeItems[i] = null;
+				this.position--;
+            }
+            if(findItem){
+                if(i != this.takeItems.length-1){
+                    this.takeItems[i] = this.takeItems[i+1];
+                }
+                else{
+                    this.takeItems[i] = null;
+                }
             }
         }
-        this.TakeItems = result;
-        this.position--;
-    }
+	}
 
 	 /**
 		*The method find item by id
@@ -57,7 +55,7 @@ public class Tracker {
     public Item[] findItem(String id){
         Item[] tmpArray = new Item[this.position];
         int counter =0;
-        for(Item tmpItem: this.TakeItems){
+        for(Item tmpItem: this.takeItems){
             if(tmpItem!=null && tmpItem.getId().equals(id)){
                 tmpArray[counter] = tmpItem;
                 counter++;
@@ -80,7 +78,7 @@ public class Tracker {
     public Item[] findItem(String name,String description){
         Item[] tmpArray = new Item[this.position];
         int counter =0;
-        for(Item tmpItem: this.TakeItems){
+        for(Item tmpItem: this.takeItems){
             if(tmpItem!=null && (tmpItem.getName().equals(name) && tmpItem.getDescription().equals(description))){
                 tmpArray[counter] = tmpItem;
                 counter++;
@@ -99,7 +97,7 @@ public class Tracker {
 		*@param editItem
 	*/ 	
     public void editItem(Item editItem){
-        for (Item tmpItem: this.TakeItems){
+        for (Item tmpItem: this.takeItems){
             if (tmpItem !=null && tmpItem.getId().equals(editItem.getId())){
                 tmpItem.setName(editItem.getName());
                 tmpItem.setDescription(editItem.getDescription());
@@ -114,7 +112,7 @@ public class Tracker {
     public Item[] showAllItem(){
         Item[] result = new Item[this.position];
         for (int counter =0; counter < this.position; counter++){
-            result[counter] = this.TakeItems[counter];
+            result[counter] = this.takeItems[counter];
         }
         return result;
     }
