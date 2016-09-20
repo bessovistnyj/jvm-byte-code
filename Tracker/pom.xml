@@ -1,8 +1,10 @@
 <project>
  	<modelVersion>4.0.0</modelVersion>
+	<groupId>ru.napadovskiu</groupId>
 	<artifactId>Tracker</artifactId>
+	<version>1.0</version>
+	<name>Tracker</name>	
 	<packaging>jar</packaging>
-
 	<build>
 		<plugins>
 		<plugin>

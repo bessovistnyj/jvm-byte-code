@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/Arrays/Arrays.iml" filepath="$PROJECT_DIR$/Arrays/Arrays.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Conditional_Operator/Conditional_Operator.iml" filepath="$PROJECT_DIR$/Conditional_Operator/Conditional_Operator.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Java_Junior.iml" filepath="$PROJECT_DIR$/Java_Junior.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Square/Square.iml" filepath="$PROJECT_DIR$/Square/Square.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Testtask/Testtask.iml" filepath="$PROJECT_DIR$/Testtask/Testtask.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Tracker/Tracker.iml" filepath="$PROJECT_DIR$/Tracker/Tracker.iml" />
+    </modules>
+  </component>
+</project>
