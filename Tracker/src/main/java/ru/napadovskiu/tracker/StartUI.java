@@ -7,14 +7,26 @@ import ru.napadovskiu.items.*;
 
 
 public class StartUI {
-    private Input input;
-    private Tracker tracker;
+    private Input     input;
+    private Tracker   tracker;
 
-    public StartUI(Input input, Tracer tracker){
+
+    public StartUI(Input input, Tracker tracker){
         this.input = input;
         this.tracker = tracker;
     }
 
+
+
+    public void showMenu(){
+        System.out.println("1. Add new item ");
+        System.out.println("2. Show all item ");
+        System.out.println("3. Find irem by name and description ");
+        System.out.println("4. Edit item ");
+        System.out.println("5. Delete item ");
+        System.out.println("6. Exit");
+
+    }
 
    public void addNewItem(){
 
@@ -25,32 +37,13 @@ public class StartUI {
 
     public void init(){
         boolean exit =false;
-
-
-        do {
-            this.input.showMenu();
-            Integer userChoice = this.input.makeChoice("Please make your choice");
-            if (userChoice.intValue() == 1){
-               this.addNewItem();// System.out.println("add new item");
-            }
-            if (userChoice.intValue() == 2){
-                System.out.println("Edit item");
-            }
-            if (userChoice.intValue() == 3){
-                System.out.println("Show all item");
-            }
-            if (userChoice.intValue() == 4){
-                System.out.println("Find item by name and description");
-            }
-            if (userChoice.intValue() == 5){
-                System.out.println("Delete item");
-            }
-            if (userChoice.intValue() == 0){
-                exit = true;
-            }
-
-
-        } while(!exit );
+            this.showMenu();
+//        do {
+            //Integer userChoice = this.input.userChoice("Please make your choice");
+//           if (userChoice.intValue() == 1){
+//               this.addNewItem();// System.out.println("add new item");
+//           }
+//        } while(!exit );
 
     }
 
@@ -59,7 +52,7 @@ public class StartUI {
     public static void main(String[] args){
         Input consoleInput = new ConsoleInput();
         Tracker tracker = new Tracker();
-        new StartUI(consoleInput,).init();
+        new StartUI(consoleInput,tracker).init();
 //
 //        Tracker tracker = new Tracker();
 //        tracker.addNewItem(new Item(name,"firstItemDescription"));
