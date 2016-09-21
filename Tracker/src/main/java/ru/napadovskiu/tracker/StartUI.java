@@ -1,7 +1,5 @@
 package ru.napadovskiu.tracker;
 
-import jdk.internal.instrumentation.Tracer;
-
 import ru.napadovskiu.items.*;
 
 
@@ -99,7 +97,9 @@ public class StartUI {
     public static void main(String[] args){
         Input consoleInput = new ConsoleInput();
         Tracker tracker = new Tracker();
-        new StartUI(consoleInput,tracker).init();
+        StartUI userAction = new StartUI(consoleInput,tracker);
+        userAction.showMenu();
+        userAction.init();
 //        String[] params = new String[]{"1","Task id","Task name","Task desc","1","Task id","","","7"};
 //        Tracker tracker = new Tracker();
 //        Input input = new StubInput(params);
