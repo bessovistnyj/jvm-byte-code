@@ -2,8 +2,6 @@ package ru.napadovskiu.tracker;
 
 import ru.napadovskiu.items.*;
 
-
-
 public class StartUI {
     private Input     input;
     private Tracker   tracker;
@@ -44,13 +42,8 @@ public class StartUI {
        return arrayItem[i-1];
    }
 
-    public Tracker getTracker(){
-        return this.tracker;
-    }
-
-    public void init(){
+      public void init(){
         boolean exit =false;
-            this.showMenu();
         do {
             String  action = this.input.ask("Choice your action");
             if (action.equals("1")){
