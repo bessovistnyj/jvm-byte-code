@@ -12,7 +12,10 @@ public class StartUI {
         this.tracker = tracker;
     }
 
-    public void showMenu(){
+  	 /**
+		*The method show users menu
+	*/ 	
+	public void showMenu(){
         System.out.println("1. Add new item ");
         System.out.println("2. Show all item ");
         System.out.println("3. Find item by name and description ");
@@ -23,8 +26,11 @@ public class StartUI {
 
     }
 
-    public void showItem(Item[] arrayItem){
-       //
+  	 /**
+		*The method show Item for users
+		*@param arrayItem 
+	*/ 	
+ 	public void showItem(Item[] arrayItem){
        Integer counter =1;
         for(Item tmpItem : arrayItem){
 
@@ -36,13 +42,17 @@ public class StartUI {
        }
    }
 
-    private Item takeItemFromArray(Item[] arrayItem){
+
+   private Item takeItemFromArray(Item[] arrayItem){
        String counter = this.input.ask("please enter number delete item ");
        Integer i = new Integer(counter);
        return arrayItem[i-1];
    }
 
-      public void init(){
+  	 /**
+		*The main method 
+	*/ 	
+	public void init(){
         boolean exit =false;
         do {
             String  action = this.input.ask("Choice your action");
@@ -86,17 +96,4 @@ public class StartUI {
         } while(!exit );
 
     }
-
-    public static void main(String[] args){
-        Input consoleInput = new ConsoleInput();
-        Tracker tracker = new Tracker();
-        StartUI userAction = new StartUI(consoleInput,tracker);
-        userAction.showMenu();
-        userAction.init();
-//        String[] params = new String[]{"1","Task id","Task name","Task desc","1","Task id","","","7"};
-//        Tracker tracker = new Tracker();
-//        Input input = new StubInput(params);
-//        new StartUI(input,tracker).init();
-    }
-
 }

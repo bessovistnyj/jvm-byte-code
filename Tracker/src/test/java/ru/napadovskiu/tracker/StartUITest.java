@@ -50,17 +50,18 @@ public class StartUITest {
     public void whenEditItem()  {
         String[] firstParams = new String[] {"1","namefirstItem","descfirstItem","1","nameSecondItem","descSecondItem","7"};
         this.init(firstParams);
-        String[] secondParams = new String[] {"4",this.tracker.showAllItem()[0].getId(),"7"};
+        String[] secondParams = new String[] {"5",this.tracker.findItem("namefirstItem","descfirstItem")[0].getId(),"nameEditItem","descEditItem","7"};
         this.init(secondParams);
-        assertThat(this.tracker.findItem(this.tracker.showAllItem()[0].getId())[0].getName(), is("namefirstItem"));
+        assertThat(this.tracker.findItem(this.tracker.showAllItem()[0].getId())[0].getName(), is("nameEditItem"));
     }
-////    @Test
-//    public void whenDeleteItem()  {
-//        String[] params = new String[] {"1","namefirstItem","descfirstItem","2","7"};
-//        Input input = new StubInput(params);
-//        this.init(params);
-//        assertThat(this.userAction.getTracker().showAllItem().length, is(1));
-//    }
+    @Test
+    public void whenDeleteItem()  {
+        String[] firstParams = new String[] {"1","namefirstItem","descfirstItem","1","nameSecondItem","descSecondItem","7"};
+        this.init(firstParams);
+        String[] secondParams = new String[] {"6",this.tracker.findItem("namefirstItem","descfirstItem")[0].getId(),"7"};
+        this.init(secondParams);
+        assertThat(this.tracker.showAllItem().length, is(1));
+    }
 //    @Test
 //    public void whenShowAllItem()  {
 //        String[] params = new String[] {"1","namefirstItem","descfirstItem","2","7"};
