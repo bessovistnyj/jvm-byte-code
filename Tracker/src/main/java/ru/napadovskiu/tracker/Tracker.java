@@ -12,7 +12,6 @@ import java.util.Random;
  
 public class Tracker {
     private Item[] takeItems = new Item[100];
-    private int position = 0;
     private static  final Random RN = new Random();
 
  	 /**
@@ -20,8 +19,14 @@ public class Tracker {
 		*@param item
 	*/ 	
 	public void addNewItem(Item item){
-		item.setId(generateId());
-		this.takeItems[position++] = item;
+		for (int i =0; i< this.takeItems.length; i++){
+            if(this.takeItems[i] ==null) {
+                item.setId(generateId());
+                item.setCreateDate(System.currentTimeMillis());
+                this.takeItems[i]= item;
+                break;
+            }
+        }
 	}
 
 	 /**
@@ -34,15 +39,6 @@ public class Tracker {
             if(this.takeItems[i]!=null && this.takeItems[i].getId().equals(item.getId())){
                 findItem = true;
                 this.takeItems[i] = null;
-				this.position--;
-            }
-            if(findItem){
-                if(i != this.takeItems.length-1){
-                    this.takeItems[i] = this.takeItems[i+1];
-                }
-                else{
-                    this.takeItems[i] = null;
-                }
             }
         }
 	}
@@ -52,19 +48,13 @@ public class Tracker {
 		*@param id
 		*@return an array of items found 
 	*/ 	
-    public Item[] findItem(String id){
-        Item[] tmpArray = new Item[this.position];
-        int counter =0;
+    public Item findItemById(String id){
+        Item result = null;
         for(Item tmpItem: this.takeItems){
             if(tmpItem!=null && tmpItem.getId().equals(id)){
-                tmpArray[counter] = tmpItem;
-                counter++;
+                result = tmpItem;
+                break;
             }
-        }
-        Item[] result = new Item[counter];
-
-        for(int i =0; i<counter; i++){
-            result[i] = tmpArray[i];
         }
         return result;
     }
@@ -76,18 +66,20 @@ public class Tracker {
 		*@return an array of items found 
 	*/ 	
     public Item[] findItem(String name,String description){
-        Item[] tmpArray = new Item[this.position];
-        int counter =0;
+        int tmpCounter =0;
         for(Item tmpItem: this.takeItems){
             if(tmpItem!=null && (tmpItem.getName().equals(name) && tmpItem.getDescription().equals(description))){
-                tmpArray[counter] = tmpItem;
-                counter++;
+                tmpCounter++;
             }
         }
-        Item[] result = new Item[counter];
+        Item[] result = new Item[tmpCounter];
 
-        for(int i =0; i<counter; i++){
-            result[i] = tmpArray[i];
+        int counter = 0;
+        for(int i =0; i< this.takeItems.length; i++){
+            if(this.takeItems[i]!=null && (this.takeItems[i].getName().equals(name) && this.takeItems[i].getDescription().equals(description))) {
+                result[counter] = takeItems[i];
+                counter++;
+            }
         }
         return result;
     }
@@ -109,15 +101,36 @@ public class Tracker {
 		*The method show all item 
 		*@return an array all items 
 	*/ 	
-    public Item[] showAllItem(){
-        Item[] result = new Item[this.position];
-        for (int counter =0; counter < this.position; counter++){
-            result[counter] = this.takeItems[counter];
+    public Item[] getAllItem(){
+        int tmpCounter =0;
+        for(Item tmpItem: this.takeItems){
+            if(tmpItem!=null){
+                tmpCounter++;
+            }
+        }
+        Item[] result = new Item[tmpCounter];
+
+        int counter = 0;
+        for(int i =0; i< this.takeItems.length; i++){
+            if(this.takeItems[i]!=null) {
+                result[counter] = takeItems[i];
+                counter++;
+            }
         }
         return result;
     }
 
-	/**
+	public void addCommentsToItem(Item editItem, Comments addComments){
+        for (int i = 0; i != this.takeItems.length; i++) {
+            if (this.takeItems[i]!=null && this.takeItems[i].getId().equals(editItem.getId())){
+                if (this.takeItems[i].getComment()==null) {
+                    this.takeItems[i].addComment(addComments);
+                }else this.takeItems[i].setComment(addComments);
+            }
+        }
+    }
+
+    /**
 		*The method generate id for new item
 		*@return id 
 	*/ 	

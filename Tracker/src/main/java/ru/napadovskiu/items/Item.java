@@ -10,7 +10,11 @@ package ru.napadovskiu.items;
 public class Item {
     private String id;
     private String name;
-    private String description;
+    private long createDate;
+	private String description;
+    private Comments[] comments = new Comments[10];
+    private int commentPosition = 0;
+
 
     public Item(){
 
@@ -19,10 +23,14 @@ public class Item {
     public Item(String name, String desc){
         this.name = name;
         this.description = desc;
-    }
+	}
 
   	public void setId(String id){
         this.id = id;
+    }
+
+  	public void setCreateDate(long createDate){
+        this.createDate = createDate;
     }
 
     public void setName(String name){
@@ -33,9 +41,16 @@ public class Item {
         this.description = description;
     }
 
+    public void setComment(Comments comment) {
+        this.comments[this.commentPosition] = comment;
+    }
 
     public String getId(){
         return this.id;
+    }
+
+    public long getCreateDate(){
+        return this.createDate;
     }
 
     public String getDescription(){
@@ -46,4 +61,23 @@ public class Item {
         return this.name;
     }
 
+    public Comments addComment(Comments comment) {
+        comments[this.commentPosition++] = comment;
+        return comment;
+    }
+
+    public String getComment() {
+        String result = "";
+        for (int i = 0; i < comments.length; i++){
+            if (comments[i]!=null){
+                result = comments[i].getComment();
+            }
+        }
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        return "id: " + id + ";   name: " + name + ";   description: " + description + ";   comments: " + this.getComment();
+    }
 }
