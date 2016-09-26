@@ -5,7 +5,7 @@ import static org.hamcrest.core.Is.is;
 import  ru.napadovskiu.items.*;
 
 import org.junit.Test;
-import ru.napadovskiu.items.*;
+
 
 import static org.junit.Assert.*;
 
@@ -19,19 +19,18 @@ public class StartUITest {
         userAction.init();
     }
 
-
     @Test
     public void whenAddNewItemThenTrackerAddItem()  {
         String[] params = new String[] {"1","namefirstItem","descfirstItem","7"};
         this.init(params);
-        assertThat(this.tracker.showAllItem().length, is(1));
+        assertThat(this.tracker.getAllItem().length, is(1));
     }
 
     @Test
     public void whenFindItemByNameDescription()  {
         String[] firstParams = new String[] {"1","namefirstItem","descfirstItem","1","nameSecondItem","descSecondItem","7"};
         this.init(firstParams);
-        String[] secondParams = new String[] {"3",this.tracker.showAllItem()[0].getName(),this.tracker.showAllItem()[0].getDescription(),"7"};
+        String[] secondParams = new String[] {"3",this.tracker.getAllItem()[0].getName(),this.tracker.getAllItem()[0].getDescription(),"7"};
         this.init(secondParams);
         assertThat(this.tracker.findItem("namefirstItem","descfirstItem")[0].getName(), is("namefirstItem"));
     }
@@ -40,9 +39,9 @@ public class StartUITest {
     public void whenFindById()  {
         String[] firstParams = new String[] {"1","namefirstItem","descfirstItem","1","nameSecondItem","descSecondItem","7"};
         this.init(firstParams);
-        String[] secondParams = new String[] {"4",this.tracker.showAllItem()[0].getId(),"7"};
+        String[] secondParams = new String[] {"4",this.tracker.getAllItem()[0].getId(),"7"};
         this.init(secondParams);
-        assertThat(this.tracker.findItem(this.tracker.showAllItem()[0].getId())[0].getName(), is("namefirstItem"));
+        assertThat(this.tracker.findItem(this.tracker.getAllItem()[0].getId())[0].getName(), is("namefirstItem"));
 
     }
 
@@ -52,7 +51,7 @@ public class StartUITest {
         this.init(firstParams);
         String[] secondParams = new String[] {"5",this.tracker.findItem("namefirstItem","descfirstItem")[0].getId(),"nameEditItem","descEditItem","7"};
         this.init(secondParams);
-        assertThat(this.tracker.findItem(this.tracker.showAllItem()[0].getId())[0].getName(), is("nameEditItem"));
+        assertThat(this.tracker.findItem(this.tracker.getAllItem()[0].getId())[0].getName(), is("nameEditItem"));
     }
     @Test
     public void whenDeleteItem()  {
@@ -60,7 +59,7 @@ public class StartUITest {
         this.init(firstParams);
         String[] secondParams = new String[] {"6",this.tracker.findItem("namefirstItem","descfirstItem")[0].getId(),"7"};
         this.init(secondParams);
-        assertThat(this.tracker.showAllItem().length, is(1));
+        assertThat(this.tracker.getAllItem().length, is(1));
     }
 //    @Test
 //    public void whenShowAllItem()  {

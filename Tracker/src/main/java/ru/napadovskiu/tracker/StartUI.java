@@ -136,11 +136,11 @@ public class StartUI {
 
     }
 
-    public static void main(String[] args) {
-        Input input = new ConsoleInput();
-        Tracker tracker = new Tracker();
-        StartUI userAction = new StartUI(input,tracker);
-        userAction.showMenu();
-        userAction.init();
-    }
+//    public static void main(String[] args) {
+//        Input input = new ConsoleInput();
+//        Tracker tracker = new Tracker();
+//        StartUI userAction = new StartUI(input,tracker);
+//        userAction.showMenu();
+//        userAction.init();
+//    }
 }
