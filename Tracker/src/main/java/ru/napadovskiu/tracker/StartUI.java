@@ -38,66 +38,100 @@ public class StartUI {
        }
    }
 
+    /**
+     *The method show Item for users
+     *@param printItem
+     */
+
     public void showItem(Item printItem){
         System.out.println(printItem.toString());
     }
 
-   private Item takeItemFromArray(Item[] arrayItem){
+
+    private Item takeItemFromArray(Item[] arrayItem){
        String counter = this.input.ask("please enter number delete item ");
        Integer i = new Integer(counter);
        return arrayItem[i-1];
    }
 
-  	private void addNewItem(Item item){
+    /**
+     * The metthod add new item to tracker
+     * @param item
+     */
+
+   private void addNewItem(Item item){
 
         this.tracker.addNewItem(item);
-    }
+   }
 
-    private void showAllItem(){
-        Item[] arrayItem  = this.tracker.getAllItem();
-        if(arrayItem.length >0){
-           this.showItem(arrayItem);
-        }
-    }
-
-    private void findItem(String id){
-        Item findItem  = this.tracker.findItemById(id);
-        if(findItem !=null) {
-            this.showItem(findItem);
-        }
-    }
-
-    private void addCommentsToItem(Item item){
-        if(item !=null) {
-            this.tracker.addCommentsToItem(item, new Comments(this.input.ask("please enter comments to item")));
-            this.showItem(item);
-        }
-    }
-
-
-    private void findItem(String name, String desc){
-        Item[] findItem = this.tracker.findItem(name,desc);
-        if(findItem.length !=0){
-            this.showItem(findItem);
-        }
-
-    }
-
-    private void editItem(Item editItem){
-        Item newEditItem = new Item(this.input.ask("please enter the name of item"),this.input.ask("please enter the description of item"));
-        if(editItem !=null){
-            newEditItem.setId(editItem.getId());
-            this.tracker.editItem(editItem);
-            this.showItem(editItem);
-        }
-    }
-
-    private void deleteItem(Item deleteItem){
-       if(deleteItem !=null) {
-           this.tracker.deleteItem(deleteItem);
-           this.showAllItem();
+    /**
+     * method show all item from tracker
+     */
+   private void showAllItem(){
+       Item[] arrayItem  = this.tracker.getAllItem();
+       if(arrayItem.length >0){
+          this.showItem(arrayItem);
        }
-    }
+   }
+
+
+    /**
+     * method find item by Id
+     * @param id
+     */
+   private void findItemById(String id){
+       Item findItem  = this.tracker.findItemById(id);
+       if(findItem !=null) {
+           this.showItem(findItem);
+       }
+   }
+
+    /**
+     * method adds comment to item
+     * @param item
+     */
+   private void addCommentsToItem(Item item){
+       if(item !=null) {
+           this.tracker.addCommentsToItem(item, new Comments(this.input.ask("please enter comments to item")));
+           this.showItem(item);
+       }
+   }
+
+    /**
+     * method find item by name and description
+     * @param name
+     * @param desc
+     */
+   private void findItem(String name, String desc){
+       Item[] findItem = this.tracker.findItem(name,desc);
+       if(findItem.length !=0){
+           this.showItem(findItem);
+       }
+   }
+
+    /**
+     * method edit item i tracker
+     * @param editItem
+     */
+   private void editItem(Item editItem){
+       Item newEditItem = new Item(this.input.ask("please enter the name of item"),this.input.ask("please enter the description of item"));
+       if(editItem !=null){
+           newEditItem.setId(editItem.getId());
+           this.tracker.editItem(newEditItem);
+           this.showItem(editItem);
+       }
+   }
+
+    /**
+     * metho delete item from tracker
+     * @param deleteItem
+     */
+   private void deleteItem(Item deleteItem){
+      if(deleteItem !=null) {
+          this.tracker.deleteItem(deleteItem);
+          this.showAllItem();
+      }
+   }
 
     /**
 		*The main method 
@@ -117,7 +151,7 @@ public class StartUI {
                     this.findItem(this.input.ask("please enter the name of item"),this.input.ask("please enter the description of item"));
                     break;
                 case 4 :
-                    this.findItem(this.input.ask("please enter id Item"));
+                    this.findItemById(this.input.ask("please enter id Item"));
                     break;
                 case 5 :
                     this.editItem(this.tracker.findItemById(this.input.ask("please enter id Item")));
@@ -136,11 +170,4 @@ public class StartUI {
 
     }
 
-//    public static void main(String[] args) {
-//        Input input = new ConsoleInput();
-//        Tracker tracker = new Tracker();
-//        StartUI userAction = new StartUI(input,tracker);
-//        userAction.showMenu();
-//        userAction.init();
-//    }
 }

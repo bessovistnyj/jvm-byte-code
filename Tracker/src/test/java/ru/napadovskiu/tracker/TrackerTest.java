@@ -20,7 +20,7 @@ public class TrackerTest{
 		Item firstItem 	= new Item("firstItem","descriptionFirstItem");
 		testTracker.addNewItem(firstItem);
 		
-		assertThat(testTracker.showAllItem()[0], is(firstItem));
+		assertThat(testTracker.getAllItem()[0], is(firstItem));
 	}	
 
 	@Test
@@ -32,7 +32,7 @@ public class TrackerTest{
 		
 		testTracker.deleteItem(firstItem);
 		
-		assertThat(testTracker.showAllItem().length, is(0));
+		assertThat(testTracker.getAllItem().length, is(0));
 	}	
 
 	@Test
@@ -47,7 +47,7 @@ public class TrackerTest{
 		
 		Item[] testArray = new Item[] {firstItem};
 		
-		assertThat(testTracker.findItem(secondItem.getId())[0], is(secondItem));
+		assertThat(testTracker.findItemById(secondItem.getId()), is(secondItem));
 	}	
 
 	@Test

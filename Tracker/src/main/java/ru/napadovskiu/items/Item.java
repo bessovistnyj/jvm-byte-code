@@ -1,5 +1,7 @@
 package ru.napadovskiu.items;
 
+import java.util.Date;
+
 /**
  //*Class Item
  *@author napadovskiy
@@ -14,7 +16,6 @@ public class Item {
 	private String description;
     private Comments[] comments = new Comments[10];
     private int commentPosition = 0;
-
 
     public Item(){
 
@@ -78,6 +79,7 @@ public class Item {
 
     @Override
     public String toString() {
-        return "id: " + id + ";   name: " + name + ";   description: " + description + ";   comments: " + this.getComment();
+        Date date = new Date(this.createDate);
+		return "id: " + this.id + ";   name: " + this.name + ";   description: " + this.description + ";   comments: " + this.getComment() + "; date: "+date;
     }
 }
