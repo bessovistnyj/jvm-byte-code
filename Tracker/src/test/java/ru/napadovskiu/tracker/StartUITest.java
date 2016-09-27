@@ -28,11 +28,11 @@ public class StartUITest {
 
     @Test
     public void whenFindItemByNameDescription()  {
-        String[] firstParams = new String[] {"1","namefirstItem","descfirstItem","1","nameSecondItem","descSecondItem","8"};
+        String[] firstParams = new String[] {"1","namefirstItem","descfirstItem","1","namefirstItem1","descfirstItem1","1","namesecondItem","DescsecondItem","8"};
         this.init(firstParams);
-        String[] secondParams = new String[] {"3",this.tracker.getAllItem()[0].getName(),this.tracker.getAllItem()[0].getDescription(),"8"};
+        String[] secondParams = new String[] {"3","namefirstItem","Desc","8"};
         this.init(secondParams);
-        assertThat(this.tracker.findItem("namefirstItem","descfirstItem")[0].getName(), is("namefirstItem"));
+        assertThat(this.tracker.findItem("namefirstItem","Desc")[0].getName(), is("namefirstItem"));
     }
 
     @Test

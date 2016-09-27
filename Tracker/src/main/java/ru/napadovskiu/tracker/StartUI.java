@@ -88,13 +88,12 @@ public class StartUI {
 
     /**
      * method adds comment to item
-     * @param item
+     * @param idItem
      */
-   private void addCommentsToItem(Item item){
-       if(item !=null) {
-           this.tracker.addCommentsToItem(item, new Comments(this.input.ask("please enter comments to item")));
-           this.showItem(item);
-       }
+   private void addCommentsToItem(String idItem){
+      Comments comment = new Comments(this.input.ask("please enter comments to item"));
+       Item editItem = this.tracker.findItemById(idItem);
+       editItem.addComment(comment);
    }
 
     /**
@@ -160,7 +159,7 @@ public class StartUI {
                     this.deleteItem(this.tracker.findItemById(this.input.ask("please enter id Item")));
                     break;
                 case 7 :
-                    this.addCommentsToItem(this.tracker.findItemById(this.input.ask("please enter id Item")));
+                    this.addCommentsToItem(this.input.ask("please enter id Item"));
                     break;
                 case 8 :
                     exit = true;
@@ -170,4 +169,15 @@ public class StartUI {
 
     }
 
+    public static void main(String[] args){
+        Tracker tracker = new Tracker();
+        Input input = new ConsoleInput();
+        StartUI startUI = new StartUI(input,tracker);
+        startUI.showMenu();
+        startUI.init();
+
+    }
+
+
 }
+

@@ -59,29 +59,39 @@ public class Tracker {
         return result;
     }
 
-	 /**
+
+	private boolean findSubString(String str, String findStr){
+        boolean result = false;
+        if(str.indexOf(findStr) != -1){
+            result  = true;
+        }
+        return result;
+    }
+
+
+    /**
 		*The method find item by name and description
 		*@param name
 		*@param description
 		*@return an array of items found 
 	*/ 	
     public Item[] findItem(String name,String description){
-        int tmpCounter =0;
-        for(Item tmpItem: this.takeItems){
-            if(tmpItem!=null && (tmpItem.getName().equals(name) && tmpItem.getDescription().equals(description))){
-                tmpCounter++;
-            }
-        }
-        Item[] result = new Item[tmpCounter];
-
+        Item[] resultArray = new Item[this.takeItems.length];
         int counter = 0;
-        for(int i =0; i< this.takeItems.length; i++){
-            if(this.takeItems[i]!=null && (this.takeItems[i].getName().equals(name) && this.takeItems[i].getDescription().equals(description))) {
-                result[counter] = takeItems[i];
-                counter++;
+
+        for(Item tmpItem: this.takeItems){
+            if (tmpItem!=null && findSubString(tmpItem.getName(),name)){
+                resultArray[counter] = tmpItem;
             }
+            if (tmpItem!=null && findSubString(tmpItem.getDescription(),description)){
+                if (tmpItem!=null || !resultArray[counter].equals(tmpItem)){
+                    resultArray[counter] = tmpItem;
+                }
+            }
+            counter++;
+
         }
-        return result;
+        return resultArray;
     }
 
 	 /**
@@ -119,17 +129,6 @@ public class Tracker {
         }
         return result;
     }
-
-	public void addCommentsToItem(Item editItem, Comments addComments){
-        for (int i = 0; i != this.takeItems.length; i++) {
-            if (this.takeItems[i]!=null && this.takeItems[i].getId().equals(editItem.getId())){
-                if (this.takeItems[i].getComment()==null) {
-                    this.takeItems[i].addComment(addComments);
-                }else this.takeItems[i].setComment(addComments);
-            }
-        }
-    }
-
 
     /**
 		*The method generate id for new item
