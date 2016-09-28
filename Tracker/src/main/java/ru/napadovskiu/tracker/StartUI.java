@@ -34,9 +34,11 @@ public class StartUI {
 	*/ 	
  	public void showItem(Item[] arrayItem){
         for(Item tmpItem : arrayItem){
-            System.out.println(tmpItem.toString());
-       }
-   }
+            if(tmpItem !=null){
+                System.out.println(tmpItem.toString());
+            }
+        }
+    }
 
     /**
      *The method show Item for users
@@ -104,11 +106,7 @@ public class StartUI {
    private void findItem(String name, String desc){
        Item[] findItem = this.tracker.findItem(name,desc);
        if(findItem.length !=0){
-           for(Item tmpItem : findItem){
-               if (tmpItem !=null){
-                   this.showItem(tmpItem);
-               }
-           }
+             this.showItem(findItem);
        }
    }
 
