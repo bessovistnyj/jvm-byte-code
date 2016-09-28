@@ -104,7 +104,11 @@ public class StartUI {
    private void findItem(String name, String desc){
        Item[] findItem = this.tracker.findItem(name,desc);
        if(findItem.length !=0){
-           this.showItem(findItem);
+           for(Item tmpItem : findItem){
+               if (tmpItem !=null){
+                   this.showItem(tmpItem);
+               }
+           }
        }
    }
 
