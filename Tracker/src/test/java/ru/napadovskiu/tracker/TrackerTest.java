@@ -20,19 +20,19 @@ public class TrackerTest{
 		Item firstItem 	= new Item("firstItem","descriptionFirstItem");
 		testTracker.addNewItem(firstItem);
 		
-		assertThat(testTracker.getAllItem()[0], is(firstItem));
+		assertThat(testTracker.findItemById(firstItem.getId()), is(firstItem));
 	}	
 
 	@Test
 	public void whenDeleteItem() {
 		Tracker testTracker = new Tracker();
-			
+		boolean isDeleteItem;
 		Item firstItem 	= new Item("firstItem","descriptionFirstItem");
 		testTracker.addNewItem(firstItem);
+
+		isDeleteItem = testTracker.deleteItem(firstItem);
 		
-		testTracker.deleteItem(firstItem);
-		
-		assertThat(testTracker.getAllItem().length, is(0));
+		assertThat(isDeleteItem, is(true));
 	}	
 
 	@Test

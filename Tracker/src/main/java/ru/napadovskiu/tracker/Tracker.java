@@ -18,30 +18,41 @@ public class Tracker {
 		*The method add new item to items array
 		*@param item
 	*/ 	
-	public void addNewItem(Item item){
-		for (int i =0; i< this.takeItems.length; i++){
+	public Item addNewItem(Item item){
+		Item result = null;
+        boolean newItem = false;
+        int i =0;
+        for (; i< this.takeItems.length; i++){
             if(this.takeItems[i] ==null) {
                 item.setId(generateId());
                 item.setCreateDate(System.currentTimeMillis());
                 this.takeItems[i]= item;
+                result = item;
+                newItem = true;
                 break;
             }
         }
+	    if (i == this.takeItems.length -1 && newItem ==false ){
+            result =null;
+        }
+        return result;
 	}
 
 	 /**
 		*The method delete item from items array
 		*@param item
 	*/ 	
-    public void deleteItem(Item item){
-        boolean findItem = false;
+    public boolean deleteItem(Item item){
+
+        boolean isDeleteItem = false;
         for(int i=0; i<this.takeItems.length;i++){
             if(this.takeItems[i]!=null && this.takeItems[i].getId().equals(item.getId())){
-                findItem = true;
+                isDeleteItem = true;
                 this.takeItems[i] = null;
             }
         }
-	}
+	    return isDeleteItem;
+    }
 
 	 /**
 		*The method find item by id
@@ -72,10 +83,10 @@ public class Tracker {
     /**
 		*The method find item by name and description
 		*@param name
-		*@param description
-		*@return an array of items found 
+		*@return an array of items found
 	*/ 	
-    public Item[] findItem(String name,String description){
+
+    public Item[] findItemByName(String name){
         Item[] resultArray = new Item[this.takeItems.length];
         int counter = 0;
 
@@ -83,18 +94,35 @@ public class Tracker {
             if (tmpItem!=null && findSubString(tmpItem.getName(),name)){
                 resultArray[counter] = tmpItem;
             }
-            if (tmpItem!=null && findSubString(tmpItem.getDescription(),description)){
-                if (tmpItem!=null || !resultArray[counter].equals(tmpItem)){
-                    resultArray[counter] = tmpItem;
-                }
-            }
             counter++;
 
         }
         return resultArray;
     }
 
-	 /**
+    /**
+     *The method find item by name and description
+     *@param description
+     *@return an array of items found
+     */
+    public Item[] findItemByDescription(String description){
+        Item[] resultArray = new Item[this.takeItems.length];
+        int counter = 0;
+
+        for(Item tmpItem: this.takeItems){
+            if (tmpItem!=null && findSubString(tmpItem.getDescription(),description)){
+                if (tmpItem!=null || !resultArray[counter].equals(tmpItem)){
+                    resultArray[counter] = tmpItem;
+                }
+            }
+            counter++;
+        }
+        return resultArray;
+    }
+
+
+
+	     /**
 		*The method edit item 
 		*@param editItem
 	*/ 	
@@ -112,22 +140,8 @@ public class Tracker {
 		*@return an array all items 
 	*/ 	
     public Item[] getAllItem(){
-        int tmpCounter =0;
-        for(Item tmpItem: this.takeItems){
-            if(tmpItem!=null){
-                tmpCounter++;
-            }
-        }
-        Item[] result = new Item[tmpCounter];
+        return this.takeItems;
 
-        int counter = 0;
-        for(int i =0; i< this.takeItems.length; i++){
-            if(this.takeItems[i]!=null) {
-                result[counter] = takeItems[i];
-                counter++;
-            }
-        }
-        return result;
     }
 
     /**

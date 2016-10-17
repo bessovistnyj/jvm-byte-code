@@ -21,18 +21,19 @@ public class StartUITest {
 
     @Test
     public void whenAddNewItemThenTrackerAddItem()  {
-       String[] params = new String[] {"1","namefirstItem","descfirstItem","8"};
-       this.init(params);
-       assertThat(this.tracker.getAllItem().length, is(1));
+        Item tmpItem = new Item("namefirstItem","descfirstItem");
+        String[] params = new String[] {"1",tmpItem.getName(),tmpItem.getDescription(),"8"};
+        this.init(params);
+        assertThat(this.tracker.findItemByName("namefirstItem")[0].getName(), is(tmpItem.getName()));
    }
 
     @Test
-    public void whenFindItemByNameDescription()  {
+    public void whenFindItemByName()  {
         String[] firstParams = new String[] {"1","namefirstItem","descfirstItem","1","namefirstItem1","descfirstItem1","1","namesecondItem","DescsecondItem","8"};
         this.init(firstParams);
-        String[] secondParams = new String[] {"3","namefirstItem","Desc","8"};
+        String[] secondParams = new String[] {"3","namefirstItem","8"};
         this.init(secondParams);
-        assertThat(this.tracker.findItem("namefirstItem","Desc")[0].getName(), is("namefirstItem"));
+        assertThat(this.tracker.findItemByName("namefirstItem")[0].getName(), is("namefirstItem"));
     }
 
     @Test
@@ -49,7 +50,7 @@ public class StartUITest {
     public void whenEditItem()  {
         String[] firstParams = new String[] {"1","namefirstItem","descfirstItem","1","nameSecondItem","descSecondItem","8"};
         this.init(firstParams);
-        String[] secondParams = new String[] {"5",this.tracker.findItem("namefirstItem","descfirstItem")[0].getId(),"nameEditItem","descEditItem","8"};
+        String[] secondParams = new String[] {"5",this.tracker.findItemByName("namefirstItem")[0].getId(),"nameEditItem","descEditItem","8"};
         this.init(secondParams);
         assertThat(this.tracker.findItemById(this.tracker.getAllItem()[0].getId()).getName(), is("nameEditItem"));
     }
@@ -58,9 +59,12 @@ public class StartUITest {
     public void whenDeleteItem()  {
         String[] firstParams = new String[] {"1","namefirstItem","descfirstItem","1","nameSecondItem","descSecondItem","8"};
         this.init(firstParams);
-        String[] secondParams = new String[] {"6",this.tracker.findItem("namefirstItem","descfirstItem")[0].getId(),"8"};
+        String[] secondParams = new String[] {"6",this.tracker.findItemByName("namefirstItem")[0].getId(),"8"};
         this.init(secondParams);
-        assertThat(this.tracker.getAllItem().length, is(1));
+
+        //assertThat(this.tracker.getAllItem()[0], is(null));
+        assertNull(this.tracker.getAllItem()[0]);
+
     }
 
 }

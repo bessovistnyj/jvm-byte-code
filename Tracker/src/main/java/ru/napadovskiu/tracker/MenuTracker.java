@@ -16,7 +16,7 @@ public class MenuTracker{
     public void fillAction(){
         this.actions[0] = new AddItem();
         this.actions[1] = new showAllItem();
-        this.actions[2] = new FindItem();
+        this.actions[2] = new FindItemByName();
         this.actions[3] = new FindItemById();
         this.actions[4] = new EditItem();
         this.actions[5] = new DeleteItem();
@@ -35,7 +35,7 @@ public class MenuTracker{
     public void showMenu(){
         System.out.println("1. Add new item ");
         System.out.println("2. Show all item ");
-        System.out.println("3. Find item by name and description ");
+        System.out.println("3. Find item by name ");
         System.out.println("4. Find item by id ");
         System.out.println("5. Edit item ");
         System.out.println("6. Delete item ");
@@ -104,7 +104,7 @@ public class MenuTracker{
 
     }
 
-    private class FindItem implements UserAction{
+    private class FindItemByName implements UserAction{
 
         public int key(){
             return 1;
@@ -112,8 +112,7 @@ public class MenuTracker{
 
         public void execute(Input input, Tracker tracker){
             String nameItem = input.ask("please enter the name of item");
-            String descItem = input.ask("please enter the description of item");
-            Item[] findItem = tracker.findItem(nameItem,descItem);
+            Item[] findItem = tracker.findItemByName(nameItem);
             if(findItem.length !=0){
                 showItem(findItem);
             }
@@ -121,7 +120,7 @@ public class MenuTracker{
         }
 
         public String info(){
-            return String.format("%s. %s", this.key(), "Find item by name and by description");
+            return String.format("%s. %s", this.key(), "Find item by name ");
         }
 
     }
@@ -134,7 +133,9 @@ public class MenuTracker{
 
         public void execute(Input input, Tracker tracker){
             Item  findItem  = tracker.findItemById(input.ask("please enter id Item"));
-            showItem(findItem);
+            if(findItem != null){
+                showItem(findItem);
+            }
         }
 
         public String info(){
