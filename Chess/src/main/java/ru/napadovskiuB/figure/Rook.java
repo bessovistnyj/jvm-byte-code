@@ -1,8 +1,6 @@
 package ru.napadovskiuB.figure;
 
 import ru.napadovskiuB.board.Board;
-import ru.napadovskiuB.board.Cell;
-import ru.napadovskiuB.board.Position;
 import ru.napadovskiuB.moves.MovesByLine;
 
 /**
@@ -10,36 +8,45 @@ import ru.napadovskiuB.moves.MovesByLine;
  */
 public class Rook implements Figure {
 
-    private Position position;
+    private int positionY;
+    private int positionX;
     private boolean isWhite;
 
-    public Rook(Position position,boolean isWhite){
-        this.position = position;
+//    private int[][]
+
+
+
+    public Rook(int y, int x, boolean isWhite){
+        this.positionY =y;
+        this.positionX =x;
+        this.isWhite   = isWhite;
+    }
+
+
+    public void setPosition(int y,int x){
+        this.positionY = y;
+        this.positionX = x;
+    }
+
+    public  void setColorFigure(boolean isWhite){
         this.isWhite = isWhite;
     }
 
-    public void setPosition(Position position){
-        this.position = position;
+    public int getPositionY(){
+        return this.positionY;
+
     }
 
-    public void setWhite(boolean isWhite){
-        this.isWhite = isWhite;
+    public int getPositionX(){
+        return this.positionX;
+
     }
 
-    public Position getPosition(){
-        return this.position;
+
+    public void moveFigure(int newY, int newX){
+
+
     }
 
-    public boolean getIsWhite(){
-        return this.isWhite;
-    }
-
-    public Position[] getAllAvailableMove(Board board){
-        Position[] result = new Position[16];
-
-        result = new MovesByLine(this,board).TakeAllAvailableMoves(result.length);
-
-        return result;
-    }
 
 }

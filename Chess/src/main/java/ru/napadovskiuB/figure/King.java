@@ -1,8 +1,6 @@
 package ru.napadovskiuB.figure;
 
 import ru.napadovskiuB.board.Board;
-import ru.napadovskiuB.board.Position;
-import ru.napadovskiuB.moves.MovesByLine;
 
 /**
  * Created by program on 08.10.2016.

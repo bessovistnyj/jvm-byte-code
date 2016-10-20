@@ -5,14 +5,16 @@ import ru.napadovskiuB.board.*;
 
 public interface Figure{
 
-    void setPosition(Position position);
+    void setPosition(int y,int x);
 
-    void setWhite(boolean isWhite);
+    void setColorFigure(boolean isWhite);
 
-    Position getPosition();
+    int getPositionY();
 
-    boolean getIsWhite();
+    int getPositionX();
 
-    Position[] getAllAvailableMove(Board board);
+    void moveFigure(int newY, int newX);
+
+
 
 }
