@@ -13,7 +13,7 @@ public interface Figure{
 
     int getPositionX();
 
-    void moveFigure(int newY, int newX);
+    void moveFigure(int newY, int newX, Board board);
 
 
 
