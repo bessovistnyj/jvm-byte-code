@@ -1,40 +1,161 @@
-//package ru.napadovskiuB.figure;
-//
-//import ru.napadovskiuB.board.Board;
-//
-///**
-// * Created by program on 08.10.2016.
-// */
-//public class King implements Figure {
-//
-//    private Position position;
-//    private boolean isWhite;
-//
-//    public King(Position position,boolean isWhite){
-//        this.position = position;
-//        this.isWhite = isWhite;
-//    }
-//
-//    public void setPosition(Position position){
-//        this.position = position;
-//    }
-//
-//    public void setWhite(boolean isWhite){
-//        this.isWhite = isWhite;
-//    }
-//
-//    public Position getPosition(){
-//        return this.position;
-//    }
-//
-//    public boolean getIsWhite(){
-//        return this.isWhite;
-//    }
-//
-//    public Position[] getAllAvailableMove(Board board){
-////        Position[] arrayPosition = new MovesByLine(this,board).TakeAllAvailableMoves();
-//
-//        return null;
-//    }
-//
-//}
+package ru.napadovskiuB.figure;
+
+import ru.napadovskiuB.board.*;
+
+
+/**
+ * Created by Napadovskiy
+ *@author napadovskiy
+ *@since 14.10.2016
+ *@version 1
+ */
+public class King implements Figure {
+
+    private Position position;
+    private boolean isWhite;
+
+    public King(int y, int x, boolean isWhite){
+        this.position = new Position(y,x);
+        this.isWhite   = isWhite;
+    }
+
+    private class Position{
+        private int positionY;
+        private int positionX;
+
+        private Position(int y, int x){
+            this.positionY =y;
+            this.positionX =x;
+        }
+
+        private int getPositionY(){
+            return this.positionY;
+        }
+        private int getPositionX(){
+            return this.positionX;
+        }
+
+    }
+
+    /**
+     *The method get array of all available moves
+     */
+    private Position[] getAvailableMoves() {
+        Position[] result = new Position[8];
+        int counter =0;
+
+        int tmpX = this.getPositionX();
+        int tmpY = this.getPositionY();
+        if(tmpY>0){
+            result[counter] = new Position(tmpY-1,tmpX);
+            counter++;
+        }
+        if(tmpY>0&& tmpX>0){
+            result[counter] = new Position(tmpY-1,tmpX-1);
+            counter++;
+        }
+        if(tmpX<7 && tmpY>0){
+            result[counter] = new Position(tmpY-1,tmpX+1);
+            counter++;
+        }
+
+        if(tmpX>0){
+            result[counter] = new Position(tmpY,tmpX-1);
+            counter++;
+        }
+        if(tmpX<7){
+            result[counter] = new Position(tmpY,tmpX+1);
+            counter++;
+        }
+        if(tmpY<7){
+            result[counter] = new Position(tmpY+1,tmpX);
+            counter++;
+        }
+        if(tmpY<7&& tmpX<7){
+            result[counter] = new Position(tmpY+1,tmpX+1);
+            counter++;
+        }
+        if(tmpX>0 && tmpY<7){
+            result[counter] = new Position(tmpY+1,tmpX-1);
+            counter++;
+        }
+
+
+        return result;
+    }
+
+    /**
+     *The method check opportunity move the figure
+     *@param newY
+     *@param newX
+     *@param board
+     *@return result
+     */
+    private boolean canMoveTheFigure(int newY, int newX, Board board){
+        boolean result = false;
+        Position[] availableMoves = getAvailableMoves();
+
+        for (int i=0; i < availableMoves.length; i++){
+            if (availableMoves[i] == null){
+                continue;
+            }
+            if (availableMoves[i].getPositionY() == newY && availableMoves[i].getPositionX() == newX){
+                result=true;
+                break;
+            }
+        }
+        if(board.getFigureByPosition(newY,newX)!=null){
+            result =false;
+        }
+
+        return result;
+    }
+
+    /**
+     *The method set position
+     */
+    public void setPosition(int y,int x){
+        this.position = new Position(y,x);
+    }
+
+    /**
+     *The method set color
+     */
+    public  void setColorFigure(boolean isWhite){
+        this.isWhite = isWhite;
+    }
+
+    /**
+     *The method get position Y
+     */
+    public int getPositionY(){
+        return this.position.getPositionY();
+
+    }
+
+    /**
+     *The method get position X
+     */
+    public int getPositionX(){
+        return this.position.getPositionX();
+
+    }
+
+    /**
+     *The method move figure by new position
+     *@param newY
+     *@param newX
+     *@param board
+     */
+    public void moveFigure(int newY, int newX, Board board){
+        if (canMoveTheFigure(newY, newX, board)){
+            this.setPosition(newY,newX);
+            board.setFigureByPosition(this);
+        }
+        else {
+            System.out.println("Inaccessible move");
+        }
+
+    }
+}
+

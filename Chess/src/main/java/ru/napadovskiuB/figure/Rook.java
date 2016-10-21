@@ -1,10 +1,12 @@
 package ru.napadovskiuB.figure;
 
 import ru.napadovskiuB.board.Board;
-//import ru.napadovskiuB.moves.MovesByLine;
 
 /**
- * Created by program on 08.10.2016.
+ * Created by Napadovskiy
+ *@author napadovskiy
+ *@since 14.10.2016
+ *@version 1
  */
 public class Rook implements Figure {
 
@@ -34,7 +36,7 @@ public class Rook implements Figure {
 
     }
 
-    private Position[] getAvailableMoves(Board board){
+    private Position[] getAvailableMoves(){
         Position[] result = new Position[16];
 
         int tmpY = this.getPositionY();
@@ -59,7 +61,7 @@ public class Rook implements Figure {
             if (!fillPlus){
                 result[counter] = new Position(tmpY,++tmpX);
                 counter++;
-                fillMinus = (tmpX ==7) ? true : false;
+                fillPlus = (tmpX ==7) ? true : false;
 
             }
         }
@@ -90,46 +92,80 @@ public class Rook implements Figure {
 
     }
 
-    public void setPosition(int y,int x){
-        this.position = new Position(y,x);
-    }
-
-    public  void setColorFigure(boolean isWhite){
-        this.isWhite = isWhite;
-    }
-
-    public int getPositionY(){
-        return this.position.getPositionY();
-
-    }
-
-    public int getPositionX(){
-        return this.position.getPositionX();
-
-    }
-
-    public void moveFigure(int newY, int newX, Board board){
-        Position [] availableMoves = getAvailableMoves(board);
-
-        boolean canMove =false;
+    /**
+     *The method check opportunity move the figure
+     *@param newY
+     *@param newX
+     *@param board
+     *@return result
+     */
+    private boolean canMoveTheFigure(int newY, int newX, Board board){
+        boolean result = false;
+        Position[] availableMoves = getAvailableMoves();
 
         for (int i=0; i < availableMoves.length; i++){
             if (availableMoves[i] == null){
                 continue;
             }
-            if (availableMoves[i].getPositionY() == newY && availableMoves[i].getPositionX() == newX){
-                canMove=true;
+
+            if(board.getFigureByPosition(availableMoves[i].getPositionY(),availableMoves[i].getPositionX())!=null){
+                result =false;
                 break;
             }
+
+            if (availableMoves[i].getPositionY() == newY && availableMoves[i].getPositionX() == newX){
+                result=true;
+                break;
+            }
+
         }
 
-        if(canMove){
+        return result;
+    }
+
+    /**
+     *The method set position
+     */
+    public void setPosition(int y,int x){
+        this.position = new Position(y,x);
+    }
+
+    /**
+     *The method set color
+     */
+    public  void setColorFigure(boolean isWhite){
+        this.isWhite = isWhite;
+    }
+
+    /**
+     *The method get position Y
+     */
+    public int getPositionY(){
+        return this.position.getPositionY();
+
+    }
+
+    /**
+     *The method get position X
+     */
+    public int getPositionX(){
+        return this.position.getPositionX();
+
+    }
+
+    /**
+     *The method move figure by new position
+     *@param newY
+     *@param newX
+     *@param board
+     */
+    public void moveFigure(int newY, int newX, Board board){
+        if (canMoveTheFigure(newY, newX, board)){
             this.setPosition(newY,newX);
+            board.setFigureByPosition(this);
         }
         else {
             System.out.println("Inaccessible move");
         }
-
     }
-
 }
