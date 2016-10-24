@@ -1,6 +1,5 @@
 package ru.napadovskiuB.figure;
 
-
 import ru.napadovskiuB.board.*;
 
 public interface Figure{
@@ -13,8 +12,7 @@ public interface Figure{
 
     int getPositionX();
 
-    void moveFigure(int newY, int newX, Board board);
-
+    Position[] getAvailableMoves();
 
 
 }

@@ -15,8 +15,9 @@ public class BoardTest {
         Board board  = new Board();
         Figure whiteRook = new Rook(2,2,true);
         board.setFigureByPosition(whiteRook);
-        whiteRook.moveFigure(7,2,board);
-        assertThat(board.getFigureByPosition(7,2),is(whiteRook));
+        board.moveFigure(whiteRook,7,2);
+        board.moveFigure(whiteRook,7,5);
+        assertThat(board.getFigureByPosition(7,5),is(whiteRook));
 
     }
 
@@ -27,7 +28,7 @@ public class BoardTest {
         board.setFigureByPosition(whiteRook);
         Figure blackPawn = new Pawn(4,2,false);
         board.setFigureByPosition(blackPawn);
-        whiteRook.moveFigure(7,2,board);
+        board.moveFigure(whiteRook,7,2);
         assertThat(board.getFigureByPosition(2,2),is(whiteRook));
     }
 
@@ -37,7 +38,7 @@ public class BoardTest {
         Board board  = new Board();
         Figure whiteElephant = new Elephant(0,1,true);
         board.setFigureByPosition(whiteElephant);
-        whiteElephant.moveFigure(4,5,board);
+        board.moveFigure(whiteElephant,4,5);
         assertThat(board.getFigureByPosition(4,5),is(whiteElephant));
 
     }
@@ -47,7 +48,7 @@ public class BoardTest {
         Board board  = new Board();
         Figure whiteHorse = new Horse(2,2,true);
         board.setFigureByPosition(whiteHorse);
-        whiteHorse.moveFigure(3,3,board);
+        board.moveFigure(whiteHorse,3,3);
         assertThat(board.getFigureByPosition(2,2),is(whiteHorse));
     }
 
@@ -58,7 +59,7 @@ public class BoardTest {
         board.setFigureByPosition(whiteHorse);
         Figure blackPawn = new Pawn(4,1,false);
         board.setFigureByPosition(blackPawn);
-        whiteHorse.moveFigure(4,1,board);
+        board.moveFigure(whiteHorse,4,1);
         assertThat(board.getFigureByPosition(2,2),is(whiteHorse));
     }
 
@@ -67,7 +68,7 @@ public class BoardTest {
         Board board  = new Board();
         Figure whiteKing = new King(2,2,true);
         board.setFigureByPosition(whiteKing);
-        whiteKing.moveFigure(1,1,board);
+        board.moveFigure(whiteKing,1,1);
         assertThat(board.getFigureByPosition(1,1),is(whiteKing));
 
     }
@@ -77,10 +78,9 @@ public class BoardTest {
         Board board  = new Board();
         Figure whiteHorse = new Queen(3,3,true);
         board.setFigureByPosition(whiteHorse);
-        whiteHorse.moveFigure(6,0,board);
+        board.moveFigure(whiteHorse,6,0);
         assertThat(board.getFigureByPosition(6,0),is(whiteHorse));
 
     }
-
 
 }

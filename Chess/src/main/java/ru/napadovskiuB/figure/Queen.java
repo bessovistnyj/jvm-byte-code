@@ -1,6 +1,6 @@
 package ru.napadovskiuB.figure;
 
-import ru.napadovskiuB.board.Board;
+import ru.napadovskiuB.board.Position;
 
 /**
  * Created by Napadovskiy
@@ -16,24 +16,6 @@ public class Queen implements Figure {
     public Queen(int y, int x, boolean isWhite){
         this.position = new Position(y,x);
         this.isWhite   = isWhite;
-    }
-
-    private class Position{
-        private int positionY;
-        private int positionX;
-
-        private Position(int y, int x){
-            this.positionY =y;
-            this.positionX =x;
-        }
-
-        private int getPositionY(){
-            return this.positionY;
-        }
-        private int getPositionX(){
-            return this.positionX;
-        }
-
     }
 
     /**
@@ -131,36 +113,18 @@ public class Queen implements Figure {
 
     /**
      *The method check opportunity move the figure
-     *@param newY
-     *@param newX
-     *@param board
-     *@return result
+     *@return an array of all moves
      */
-    private boolean canMoveTheFigure(int newY, int newX, Board board){
-        boolean result = false;
-        Position[] availableMoves  = new Position[64];
+    public Position[] getAvailableMoves(){
+        Position[] result = new Position[32];
+        //Position[] availableMoves  = new Position[32];
 
         Position[] availableMovesByLine = getAvailableMovesByLine();
         Position[] availableMovesByDiagonal = getAvailableMovesByDiagonal();
 
-        System.arraycopy(availableMovesByLine,0,availableMoves,0,availableMovesByLine.length);
-        System.arraycopy(availableMovesByDiagonal,0,availableMoves,availableMovesByLine.length,availableMovesByDiagonal.length);
+        System.arraycopy(availableMovesByLine,0,result ,0,availableMovesByLine.length);
+        System.arraycopy(availableMovesByDiagonal,0,result ,availableMovesByLine.length,availableMovesByDiagonal.length);
 
-        for (int i=0; i < availableMoves.length; i++){
-            if (availableMoves[i] == null){
-                continue;
-            }
-            if(board.getFigureByPosition(availableMoves[i].getPositionY(),availableMoves[i].getPositionX())!=null){
-                result =false;
-                break;
-            }
-
-            if (availableMoves[i].getPositionY() == newY && availableMoves[i].getPositionX() == newX){
-                result=true;
-                break;
-            }
-
-        }
         return result;
     }
 
@@ -191,23 +155,6 @@ public class Queen implements Figure {
      */
     public int getPositionX(){
         return this.position.getPositionX();
-
-    }
-
-    /**
-     *The method move figure by new position
-     *@param newY
-     *@param newX
-     *@param board
-     */
-    public void moveFigure(int newY, int newX, Board board){
-        if (canMoveTheFigure(newY, newX, board)){
-            this.setPosition(newY,newX);
-            board.setFigureByPosition(this);
-        }
-        else {
-            System.out.println("Inaccessible move");
-        }
 
     }
 
