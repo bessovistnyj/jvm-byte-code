@@ -98,9 +98,11 @@ public class Board{
      *@param newY
      *@param newX
      */
-    private void takeShape(int newY, int newX){
+    private void takeShape(Figure newFigure, int newY, int newX){
         if(this.getFigureByPosition(newY,newX) !=null){
-            clearPosition(newY,newX);
+           if (newFigure.getColorFigure() != this.getFigureByPosition(newY,newX).getColorFigure()){
+               clearPosition(newY,newX);
+           }
         }
     }
 
@@ -140,7 +142,7 @@ public class Board{
         if(this.canMoveFigure(figure,newPositionY,newPositionX)){
             clearPosition(figure.getPositionY(),figure.getPositionX());
 
-            takeShape(newPositionY,newPositionX);
+            takeShape(figure,newPositionY,newPositionX);
 
             figure.setPosition(newPositionY,newPositionX);
 

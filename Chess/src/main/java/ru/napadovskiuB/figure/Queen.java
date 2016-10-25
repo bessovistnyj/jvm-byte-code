@@ -158,4 +158,12 @@ public class Queen implements Figure {
 
     }
 
+    /**
+     *The method get color figure
+     */
+    public boolean getColorFigure(){
+        return this.isWhite;
+    }
+
+
 }

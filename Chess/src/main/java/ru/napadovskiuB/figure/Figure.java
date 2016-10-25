@@ -12,6 +12,8 @@ public interface Figure{
 
     int getPositionX();
 
+    boolean getColorFigure();
+
     Position[] getAvailableMoves();
 
 

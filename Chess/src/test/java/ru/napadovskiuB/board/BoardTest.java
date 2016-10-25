@@ -60,7 +60,7 @@ public class BoardTest {
         Figure blackPawn = new Pawn(4,1,false);
         board.setFigureByPosition(blackPawn);
         board.moveFigure(whiteHorse,4,1);
-        assertThat(board.getFigureByPosition(2,2),is(whiteHorse));
+        assertThat(board.getFigureByPosition(4,1),is(whiteHorse));
     }
 
     @Test

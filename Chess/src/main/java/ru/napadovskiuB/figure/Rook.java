@@ -49,6 +49,12 @@ public class Rook implements Figure {
     }
 
     /**
+     *The method get color figure
+     */
+    public boolean getColorFigure(){
+        return this.isWhite;
+    }
+    /**
      *The method check opportunity move the figure
      *@return an array of all moves
      */

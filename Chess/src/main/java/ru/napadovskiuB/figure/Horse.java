@@ -95,5 +95,13 @@ public class Horse implements Figure {
         return result;
     }
 
+    /**
+     *The method get color figure
+     */
+    public boolean getColorFigure(){
+        return this.isWhite;
+    }
+
+
 }
 
