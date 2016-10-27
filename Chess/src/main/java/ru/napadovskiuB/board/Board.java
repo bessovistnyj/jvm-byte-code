@@ -106,6 +106,22 @@ public class Board{
         }
     }
 
+
+    /**
+     *Method chek color of figure on the new position
+     *@param figure
+     *@param y
+     *@param x
+     */
+
+    private boolean checkNewPosition(Figure figure, int y,int x){
+        boolean result = false;
+        if (this.getFigureByPosition(y,x)!=null && figure.getColorFigure() != this.getFigureByPosition(y,x).getColorFigure()){
+            result = true;
+        }
+        return result;
+    }
+
     /**
      *Method checks the possibility of move
      *@param figure
@@ -115,17 +131,21 @@ public class Board{
     private boolean canMoveFigure(Figure figure,int newY, int newX){
         boolean result = false;
         Position[] allAvailableMoves = figure.getAvailableMoves();
-        for (int i=0; i < allAvailableMoves.length; i++){
-            if (allAvailableMoves[i] == null){
-                continue;
-            }
-            if(!occupiedCell(figure,allAvailableMoves[i].getPositionY(),allAvailableMoves[i].getPositionX())){
-                result =false;
-                break;
-            }
-            if (allAvailableMoves[i].getPositionY() == newY && allAvailableMoves[i].getPositionX() == newX){
-                result=true;
-                break;
+        if (checkNewPosition(figure,newY,newX)) {
+
+            for (int i = 0; i < allAvailableMoves.length; i++) {
+                if (allAvailableMoves[i] == null) {
+                    continue;
+                }
+                if (!occupiedCell(figure, allAvailableMoves[i].getPositionY(), allAvailableMoves[i].getPositionX())) {
+                    result = false;
+                    break;
+                }
+
+                if (allAvailableMoves[i].getPositionY() == newY && allAvailableMoves[i].getPositionX() == newX) {
+                    result = true;
+                    break;
+                }
             }
         }
         return result;
