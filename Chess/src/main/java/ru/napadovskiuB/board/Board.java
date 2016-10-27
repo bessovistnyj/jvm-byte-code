@@ -118,6 +118,8 @@ public class Board{
         boolean result = false;
         if (this.getFigureByPosition(y,x)!=null && figure.getColorFigure() != this.getFigureByPosition(y,x).getColorFigure()){
             result = true;
+        }else if(this.getFigureByPosition(y,x)==null){
+            result = true;
         }
         return result;
     }
