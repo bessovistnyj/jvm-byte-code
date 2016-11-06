@@ -31,7 +31,7 @@ public class EvenNumberTest {
 
         boolean result = evenNumber.checkEvenNumber(inputStream);
 
-        assertThat(result, is(true));
+        assertThat(result, is(false));
     }
 
  }
