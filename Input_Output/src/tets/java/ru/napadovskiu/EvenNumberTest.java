@@ -1,37 +1,53 @@
 package ru.napadovskiu;
 
 import static org.hamcrest.core.Is.is;
-import java.io.*;
 import static org.junit.Assert.*;
+
+import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
+
+import java.io.*;
 
 
 import java.util.*;
 /**
  * Created by program on 01.11.2016.
  */
+@Ignore
 public class EvenNumberTest {
 
     @Test
-    public void whenInputEvenNumberThenReturnTrue() throws Exception{
-        InputStream inputStream = new ByteArrayInputStream("4".getBytes());
-
+    public void whenInputEvenNumberThenReturnTrue(){
+        boolean result = false;
         EvenNumber evenNumber = new EvenNumber();
 
-        boolean result = evenNumber.checkEvenNumber(inputStream);
+        try (InputStream inputStream = new ByteArrayInputStream("4".getBytes())){
 
+            result = evenNumber.checkEvenNumber(inputStream);
+
+        }
+        catch (IOException error){
+            error.printStackTrace();
+        }
         assertThat(result, is(true));
     }
 
     @Test
-    public void whenInputOddNumberThenReturnFalse() throws  Exception{
-        InputStream inputStream = new ByteArrayInputStream("5".getBytes());
+    public void whenInputOddNumberThenReturnFalse() {
 
+        boolean result = false;
         EvenNumber evenNumber = new EvenNumber();
 
-        boolean result = evenNumber.checkEvenNumber(inputStream);
+        try (InputStream inputStream = new ByteArrayInputStream("3".getBytes())){
 
-        assertThat(result, is(false));
+            result = evenNumber.checkEvenNumber(inputStream);
+
+        }
+        catch (IOException error){
+            error.printStackTrace();
+        }
+        assertThat(result, is(true));
     }
 
  }

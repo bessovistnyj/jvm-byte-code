@@ -13,9 +13,6 @@ public class EvenNumber {
         if (inputStream.read() % 2 == 0) {
             result = true;
         }
-        else {
-            result = false;
-        }
         return result;
     }
 
