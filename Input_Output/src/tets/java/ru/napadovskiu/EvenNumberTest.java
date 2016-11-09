@@ -3,8 +3,6 @@ package ru.napadovskiu;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.*;
 
-import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import java.io.*;
@@ -14,7 +12,7 @@ import java.util.*;
 /**
  * Created by program on 01.11.2016.
  */
-@Ignore
+
 public class EvenNumberTest {
 
     @Test
@@ -47,7 +45,7 @@ public class EvenNumberTest {
         catch (IOException error){
             error.printStackTrace();
         }
-        assertThat(result, is(true));
+        assertThat(result, is(false));
     }
 
  }
