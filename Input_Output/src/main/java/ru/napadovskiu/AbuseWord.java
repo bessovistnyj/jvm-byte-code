@@ -14,13 +14,12 @@ public class AbuseWord {
 
         int counter = 0;
 
-        InputStreamReader inputStreamReader     = new InputStreamReader(in);
-        OutputStreamWriter outputStreamWriter   = new OutputStreamWriter(out);
+        try(InputStreamReader inputStreamReader     = new InputStreamReader(in);
+        OutputStreamWriter outputStreamWriter   = new OutputStreamWriter(out);){
 
         StringBuilder stringBuilder = new StringBuilder();
-
         while((ch = inputStreamReader.read()) != -1){
-            stringBuilder.append((char)ch);
+        stringBuilder.append((char)ch);
             for (String abuseString : abuse){
                 if(stringBuilder.toString().equalsIgnoreCase(abuseString)){
                     stringBuilder.delete(0, stringBuilder.length());
@@ -38,5 +37,11 @@ public class AbuseWord {
         }
         inputStreamReader.close();
         outputStreamWriter.close();
+
+        }
+        catch (IOException error){
+            error.printStackTrace();
+        }
+
     }
 }
