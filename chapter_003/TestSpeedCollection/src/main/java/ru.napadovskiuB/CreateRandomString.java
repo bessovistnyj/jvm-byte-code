@@ -3,14 +3,14 @@ package ru.napadovskiuB;
 import java.util.Random;
 
 /**
- * Created by Программист on 25.05.2017.
+ * Created by napadovskiuB on 25.05.2017.
  */
 public class CreateRandomString  {
 
     /**
      *
-     * @param length
-     * @return
+     * @param length string length.
+     * @return result creating string.
      */
     public String createRandomString(int length) {
         final String valid = "qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM1234567890";

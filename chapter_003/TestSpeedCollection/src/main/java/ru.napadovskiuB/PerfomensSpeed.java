@@ -6,48 +6,48 @@ import java.util.TreeSet;
 import java.util.Random;
 
 /**
- * Created by Программист on 25.05.2017.
+ * Created by napadovskiuB on 25.05.2017.
  */
 public class PerfomensSpeed {
 
     /**
-     *
+     * Array list for checking.
      */
-    private ArrayList<String> arrayList = new ArrayList<>();
+    private ArrayList<String> arrayList = new ArrayList<String>();
 
     /**
-     *
+     * Linked list for checking.
      */
-    private LinkedList<String> linkedList = new LinkedList<>();
+    private LinkedList<String> linkedList = new LinkedList<String>();
 
     /**
-     *
+     * Tree set for checking.
      */
-    private TreeSet<String> treeSet = new TreeSet<>();
+    private TreeSet<String> treeSet = new TreeSet<String>();
 
     /**
-     *
+     *  Class with method's for checking speed.
      */
     private  WorkWithCollection workWithCollection  = new WorkWithCollection();
 
     /**
-     *
+     * string for add in collection.
      */
     private String testString;
 
     /**
-     *
+     * number of strings to add in collection.
      */
-    final static int numberOfLines = 15000;
+    private final int numberOfLines = 15000;
 
     /**
-     *
+     * length string for generate random string.
      */
-    final static int lengthString = 100;
+    private final int lengthString = 100;
 
 
     /**
-     *
+     * method test speed add string to collection.
      */
     public void testAdd() {
 
@@ -69,7 +69,7 @@ public class PerfomensSpeed {
 
 
     /**
-     *
+     * method tests deleting speed from collection.
      */
     public void testDelete() {
 
@@ -78,13 +78,4 @@ public class PerfomensSpeed {
         System.out.println(this.workWithCollection.delete(this.treeSet, numberOfLines));
 
     }
-
-
-    public static void main(String[] args) {
-        PerfomensSpeed testSpeed = new PerfomensSpeed();
-        testSpeed.testAdd();
-        testSpeed.testDelete();
-
-    }
-
 }
