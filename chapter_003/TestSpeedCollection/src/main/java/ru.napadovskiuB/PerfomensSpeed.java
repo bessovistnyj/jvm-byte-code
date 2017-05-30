@@ -6,48 +6,28 @@ import java.util.TreeSet;
 import java.util.Random;
 
 /**
-<<<<<<< HEAD
- * Created by Napadovskiy on 25.05.2017.
-=======
  * Created by napadovskiuB on 25.05.2017.
->>>>>>> 48a903de654ac10c8f32e95fc512153901c311fb
  */
 public class PerfomensSpeed {
 
     /**
-<<<<<<< HEAD
      * Array list for speed testing.
-=======
-     * Array list for checking.
->>>>>>> 48a903de654ac10c8f32e95fc512153901c311fb
+
      */
     private ArrayList<String> arrayList = new ArrayList<String>();
 
     /**
-<<<<<<< HEAD
-     * Linked list  for speed testing.
-=======
      * Linked list for checking.
->>>>>>> 48a903de654ac10c8f32e95fc512153901c311fb
      */
     private LinkedList<String> linkedList = new LinkedList<String>();
 
     /**
-<<<<<<< HEAD
      * Tree for speed testing.
-=======
-     * Tree set for checking.
->>>>>>> 48a903de654ac10c8f32e95fc512153901c311fb
+
      */
     private TreeSet<String> treeSet = new TreeSet<String>();
 
     /**
-<<<<<<< HEAD
-     * Class for work with collection.
-     */
-    private  WorkWithCollection workWithCollection  = new WorkWithCollection();
-
-     /**
      * Number of lines for add to Collection.
      */
     private static final int NUMBERLINES = 15000;
@@ -59,8 +39,6 @@ public class PerfomensSpeed {
 
 
     /**
-     * Method for test add strings to collection.
-=======
      *  Class with method's for checking speed.
      */
     private  WorkWithCollection workWithCollection  = new WorkWithCollection();
@@ -71,19 +49,7 @@ public class PerfomensSpeed {
     private String testString;
 
     /**
-     * number of strings to add in collection.
-     */
-    private final int numberOfLines = 15000;
-
-    /**
-     * length string for generate random string.
-     */
-    private final int lengthString = 100;
-
-
-    /**
      * method test speed add string to collection.
->>>>>>> 48a903de654ac10c8f32e95fc512153901c311fb
      */
     public void testAdd() {
 
@@ -106,7 +72,6 @@ public class PerfomensSpeed {
 
 
     /**
-<<<<<<< HEAD
      * Method for test delete strings to collection.
      */
     public void testDelete() {
@@ -117,15 +82,5 @@ public class PerfomensSpeed {
 
     }
 
-=======
-     * method tests deleting speed from collection.
-     */
-    public void testDelete() {
 
-        System.out.println(this.workWithCollection.delete(this.arrayList, numberOfLines));
-        System.out.println(this.workWithCollection.delete(this.linkedList, numberOfLines));
-        System.out.println(this.workWithCollection.delete(this.treeSet, numberOfLines));
-
-    }
->>>>>>> 48a903de654ac10c8f32e95fc512153901c311fb
 }
