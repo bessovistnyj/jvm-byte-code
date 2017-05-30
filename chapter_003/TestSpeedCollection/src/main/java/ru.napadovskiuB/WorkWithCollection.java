@@ -5,27 +5,27 @@ import java.util.Iterator;
 
 
 /**
- * Created by Программист on 25.05.2017.
+ * Created by Napadovskiy on 25.05.2017.
  */
 public class WorkWithCollection {
 
     /**
-     *
+     * start time for test.
      */
     private long start;
 
     /**
-     *
+     * end time for test.
      */
     private long end;
 
 
     /**
-     *
-     * @param collection
-     * @param line
-     * @param amount
-     * @return
+     * Method add strings to collection.
+     * @param collection testing collection.
+     * @param line String for add to collection.
+     * @param amount amount strings for add to collection.
+     * @return result time.
      */
     public long add(Collection<String> collection, String line, int amount) {
 
@@ -46,10 +46,10 @@ public class WorkWithCollection {
 
 
     /**
-     *
-     * @param collection
-     * @param amount
-     * @return
+     * Method delete strings from collection.
+     * @param collection for test.
+     * @param amount amount strings for add to collection.
+     * @return result time.
      */
     public long delete(Collection<String> collection, int amount) {
 
@@ -74,7 +74,6 @@ public class WorkWithCollection {
         return result;
 
     }
-
 
 
 }
