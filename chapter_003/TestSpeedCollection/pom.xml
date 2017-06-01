@@ -1,11 +1,7 @@
 <project>
 	<modelVersion>4.0.0</modelVersion>
 	<artifactId>TestSpeedCollection</artifactId>
-<<<<<<< HEAD
-	<packaging>jar</packaging>
-=======
 	<packaging>pom</packaging>
->>>>>>> 48a903de654ac10c8f32e95fc512153901c311fb
 
 	<parent>
 		<groupId>ru.napadovskiu</groupId>
@@ -83,10 +79,6 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 	
-<<<<<<< HEAD
-
-=======
->>>>>>> 48a903de654ac10c8f32e95fc512153901c311fb
 	 <dependencies>
 		<dependency>
             <groupId>junit</groupId>
