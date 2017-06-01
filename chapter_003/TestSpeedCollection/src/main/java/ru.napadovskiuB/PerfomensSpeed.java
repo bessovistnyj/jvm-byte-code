@@ -3,7 +3,6 @@ package ru.napadovskiuB;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.TreeSet;
-import java.util.concurrent.TimeUnit;
 
 /**
  * Created by napadovskiuB on 25.05.2017.
@@ -42,9 +41,9 @@ public class PerfomensSpeed {
      */
     public void testAdd() {
 
-        System.out.println((double)this.workWithCollection.add(this.arrayList,  this.NUMBERLINES) / 1000000000.0);
-        System.out.println((double)this.workWithCollection.add(this.linkedList,  this.NUMBERLINES) / 1000000000.0);
-        System.out.println((double)this.workWithCollection.add(this.treeSet,  this.NUMBERLINES) / 1000000000.0);
+        System.out.println(this.workWithCollection.add(this.arrayList,  this.NUMBERLINES));
+        System.out.println(this.workWithCollection.add(this.linkedList,  this.NUMBERLINES));
+        System.out.println(this.workWithCollection.add(this.treeSet,  this.NUMBERLINES));
     }
 
 
@@ -53,9 +52,9 @@ public class PerfomensSpeed {
      */
     public void testDelete() {
 
-        System.out.println((double)this.workWithCollection.delete(this.arrayList,  this.NUMBERLINES) / 1000000000.0);
-        System.out.println((double)this.workWithCollection.delete(this.linkedList,  this.NUMBERLINES) / 1000000000.0);
-        System.out.println((double)this.workWithCollection.delete(this.treeSet,  this.NUMBERLINES) / 1000000000.0);
+        System.out.println(this.workWithCollection.delete(this.arrayList,  this.NUMBERLINES));
+        System.out.println(this.workWithCollection.delete(this.linkedList,  this.NUMBERLINES));
+        System.out.println(this.workWithCollection.delete(this.treeSet,  this.NUMBERLINES));
 
     }
 
