@@ -2,6 +2,7 @@ package ru.napadovskiuB;
 
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.Random;
 
 
 /**
@@ -19,21 +20,33 @@ public class WorkWithCollection {
      */
     private long end;
 
+    /**
+     *
+     */
+    private static final int LENGTHSTRING = 100;
+
 
     /**
      * Method add to collection strings.
      * @param collection type of collection.
-     * @param line string add to collection.
      * @param amount amount string
      * @return result time the adding string to collection.
      */
-    public long add(Collection<String> collection, String line, int amount) {
+    public long add(Collection<String> collection, int amount) {
+        CreateRandomString createRandomString = new CreateRandomString();
 
         long result;
+
+        Random rn = new Random();
+
+        int stringLength = rn.nextInt(this.LENGTHSTRING);
 
         this.start = System.nanoTime();
 
         for (int i = 0; i < amount; i++) {
+
+            String line = createRandomString.createRandomString(stringLength);
+
             collection.add(line);
         }
 
