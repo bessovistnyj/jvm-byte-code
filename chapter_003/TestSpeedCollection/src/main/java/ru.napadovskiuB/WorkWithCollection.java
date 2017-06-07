@@ -27,9 +27,33 @@ public class WorkWithCollection {
 
 
     /**
+     * Method add array to collection.
+     * @param collection type of collection.
+     * @param stringArray amount string.
+     * @return result time the adding string to collection.
+     */
+    public long add(Collection<String> collection, String[] stringArray) {
+        long result;
+
+        this.start = System.nanoTime();
+
+        for (String string: stringArray) {
+            collection.add(string);
+        }
+
+        this.end = System.nanoTime();
+
+        result = this.end - this.start;
+
+        return result;
+
+    }
+
+
+    /**
      * Method add to collection strings.
      * @param collection type of collection.
-     * @param amount amount string
+     * @param amount amount string.
      * @return result time the adding string to collection.
      */
     public long add(Collection<String> collection, int amount) {
@@ -44,10 +68,7 @@ public class WorkWithCollection {
         this.start = System.nanoTime();
 
         for (int i = 0; i < amount; i++) {
-
-            String line = createRandomString.createRandomString(stringLength);
-
-            collection.add(line);
+            collection.add(createRandomString.createRandomString(stringLength));
         }
 
         this.end = System.nanoTime();

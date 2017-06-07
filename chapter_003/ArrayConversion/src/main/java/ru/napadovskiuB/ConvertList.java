@@ -10,7 +10,7 @@ import java.util.List;
 public class ConvertList {
 
     /**
-     *
+     * Method convert array to List.
      * @param array Array for conversio to list.
      * @return listResult.
      */
@@ -30,7 +30,7 @@ public class ConvertList {
     }
 
     /**
-     *
+     * Method convert List to Array.
      * @param list List for conversion too array
      * @param rows number of lines.
      * @return Array.
@@ -40,6 +40,7 @@ public class ConvertList {
         int column = list.size() / rows;
 
         int columns;
+
         if (list.size() % rows == 0) {
             columns = column;
         }  else {
