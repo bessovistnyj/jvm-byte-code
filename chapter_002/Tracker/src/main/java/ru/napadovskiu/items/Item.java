@@ -10,76 +10,156 @@ import java.util.Date;
 */
 
 public class Item {
+    /**
+     *Id item.
+     */
     private String id;
+
+    /**
+     * Name item.
+     */
     private String name;
+
+    /**
+     *Item date.
+     */
     private long createDate;
-	private String description;
-    private Comments[] comments = new Comments[10];
+
+    /**
+     * Item description.
+     */
+    private String description;
+
+    /**
+     *
+     */
+    final private Comments[] comments = new Comments[10];
+
+    /**
+     *
+     */
     private int commentPosition = 0;
 
-    public Item(){
+    /**
+     *
+     */
+    public Item() {
 
     }
 
-    public Item(String name, String desc){
+    /**
+     *
+     * @param name
+     * @param desc
+     */
+    public Item(String name, String desc) {
         this.name = name;
         this.description = desc;
 	}
 
-  	public void setId(String id){
+    /**
+     *
+     * @param id
+     */
+	public void setId(String id) {
         this.id = id;
     }
 
-  	public void setCreateDate(long createDate){
+    /**
+     *
+     * @param createDate
+     */
+    public void setCreateDate(long createDate) {
         this.createDate = createDate;
     }
 
-    public void setName(String name){
+    /**
+     *
+     * @param name
+     */
+    public void setName(String name) {
         this.name = name;
     }
 
-    public void setDescription(String description){
+    /**
+     *
+     * @param description
+     */
+    public void setDescription(String description) {
         this.description = description;
     }
 
+    /**
+     *
+     * @param comment
+     */
     public void setComment(Comments comment) {
         this.comments[this.commentPosition] = comment;
     }
 
-    public String getId(){
+    /**
+     *
+     * @return
+     */
+    public String getId() {
         return this.id;
     }
 
-    public long getCreateDate(){
+    /**
+     *
+     * @return
+     */
+    public long getCreateDate() {
         return this.createDate;
     }
 
-    public String getDescription(){
+    /**
+     *
+     * @return
+     */
+    public String getDescription() {
         return this.description;
     }
 
-    public String getName(){
+    /**
+     *
+     * @return
+     */
+    public String getName() {
         return this.name;
     }
 
+    /**
+     *
+     * @param comment
+     * @return
+     */
     public Comments addComment(Comments comment) {
         comments[this.commentPosition++] = comment;
         return comment;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getComment() {
         String result = "";
-        for (int i = 0; i < comments.length; i++){
-            if (comments[i]!=null){
+        for (int i = 0; i < comments.length; i++) {
+            if (comments[i] != null) {
                 result = comments[i].getComment();
             }
         }
         return result;
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public String toString() {
         Date date = new Date(this.createDate);
-		return "id: " + this.id + ";   name: " + this.name + ";   description: " + this.description + ";   comments: " + this.getComment() + "; date: "+date;
+		return "id: " + this.id + ";   name: " + this.name + ";   description: " + this.description + ";   comments: " + this.getComment() + "; date: "+ date;
     }
 }

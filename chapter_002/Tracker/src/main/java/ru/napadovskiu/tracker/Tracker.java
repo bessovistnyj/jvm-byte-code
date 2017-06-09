@@ -11,7 +11,14 @@ import java.util.Random;
  */
  
 public class Tracker {
+    /**
+     *
+     */
     private Item[] takeItems = new Item[100];
+
+    /**
+     *
+     */
     private static  final Random RN = new Random();
 
  	 /**
@@ -71,7 +78,13 @@ public class Tracker {
     }
 
 
-	private boolean findSubString(String str, String findStr){
+    /**
+     *
+     * @param str
+     * @param findStr
+     * @return
+     */
+    private boolean findSubString(String str, String findStr){
         boolean result = false;
         if(str.indexOf(findStr) != -1){
             result  = true;
