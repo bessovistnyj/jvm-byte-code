@@ -11,7 +11,7 @@ public class ConvertList {
 
     /**
      * Method convert array to List.
-     * @param array Array for conversio to list.
+     * @param array Array for conversion to list.
      * @return listResult.
      */
     public List<Integer> toList(int[][] array) {
@@ -63,5 +63,28 @@ public class ConvertList {
 
         return resultArray;
     }
+
+    /**
+     * Method convert List of arrays to list.
+     * @param list with arrays.
+     * @return result list.
+     */
+
+    public List<Integer> convert(List<int[]> list) {
+
+        List<Integer> result = new ArrayList<Integer>();
+
+        for (int[] arrayList :list) {
+
+            int arraySize = arrayList.length;
+
+            for (int elem = 0; elem < arraySize; elem++) {
+                result.add(arrayList[elem]);
+            }
+        }
+
+       return result;
+    }
+
 
 }

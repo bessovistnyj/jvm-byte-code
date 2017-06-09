@@ -2,6 +2,7 @@ package ru.napadovskiuB;
 
 import org.junit.Test;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -52,5 +53,30 @@ public class ConvertListTest {
         assertThat(actual, is(expected));
 
     }
+
+    /**
+     * Method for test conversion list of Arrays in List.
+     */
+    @Test
+    public void  whenConvertListofArrayThenReturnList() {
+        ConvertList convertList = new ConvertList();
+
+        final List<int[]> list = new ArrayList<int[]>();
+
+        final int[] firstArray = new int[]{1, 2, 3};
+        final int[] secondArray = new int[]{4, 5, 6};
+
+        final List<Integer> resultList = Arrays.asList(1, 2, 3, 4, 5, 6);
+
+
+        list.add(firstArray);
+        list.add(secondArray);
+
+        List<Integer> actual = convertList.convert(list);
+
+        assertThat(actual, is(resultList));
+
+    }
+
 
 }
