@@ -3,7 +3,7 @@ package ru.napadovskiu.items;
 import java.util.Date;
 
 /**
- //*Class Item
+ //*Class Item.
  *@author napadovskiy
  *@since 13.09.2016
  *@version 1
@@ -33,8 +33,7 @@ public class Item {
     /**
      *
      */
-    final private Comments[] comments = new Comments[10];
-
+    private final Comments[] comments = new Comments[10];
     /**
      *
      */
@@ -48,9 +47,9 @@ public class Item {
     }
 
     /**
-     *
-     * @param name
-     * @param desc
+     * Constructor for class Item.
+     * @param name Item name.
+     * @param desc Item description.
      */
     public Item(String name, String desc) {
         this.name = name;
@@ -58,81 +57,81 @@ public class Item {
 	}
 
     /**
-     *
-     * @param id
+     *Method to set id Item.
+     * @param id id Item.
      */
 	public void setId(String id) {
         this.id = id;
     }
 
     /**
-     *
-     * @param createDate
+     * Method to set date for Item.
+     * @param createDate Item date.
      */
     public void setCreateDate(long createDate) {
         this.createDate = createDate;
     }
 
     /**
-     *
-     * @param name
+     * Method set name of Item.
+     * @param name item name.
      */
     public void setName(String name) {
         this.name = name;
     }
 
     /**
-     *
-     * @param description
+     *Method set description for Item.
+     * @param description Item description.
      */
     public void setDescription(String description) {
         this.description = description;
     }
 
     /**
-     *
-     * @param comment
+     * Method set Item comment.
+     * @param comment Item comment.
      */
     public void setComment(Comments comment) {
         this.comments[this.commentPosition] = comment;
     }
 
     /**
-     *
-     * @return
+     * Method get Item id.
+     * @return item id.
      */
     public String getId() {
         return this.id;
     }
 
     /**
-     *
-     * @return
+     * Method return Item date.
+     * @return Item date.
      */
     public long getCreateDate() {
         return this.createDate;
     }
 
     /**
-     *
-     * @return
+     * Method return item description.
+     * @return item description.
      */
     public String getDescription() {
         return this.description;
     }
 
     /**
-     *
-     * @return
+     * Method return item name.
+     * @return item name.
      */
     public String getName() {
         return this.name;
     }
 
     /**
-     *
-     * @param comment
-     * @return
+     * Method add comments to item.
+     * @param comment item comment.
+     * @return item comment.
      */
     public Comments addComment(Comments comment) {
         comments[this.commentPosition++] = comment;
@@ -140,8 +139,8 @@ public class Item {
     }
 
     /**
-     *
-     * @return
+     * Method return comment item.
+     * @return item comment.
      */
     public String getComment() {
         String result = "";
@@ -160,6 +159,6 @@ public class Item {
     @Override
     public String toString() {
         Date date = new Date(this.createDate);
-		return "id: " + this.id + ";   name: " + this.name + ";   description: " + this.description + ";   comments: " + this.getComment() + "; date: "+ date;
+		return "id: " + this.id + ";   name: " + this.name + ";   description: " + this.description + ";   comments: " + this.getComment() + "; date: " + date;
     }
 }

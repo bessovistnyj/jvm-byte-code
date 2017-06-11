@@ -3,7 +3,7 @@ package ru.napadovskiu.tracker;
 /**
  *
  */
-public interface UserAction{
+public interface UserAction {
 
 	/**
 	 *
@@ -16,7 +16,7 @@ public interface UserAction{
 	 * @param input
 	 * @param tracker
 	 */
-	void execute(Input input,Tracker tracker);
+	void execute(Input input, Tracker tracker);
 
 	/**
 	 *

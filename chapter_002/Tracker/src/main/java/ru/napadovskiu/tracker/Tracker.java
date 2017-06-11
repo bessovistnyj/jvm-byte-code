@@ -1,6 +1,6 @@
 package ru.napadovskiu.tracker;
 
-import ru.napadovskiu.items.*;
+import ru.napadovskiu.items.Item;
 import java.util.Random;
 
 /**
@@ -25,22 +25,22 @@ public class Tracker {
 		*The method add new item to items array
 		*@param item
 	*/ 	
-	public Item addNewItem(Item item){
+	public Item addNewItem(Item item) {
 		Item result = null;
         boolean newItem = false;
-        int i =0;
-        for (; i< this.takeItems.length; i++){
-            if(this.takeItems[i] ==null) {
+        int i = 0;
+        for (; i < this.takeItems.length; i++) {
+            if (this.takeItems[i] == null) {
                 item.setId(generateId());
                 item.setCreateDate(System.currentTimeMillis());
-                this.takeItems[i]= item;
+                this.takeItems[i] = item;
                 result = item;
                 newItem = true;
                 break;
             }
         }
-	    if (i == this.takeItems.length -1 && newItem ==false ){
-            result =null;
+	    if (i == this.takeItems.length - 1 && newItem == false) {
+            result = null;
         }
         return result;
 	}
@@ -49,11 +49,11 @@ public class Tracker {
 		*The method delete item from items array
 		*@param item
 	*/ 	
-    public boolean deleteItem(Item item){
+    public boolean deleteItem(Item item) {
 
         boolean isDeleteItem = false;
-        for(int i=0; i<this.takeItems.length;i++){
-            if(this.takeItems[i]!=null && this.takeItems[i].getId().equals(item.getId())){
+        for (int i = 0; i < this.takeItems.length; i++) {
+            if (this.takeItems[i] != null && this.takeItems[i].getId().equals(item.getId())) {
                 isDeleteItem = true;
                 this.takeItems[i] = null;
             }
@@ -66,10 +66,10 @@ public class Tracker {
 		*@param id
 		*@return an array of items found 
 	*/ 	
-    public Item findItemById(String id){
+    public Item findItemById(String id) {
         Item result = null;
-        for(Item tmpItem: this.takeItems){
-            if(tmpItem!=null && tmpItem.getId().equals(id)){
+        for (Item tmpItem: this.takeItems) {
+            if (tmpItem != null && tmpItem.getId().equals(id)) {
                 result = tmpItem;
                 break;
             }
@@ -84,9 +84,9 @@ public class Tracker {
      * @param findStr
      * @return
      */
-    private boolean findSubString(String str, String findStr){
+    private boolean findSubString(String str, String findStr) {
         boolean result = false;
-        if(str.indexOf(findStr) != -1){
+        if (str.indexOf(findStr) != -1) {
             result  = true;
         }
         return result;
@@ -99,12 +99,12 @@ public class Tracker {
 		*@return an array of items found
 	*/ 	
 
-    public Item[] findItemByName(String name){
+    public Item[] findItemByName(String name) {
         Item[] resultArray = new Item[this.takeItems.length];
         int counter = 0;
 
-        for(Item tmpItem: this.takeItems){
-            if (tmpItem!=null && findSubString(tmpItem.getName(),name)){
+        for (Item tmpItem: this.takeItems) {
+            if (tmpItem != null && findSubString(tmpItem.getName(), name)) {
                 resultArray[counter] = tmpItem;
             }
             counter++;
@@ -118,13 +118,13 @@ public class Tracker {
      *@param description
      *@return an array of items found
      */
-    public Item[] findItemByDescription(String description){
+    public Item[] findItemByDescription(String description) {
         Item[] resultArray = new Item[this.takeItems.length];
         int counter = 0;
 
-        for(Item tmpItem: this.takeItems){
-            if (tmpItem!=null && findSubString(tmpItem.getDescription(),description)){
-                if (tmpItem!=null || !resultArray[counter].equals(tmpItem)){
+        for (Item tmpItem: this.takeItems) {
+            if (tmpItem != null && findSubString(tmpItem.getDescription(), description)) {
+                if (tmpItem != null || !resultArray[counter].equals(tmpItem)) {
                     resultArray[counter] = tmpItem;
                 }
             }
@@ -139,9 +139,9 @@ public class Tracker {
 		*The method edit item 
 		*@param editItem
 	*/ 	
-    public void editItem(Item editItem){
-        for (Item tmpItem: this.takeItems){
-            if (tmpItem !=null && tmpItem.getId().equals(editItem.getId())){
+    public void editItem(Item editItem) {
+        for (Item tmpItem: this.takeItems) {
+            if (tmpItem != null && tmpItem.getId().equals(editItem.getId())) {
                 tmpItem.setName(editItem.getName());
                 tmpItem.setDescription(editItem.getDescription());
             }
@@ -152,7 +152,7 @@ public class Tracker {
 		*The method show all item 
 		*@return an array all items 
 	*/ 	
-    public Item[] getAllItem(){
+    public Item[] getAllItem() {
         return this.takeItems;
 
     }
@@ -161,8 +161,8 @@ public class Tracker {
 		*The method generate id for new item
 		*@return id 
 	*/ 	
-    private String generateId(){
-        return String.valueOf(System.currentTimeMillis() + RN.nextInt() );
+    private String generateId() {
+        return String.valueOf(System.currentTimeMillis() + RN.nextInt());
 
     }
 

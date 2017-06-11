@@ -16,7 +16,7 @@ public class MenuTracker {
      * @param input
      * @param tracker
      */
-    public MenuTracker (Input input, Tracker tracker) {
+    public MenuTracker(Input input, Tracker tracker) {
         this.input = input;
         this.tracker = tracker;
     }
@@ -32,11 +32,10 @@ public class MenuTracker {
         this.actions[4] = new EditItem();
         this.actions[5] = new DeleteItem();
         this.actions[6] = new AddCommentsToItem();
-        //this.actions[7] = new ExitFromTracker();
    }
 
     public void doAction(String action) {
-        this.actions[Integer.valueOf(action)-1].execute(this.input,this.tracker);
+        this.actions[Integer.valueOf(action) - 1].execute(this.input, this.tracker);
     }
 
 
@@ -64,8 +63,8 @@ public class MenuTracker {
      *@param arrayItem
      */
     private void showItem(Item[] arrayItem) {
-        for(Item tmpItem : arrayItem) {
-            if(tmpItem !=null){
+        for (Item tmpItem : arrayItem) {
+            if (tmpItem != null) {
                 System.out.println(tmpItem.toString());
             }
         }
@@ -83,7 +82,7 @@ public class MenuTracker {
     /**
      *
      */
-    private class AddItem implements UserAction{
+    private class AddItem implements UserAction {
 
         /**
          *
@@ -98,8 +97,8 @@ public class MenuTracker {
          * @param input
          * @param tracker
          */
-        public void execute(Input input, Tracker tracker){
-           Item newItem = new Item(input.ask("please enter the name of item"),input.ask("please enter the description of item"));
+        public void execute(Input input, Tracker tracker) {
+           Item newItem = new Item(input.ask("please enter the name of item"), input.ask("please enter the description of item"));
            tracker.addNewItem(newItem);
 
         }
@@ -168,7 +167,7 @@ public class MenuTracker {
         public void execute(Input input, Tracker tracker) {
             String nameItem = input.ask("please enter the name of item");
             Item[] findItem = tracker.findItemByName(nameItem);
-            if(findItem.length !=0) {
+            if (findItem.length != 0) {
                 showItem(findItem);
             }
 
@@ -204,7 +203,7 @@ public class MenuTracker {
          */
         public void execute(Input input, Tracker tracker) {
             Item  findItem  = tracker.findItemById(input.ask("please enter id Item"));
-            if(findItem != null) {
+            if (findItem != null) {
                 showItem(findItem);
             }
         }
@@ -238,8 +237,8 @@ public class MenuTracker {
          */
         public void execute(Input input, Tracker tracker) {
             Item editItem = tracker.findItemById(input.ask("please enter id Item"));
-            Item newEditItem = new Item(input.ask("please enter the name of item"),input.ask("please enter the description of item"));
-            if(editItem !=null) {
+            Item newEditItem = new Item(input.ask("please enter the name of item"), input.ask("please enter the description of item"));
+            if (editItem != null) {
                 newEditItem.setId(editItem.getId());
                 tracker.editItem(newEditItem);
                 showItem(editItem);
@@ -259,13 +258,13 @@ public class MenuTracker {
     /**
      *
      */
-    private class DeleteItem implements UserAction{
+    private class DeleteItem implements UserAction {
 
         /**
          *
          * @return
          */
-        public int key(){
+        public int key() {
             return 4;
         }
 
@@ -274,9 +273,9 @@ public class MenuTracker {
          * @param input
          * @param tracker
          */
-        public void execute(Input input, Tracker tracker){
+        public void execute(Input input, Tracker tracker) {
             Item deleteItem =  tracker.findItemById(input.ask("please enter id Item"));
-            if(deleteItem !=null) {
+            if (deleteItem != null) {
                 tracker.deleteItem(deleteItem);
                 showItem(tracker.getAllItem());
             }

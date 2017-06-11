@@ -2,25 +2,28 @@ package ru.napadovskiu.tracker;
 
 import ru.napadovskiu.items.Item;
 
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
 
 import org.junit.Test;
 
-import static org.junit.Assert.*;
+
 
 /**
  *
  */
-public class TrackerTest{
+public class TrackerTest {
 
 	/**
 	 *
 	 */
 	@Test
 	public void whenAddItem() {
+
 		Tracker testTracker = new Tracker();
-			
+
 		Item firstItem 	= new Item("firstItem", "descriptionFirstItem");
+
 		testTracker.addNewItem(firstItem);
 		
 		assertThat(testTracker.findItemById(firstItem.getId()), is(firstItem));

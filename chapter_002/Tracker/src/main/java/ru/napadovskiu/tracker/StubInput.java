@@ -1,15 +1,33 @@
 package ru.napadovskiu.tracker;
 
-public class StubInput implements  Input{
+/**
+ *
+ */
+public class StubInput implements  Input {
 
+    /**
+     *
+     */
     private String[] answers;
+    /**
+     *
+     */
     private  int position = 0;
 
-    public  StubInput(String[] answers){
+    /**
+     *
+     * @param answers
+     */
+    public  StubInput(String[] answers) {
         this.answers = answers;
     }
 
-    public String ask(String question){
+    /**
+     * 
+     * @param question
+     * @return
+     */
+    public String ask(String question) {
         return answers[this.position++];
     }
 
