@@ -1,6 +1,9 @@
 package ru.napadovskiu.tracker;
 
 import ru.napadovskiu.items.Item;
+
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 /**
@@ -14,7 +17,7 @@ public class Tracker {
     /**
      *
      */
-    private Item[] takeItems = new Item[100];
+    private ArrayList<Item> takeItems = new ArrayList<Item>();
 
     /**
      *
@@ -28,20 +31,32 @@ public class Tracker {
 	public Item addNewItem(Item item) {
 		Item result = null;
         boolean newItem = false;
-        int i = 0;
-        for (; i < this.takeItems.length; i++) {
-            if (this.takeItems[i] == null) {
+ //       int i = 0;
+ //        for (; i < this.takeItems.size(); i++) {
+//            if (this.takeItems[i] == null) {
+//                item.setId(generateId());
+//                item.setCreateDate(System.currentTimeMillis());
+//                this.takeItems[i] = item;
+//                result = item;
+//                newItem = true;
+//                break;
+//            }
+//        }
+//	    if (i == this.takeItems.length - 1 && newItem == false) {
+//            result = null;
+//        }
+        for (Item thisItem : this.takeItems) {
+            if (thisItem == null) {
                 item.setId(generateId());
                 item.setCreateDate(System.currentTimeMillis());
-                this.takeItems[i] = item;
+                thisItem = item;
                 result = item;
                 newItem = true;
                 break;
+
             }
         }
-	    if (i == this.takeItems.length - 1 && newItem == false) {
-            result = null;
-        }
+
         return result;
 	}
 
@@ -52,12 +67,19 @@ public class Tracker {
     public boolean deleteItem(Item item) {
 
         boolean isDeleteItem = false;
-        for (int i = 0; i < this.takeItems.length; i++) {
-            if (this.takeItems[i] != null && this.takeItems[i].getId().equals(item.getId())) {
+        for (Item thisItem : this.takeItems) {
+            if (thisItem != null && thisItem.getId().equals(item.getId())) {
                 isDeleteItem = true;
-                this.takeItems[i] = null;
+                takeItems = null;
             }
         }
+
+//        for (int i = 0; i < this.takeItems.length; i++) {
+//            if (this.takeItems[i] != null && this.takeItems[i].getId().equals(item.getId())) {
+//                isDeleteItem = true;
+//                this.takeItems[i] = null;
+//            }
+//        }
 	    return isDeleteItem;
     }
 
@@ -99,13 +121,16 @@ public class Tracker {
 		*@return an array of items found
 	*/ 	
 
-    public Item[] findItemByName(String name) {
-        Item[] resultArray = new Item[this.takeItems.length];
+    public ArrayList findItemByName(String name) {
+       // Item[] resultArray = new Item[this.takeItems.size()];
+        ArrayList<Item> resultArray = new ArrayList<Item>();
+
         int counter = 0;
 
         for (Item tmpItem: this.takeItems) {
             if (tmpItem != null && findSubString(tmpItem.getName(), name)) {
-                resultArray[counter] = tmpItem;
+                //resultArray[counter] = tmpItem;
+                resultArray.add(tmpItem);
             }
             counter++;
 
@@ -118,18 +143,28 @@ public class Tracker {
      *@param description
      *@return an array of items found
      */
-    public Item[] findItemByDescription(String description) {
-        Item[] resultArray = new Item[this.takeItems.length];
-        int counter = 0;
+    public List<Item> findItemByDescription(String description) {
+//        Item[] resultArray = new Item[this.takeItems.size()];
+        ArrayList<Item> resultArray = new ArrayList<Item>();
+//        int counter = 0;
 
-        for (Item tmpItem: this.takeItems) {
+        for(Item tmpItem : this.takeItems) {
             if (tmpItem != null && findSubString(tmpItem.getDescription(), description)) {
-                if (tmpItem != null || !resultArray[counter].equals(tmpItem)) {
-                    resultArray[counter] = tmpItem;
-                }
+//                if (tmpItem != null || !resultArray[counter].equals(tmpItem)) {
+                resultArray.add(tmpItem);
+//                }
             }
-            counter++;
+
         }
+
+//        for (Item tmpItem: this.takeItems) {
+//            if (tmpItem != null && findSubString(tmpItem.getDescription(), description)) {
+//                if (tmpItem != null || !resultArray[counter].equals(tmpItem)) {
+//                    resultArray[counter] = tmpItem;
+//                }
+//            }
+//            counter++;
+//        }
         return resultArray;
     }
 
@@ -152,7 +187,7 @@ public class Tracker {
 		*The method show all item 
 		*@return an array all items 
 	*/ 	
-    public Item[] getAllItem() {
+    public ArrayList<Item> getAllItem() {
         return this.takeItems;
 
     }

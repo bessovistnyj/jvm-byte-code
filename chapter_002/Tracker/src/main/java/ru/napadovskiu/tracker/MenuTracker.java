@@ -3,18 +3,32 @@ package ru.napadovskiu.tracker;
 import ru.napadovskiu.items.Item;
 import ru.napadovskiu.items.Comments;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
- *
+ *Class menu tracker.
  */
 public class MenuTracker {
+    /**
+     * input.
+     */
     private Input input;
-    private Tracker tracker;
-    private UserAction[] actions = new UserAction[7];
 
     /**
-     *
-     * @param input
-     * @param tracker
+     *tracker.
+     */
+    private Tracker tracker;
+
+    /**
+     * List for User action.
+     */
+    private ArrayList<UserAction> actions = new ArrayList<UserAction>();
+
+    /**
+     * Constructor with input tracker.
+     * @param input input.
+     * @param tracker tracker.
      */
     public MenuTracker(Input input, Tracker tracker) {
         this.input = input;
@@ -22,20 +36,25 @@ public class MenuTracker {
     }
 
     /**
-     *
+     *Method fill action.
      */
     public void fillAction() {
-        this.actions[0] = new AddItem();
-        this.actions[1] = new showAllItem();
-        this.actions[2] = new FindItemByName();
-        this.actions[3] = new FindItemById();
-        this.actions[4] = new EditItem();
-        this.actions[5] = new DeleteItem();
-        this.actions[6] = new AddCommentsToItem();
+        actions.add(new AddItem());
+        actions.add(new showAllItem());
+        actions.add(new FindItemByName());
+        actions.add(new FindItemById());
+        actions.add(new EditItem());
+        actions.add(new DeleteItem());
+        actions.add(new AddCommentsToItem());
+
    }
 
-    public void doAction(String action) {
-        this.actions[Integer.valueOf(action) - 1].execute(this.input, this.tracker);
+    /**
+     *Method do action.
+      * @param action string with action.
+     */
+   public void doAction(String action) {
+       this.actions.get(Integer.valueOf(action) - 1).execute(this.input, this.tracker);
     }
 
 
@@ -53,6 +72,10 @@ public class MenuTracker {
         System.out.println("8. Exit");
     }
 
+    /**
+     * Method print the question on monitor.
+     * @return string with question.
+     */
     public String  ask() {
         return this.input.ask("Choice your action");
     }
@@ -62,7 +85,7 @@ public class MenuTracker {
      *The method show Item for users
      *@param arrayItem
      */
-    private void showItem(Item[] arrayItem) {
+    private void showItem(List<Item> arrayItem) {
         for (Item tmpItem : arrayItem) {
             if (tmpItem != null) {
                 System.out.println(tmpItem.toString());
@@ -85,11 +108,13 @@ public class MenuTracker {
     private class AddItem implements UserAction {
 
         /**
-         *
-         * @return
-         */
+        *
+        * @return
+        */
         public int key() {
-            return 0;
+
+            final int key = 0;
+            return key;
         }
 
         /**
@@ -123,7 +148,8 @@ public class MenuTracker {
          * @return
          */
         public int key() {
-            return 1;
+            final int key = 1;
+            return key;
         }
 
         /**
@@ -156,7 +182,10 @@ public class MenuTracker {
          * @return
          */
         public int key() {
-            return 1;
+
+            final int key = 1;
+
+            return key;
         }
 
         /**
@@ -166,8 +195,8 @@ public class MenuTracker {
          */
         public void execute(Input input, Tracker tracker) {
             String nameItem = input.ask("please enter the name of item");
-            Item[] findItem = tracker.findItemByName(nameItem);
-            if (findItem.length != 0) {
+            ArrayList<Item> findItem = tracker.findItemByName(nameItem);
+            if (findItem.size() != 0) {
                 showItem(findItem);
             }
 
@@ -193,7 +222,10 @@ public class MenuTracker {
          * @return
          */
         public int key() {
-            return 2;
+
+            final int key = 2;
+
+            return key;
         }
 
         /**
@@ -227,7 +259,8 @@ public class MenuTracker {
          * @return
          */
         public int key() {
-            return 3;
+            final int key = 3;
+            return key;
         }
 
         /**
@@ -265,7 +298,8 @@ public class MenuTracker {
          * @return
          */
         public int key() {
-            return 4;
+            final int key = 4;
+            return key;
         }
 
         /**
@@ -302,7 +336,8 @@ public class MenuTracker {
          * @return
          */
         public int key() {
-            return 5;
+            final int key = 5;
+            return key;
         }
 
         /**

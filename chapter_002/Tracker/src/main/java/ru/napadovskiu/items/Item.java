@@ -1,5 +1,6 @@
 package ru.napadovskiu.items;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 /**
@@ -33,11 +34,11 @@ public class Item {
     /**
      *
      */
-    private final Comments[] comments = new Comments[10];
+    private final ArrayList<Comments> comments = new ArrayList<>();
     /**
      *
      */
-    private int commentPosition = 0;
+    private Integer commentPosition = 0;
 
     /**
      *
@@ -93,7 +94,8 @@ public class Item {
      * @param comment Item comment.
      */
     public void setComment(Comments comment) {
-        this.comments[this.commentPosition] = comment;
+        this.comments.set(this.commentPosition, comment);
+
     }
 
     /**
@@ -134,7 +136,8 @@ public class Item {
      * @return item comment.
      */
     public Comments addComment(Comments comment) {
-        comments[this.commentPosition++] = comment;
+        //comments[this.commentPosition++] = comment;
+        this.comments.add(comment);
         return comment;
     }
 
@@ -144,10 +147,14 @@ public class Item {
      */
     public String getComment() {
         String result = "";
-        for (int i = 0; i < comments.length; i++) {
-            if (comments[i] != null) {
-                result = comments[i].getComment();
-            }
+//        for (int i = 0; i < comments.size(); i++) {
+//            if (this.comments[i] != null) {
+//                result = comments[i].getComment();
+//            }
+//        }
+
+        for (Comments comment: this.comments) {
+            result = comment.getComment();
         }
         return result;
     }
