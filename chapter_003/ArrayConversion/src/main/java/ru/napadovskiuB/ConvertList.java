@@ -48,19 +48,18 @@ public class ConvertList {
         }
         int[][] resultArray = new int[rows][columns];
 
-        Iterator<Integer> iterator = list.iterator();
+        int j = 0;
+        int i = 0;
 
-        for (int i = 0; i < rows; i++) {
+        for (int element : list) {
 
-            for (int j = 0; j < columns; j++) {
-                if (iterator.hasNext()) {
-                    resultArray[i][j] = iterator.next();
-                } else {
-                    resultArray[i][j] = 0;
-                }
+            resultArray[i][j] = element;
+            j++;
+            if (j >= columns) {
+                j = 0;
+                i++;
             }
         }
-
         return resultArray;
     }
 

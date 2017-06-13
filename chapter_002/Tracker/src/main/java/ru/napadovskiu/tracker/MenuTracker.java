@@ -40,7 +40,7 @@ public class MenuTracker {
      */
     public void fillAction() {
         actions.add(new AddItem());
-        actions.add(new showAllItem());
+        actions.add(new ShowAllItem());
         actions.add(new FindItemByName());
         actions.add(new FindItemById());
         actions.add(new EditItem());
@@ -59,7 +59,7 @@ public class MenuTracker {
 
 
     /**
-     *The method show users menu
+     *The method show users menu.
      */
     public void showMenu() {
         System.out.println("1. Add new item ");
@@ -82,8 +82,8 @@ public class MenuTracker {
 
 
     /**
-     *The method show Item for users
-     *@param arrayItem
+     *The method show Item for users.
+     *@param arrayItem array item.
      */
     private void showItem(List<Item> arrayItem) {
         for (Item tmpItem : arrayItem) {
@@ -94,8 +94,8 @@ public class MenuTracker {
     }
 
     /**
-     *The method show Item for users
-     *@param printItem
+     *The method show Item for users.
+     *@param printItem Item for print.
      */
 
     private void showItem(Item printItem) {
@@ -103,13 +103,13 @@ public class MenuTracker {
     }
 
     /**
-     *
+     *Class add item to tracker.
      */
     private class AddItem implements UserAction {
 
         /**
-        *
-        * @return
+        * Method return key.
+        * @return key.
         */
         public int key() {
 
@@ -118,9 +118,9 @@ public class MenuTracker {
         }
 
         /**
-         *
-         * @param input
-         * @param tracker
+         *Execute method add item.
+         * @param input name item.
+         * @param tracker Tracker.
          */
         public void execute(Input input, Tracker tracker) {
            Item newItem = new Item(input.ask("please enter the name of item"), input.ask("please enter the description of item"));
@@ -129,8 +129,8 @@ public class MenuTracker {
         }
 
         /**
-         *
-         * @return
+         * Method show all item.
+         * @return string.
          */
         public String info() {
             return String.format("%s. %s", this.key(), "Show all items");
@@ -139,13 +139,13 @@ public class MenuTracker {
     }
 
     /**
-     *
+     *Class show all item.
      */
-    private class showAllItem implements UserAction {
+    private class ShowAllItem implements UserAction {
 
         /**
-         *
-         * @return
+         *Method return key.
+         * @return key.
          */
         public int key() {
             final int key = 1;
@@ -153,9 +153,9 @@ public class MenuTracker {
         }
 
         /**
-         *
-         * @param input
-         * @param tracker
+         **Execute method show all item.
+         * @param input input.
+         * @param tracker Tracker.
          */
         public void execute(Input input, Tracker tracker) {
             showItem(tracker.getAllItem());
@@ -163,8 +163,8 @@ public class MenuTracker {
         }
 
         /**
-         *
-         * @return
+         * Method show all item.
+         * @return string.
          */
         public String info() {
             return String.format("%s. %s", this.key(), "Show all menu");
@@ -173,13 +173,13 @@ public class MenuTracker {
     }
 
     /**
-     *
+     *Class find item by name.
      */
     private class FindItemByName implements UserAction {
 
         /**
-         *
-         * @return
+         *Method return key.
+         * @return key.
          */
         public int key() {
 
@@ -189,9 +189,9 @@ public class MenuTracker {
         }
 
         /**
-         *
-         * @param input
-         * @param tracker
+         *Main method for class Find by name.
+         * @param input input.
+         * @param tracker tracker.
          */
         public void execute(Input input, Tracker tracker) {
             String nameItem = input.ask("please enter the name of item");
@@ -204,7 +204,7 @@ public class MenuTracker {
 
         /**
          *
-         * @return
+         * @return string.
          */
         public String info() {
             return String.format("%s. %s", this.key(), "Find item by name ");
@@ -213,13 +213,13 @@ public class MenuTracker {
     }
 
     /**
-     *
+     *Class find item by id.
      */
     private class FindItemById implements UserAction {
 
         /**
-         *
-         * @return
+         *Method return key.
+         *@return key.
          */
         public int key() {
 
@@ -229,9 +229,9 @@ public class MenuTracker {
         }
 
         /**
-         *
-         * @param input
-         * @param tracker
+         *Main method for class Find by id.
+         * @param input input.
+         * @param tracker tracker.
          */
         public void execute(Input input, Tracker tracker) {
             Item  findItem  = tracker.findItemById(input.ask("please enter id Item"));
@@ -242,7 +242,7 @@ public class MenuTracker {
 
         /**
          *
-         * @return
+         * @return string.
          */
         public String info() {
             return String.format("%s. %s", this.key(), "Find item by id");
@@ -251,12 +251,12 @@ public class MenuTracker {
     }
 
     /**
-     *
+     *Class edit item.
      */
     private class EditItem implements UserAction {
         /**
-         *
-         * @return
+         *Method return key.
+         * @return key.
          */
         public int key() {
             final int key = 3;
@@ -264,9 +264,9 @@ public class MenuTracker {
         }
 
         /**
-         *
-         * @param input
-         * @param tracker
+         *Main method for class edit item.
+         * @param input input.
+         * @param tracker tracker.
          */
         public void execute(Input input, Tracker tracker) {
             Item editItem = tracker.findItemById(input.ask("please enter id Item"));
@@ -280,7 +280,7 @@ public class MenuTracker {
 
         /**
          *
-         * @return
+         * @return string.
          */
         public String info() {
             return String.format("%s. %s", this.key(), "Edit item");
@@ -289,13 +289,13 @@ public class MenuTracker {
     }
 
     /**
-     *
+     *Class delete item.
      */
     private class DeleteItem implements UserAction {
 
         /**
-         *
-         * @return
+         *Method return key.
+         * @return key.
          */
         public int key() {
             final int key = 4;
@@ -304,8 +304,9 @@ public class MenuTracker {
 
         /**
          *
-         * @param input
-         * @param tracker
+         *Main method for class delete item.
+         * @param input input.
+         * @param tracker tracker.
          */
         public void execute(Input input, Tracker tracker) {
             Item deleteItem =  tracker.findItemById(input.ask("please enter id Item"));
@@ -318,7 +319,7 @@ public class MenuTracker {
 
         /**
          *
-         * @return
+         * @return string.
          */
         public String info() {
             return String.format("%s. %s", this.key(), "Delete item");
@@ -327,13 +328,13 @@ public class MenuTracker {
     }
 
     /**
-    *
+    *Class add comments tom item.
     */
     private class AddCommentsToItem implements UserAction {
 
         /**
-         *
-         * @return
+         *Method return key.
+         * @return key.
          */
         public int key() {
             final int key = 5;
@@ -341,9 +342,9 @@ public class MenuTracker {
         }
 
         /**
-         *
-         * @param input
-         * @param tracker
+         *Main method for class add comments to item.
+         * @param input input.
+         * @param tracker tracker.
          */
         public void execute(Input input, Tracker tracker) {
             Comments comment = new Comments(input.ask("please enter comments to item"));
@@ -353,7 +354,7 @@ public class MenuTracker {
 
         /**
          *
-         * @return
+         * @return string.
          */
         public String info() {
             return String.format("%s. %s", this.key(), "Add comments to item");
