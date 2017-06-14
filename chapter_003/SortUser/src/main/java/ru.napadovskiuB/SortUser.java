@@ -3,6 +3,7 @@ package ru.napadovskiuB;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
+import java.util.Comparator;
 
 /**
  * Created by Napadovskiy Bohdan on 08.06.2017.
@@ -16,12 +17,58 @@ public class SortUser {
      */
     public Set<User> sort(List<User> list) {
         TreeSet result = new TreeSet();
-
-        for (User listElem : list) {
-            result.add(listElem);
-        }
+        result.addAll(list);
 
         return  result;
+    }
+
+    /**
+     * Method sort users by length name.
+     * @param list list for sort
+     * @return result list.
+     */
+    public List<User> sortNameLength(List<User> list) {
+        List result = list;
+
+        Comparator<User> comp = new Comparator<User>() {
+            @Override
+            public int compare(User user1, User user2) {
+                return user1.getName().length() - user2.getName().length();
+            }
+        };
+
+        result.sort(comp);
+
+
+        return result;
+
+    }
+
+    /**
+     * Method sort users by name and age.
+     * @param list list for sort.
+     * @return result list.
+     */
+    public List<User> sortByAllFields(List<User> list) {
+        List resultList = list;
+
+        Comparator<User> comp = new Comparator<User>() {
+            @Override
+            public int compare(User user1, User user2) {
+                int result;
+                result = user1.getName().compareTo(user2.getName());
+                if (result  == 0) {
+                    result = user1.getAge() - user2.getAge();
+
+                }
+                return result;
+            }
+        };
+
+        resultList.sort(comp);
+
+        return resultList;
+
     }
 
 }
