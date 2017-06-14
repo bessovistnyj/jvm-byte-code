@@ -1,7 +1,6 @@
 package ru.napadovskiuB;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -77,8 +76,8 @@ public class ConvertList {
 
             int arraySize = arrayList.length;
 
-            for (int elem = 0; elem < arraySize; elem++) {
-                result.add(arrayList[elem]);
+            for (int elem : arrayList) {
+                result.add(elem);
             }
         }
 

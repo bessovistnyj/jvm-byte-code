@@ -45,16 +45,7 @@ import java.util.Random;
      * @return result if delete.
      */
     public boolean deleteItem(Item item) {
-        Iterator<Item> itemIterator = this.takeItems.iterator();
-        boolean isDeleteItem = false;
-        while (itemIterator.hasNext()) {
-            Item thisItem = itemIterator.next();
-            if (thisItem.equals(item)) {
-                itemIterator.remove();
-                isDeleteItem = true;
-            }
-        }
-	    return isDeleteItem;
+        return this.takeItems.remove(item);
     }
 
 	 /**
