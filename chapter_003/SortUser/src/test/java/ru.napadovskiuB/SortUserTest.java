@@ -93,7 +93,7 @@ public class SortUserTest {
 
         List<User> treeSet = sortUser.sortByAllFields(list);
 
-        assertThat(treeSet.toArray()[0], is(secondUser));
+        assertThat(treeSet.toArray()[0], is(fourthUser));
     }
 
 

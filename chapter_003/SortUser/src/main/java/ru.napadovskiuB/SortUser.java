@@ -1,9 +1,6 @@
 package ru.napadovskiuB;
 
-import java.util.List;
-import java.util.Set;
-import java.util.TreeSet;
-import java.util.Comparator;
+import java.util.*;
 
 /**
  * Created by Napadovskiy Bohdan on 08.06.2017.
@@ -28,19 +25,14 @@ public class SortUser {
      * @return result list.
      */
     public List<User> sortNameLength(List<User> list) {
-        List result = list;
-
-        Comparator<User> comp = new Comparator<User>() {
+        Collections.sort(list, new Comparator<User>() {
             @Override
-            public int compare(User user1, User user2) {
+            public int compare( User user1, User user2 ) {
                 return user1.getName().length() - user2.getName().length();
             }
-        };
+        });
 
-        result.sort(comp);
-
-
-        return result;
+        return list;
 
     }
 
@@ -50,11 +42,9 @@ public class SortUser {
      * @return result list.
      */
     public List<User> sortByAllFields(List<User> list) {
-        List resultList = list;
-
-        Comparator<User> comp = new Comparator<User>() {
+        Collections.sort(list, new Comparator<User>() {
             @Override
-            public int compare(User user1, User user2) {
+            public int compare( User user1, User user2 ) {
                 int result;
                 result = user1.getName().compareTo(user2.getName());
                 if (result  == 0) {
@@ -63,11 +53,9 @@ public class SortUser {
                 }
                 return result;
             }
-        };
+        });
 
-        resultList.sort(comp);
-
-        return resultList;
+       return list;
 
     }
 
