@@ -1,7 +1,7 @@
 package ru.napadovskiuB.Exception;
 
 /**
- * Package of chapter_003 task1.
+ * Package of chapter_003 testTask.
  *
  * @author Napadovskiy Bohdan
  * @version 1.0
@@ -10,8 +10,8 @@ package ru.napadovskiuB.Exception;
 public class InsufficientFundsException extends Exception {
 
     /**
-     *
-     * @param msg
+     * Method return message with error.
+     * @param msg message with error.
      */
     public InsufficientFundsException(String msg) {
         super(msg);

@@ -1,5 +1,5 @@
 /**
- * Package of chapter_003 task1.
+ * Package of chapter_003 testTask.
  *
  * @author Napadovskiy Bohdan
  * @version 1.0

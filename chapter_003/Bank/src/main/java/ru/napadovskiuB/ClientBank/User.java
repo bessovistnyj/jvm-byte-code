@@ -7,19 +7,19 @@ package ru.napadovskiuB.ClientBank;
 public class User {
 
     /**
-     *
+     * user name.
      */
     private String name;
 
     /**
-     *
+     * user passport.
      */
     private String passport;
 
     /**
-     *
-     * @param name
-     * @param passport
+     *Constructor for user class.
+     * @param name user name.
+     * @param passport user passport.
      */
     public User(String name, String passport) {
         this.name = name;
@@ -28,16 +28,16 @@ public class User {
 
 
     /**
-     *
-     * @return
+     * Method return user passport.
+     * @return user passport.
      */
     public String getPassport() {
         return this.passport;
     }
 
     /**
-     *
-     * @return
+     * Method return user name.
+     * @return user name.
      */
     public String getName() {
         return this.name;
@@ -62,8 +62,9 @@ public class User {
 
     @Override
     public int hashCode() {
+        final int var = 32;
         int result = name.hashCode();
-        result = 31 * result + passport.hashCode();
+        result = (var - 1) * result + passport.hashCode();
         return result;
     }
 

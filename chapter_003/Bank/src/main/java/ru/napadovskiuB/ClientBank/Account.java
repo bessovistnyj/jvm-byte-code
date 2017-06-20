@@ -1,32 +1,37 @@
 package ru.napadovskiuB.ClientBank;
 
 /**
- * @author Napadovskiy Bohdan.
+ * Package of chapter_003 testTask.
+ *
+ * @author Napadovskiy Bohdan
+ * @version 1.0
+ * @since 15.06.2017
  */
 public class Account {
 
     /**
-     *
+     * value of money.
      */
     private double value;
 
     /**
-     *
+     * Account requisites.
      */
     private int requisites;
 
     /**
-     *
-     * @param user
-     * @param requisites
+     * Constructor for Account class.
+     * @param value Account value.
+     * @param requisites Account requisites.
      */
-    public Account(User user, int requisites) {
-
+    public Account(double value, int requisites) {
+        this.value = value;
+        this.requisites = requisites;
     }
 
     /**
-     *
-     * @return
+     * Method return account requisites.
+     * @return account requisites.
      */
     public int getRequisites() {
         return this.requisites;
@@ -34,23 +39,24 @@ public class Account {
 
 
     /**
-     *
-     * @return
+     * Method return value.
+     * @return value.
      */
     public double getValue() {
         return this.value;
     }
 
     /**
-     *
-     * @param value
+     *Method set value account.
+     * @param value account value.
      */
     public void setValue(double value) {
         this.value = value;
     }
 
     /**
-     *
+     *Method set requisites to account.
+     * @param requisites account requisites.
      */
     public void setRequisites(int requisites) {
         this.requisites = requisites;
@@ -79,9 +85,10 @@ public class Account {
     public int hashCode() {
         int result;
         long temp;
+        final int var = 32;
         temp = Double.doubleToLongBits(value);
-        result = (int) (temp ^ (temp >>> 32));
-        result = 31 * result + requisites;
+        result = (int) (temp ^ (temp >>> var));
+        result = (var - 1) * result + requisites;
         return result;
     }
 
