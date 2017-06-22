@@ -1,6 +1,9 @@
 package ru.napadovskiuB;
 
-import java.util.*;
+import java.util.Collections;
+import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 
 /**
  * Created by Napadovskiy Bohdan on 08.06.2017.
@@ -19,18 +22,15 @@ public class SortUser {
         return  result;
     }
 
+
+
     /**
      * Method sort users by length name.
      * @param list list for sort
      * @return result list.
      */
     public List<User> sortNameLength(List<User> list) {
-        Collections.sort(list, new Comparator<User>() {
-            @Override
-            public int compare( User user1, User user2 ) {
-                return user1.getName().length() - user2.getName().length();
-            }
-        });
+        Collections.sort(list, (user1, user2) -> user1.getName().length() - user2.getName().length());
 
         return list;
 
@@ -42,21 +42,19 @@ public class SortUser {
      * @return result list.
      */
     public List<User> sortByAllFields(List<User> list) {
-        Collections.sort(list, new Comparator<User>() {
-            @Override
-            public int compare( User user1, User user2 ) {
-                int result;
-                result = user1.getName().compareTo(user2.getName());
-                if (result  == 0) {
-                    result = user1.getAge() - user2.getAge();
-
-                }
-                return result;
+        Collections.sort(list, (user1, user2) -> {
+            int result;
+            result = user1.getName().compareTo(user2.getName());
+            if (result  == 0) {
+                result = user1.getAge() - user2.getAge();
             }
+            return result;
         });
 
        return list;
 
     }
+
+
 
 }

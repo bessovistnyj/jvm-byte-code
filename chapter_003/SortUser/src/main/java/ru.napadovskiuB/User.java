@@ -69,29 +69,43 @@ public class User implements Comparable<User> {
     }
 
 
+
     @Override
     public int compareTo(User o) {
         return this.age - o.age;
 
     }
 
+
+
+
     @Override
-    public boolean equals( Object o ) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
 
         User user = (User) o;
 
-        if (age != user.age) return false;
-        if (id != user.id) return false;
+        if (age != user.age) {
+            return false;
+        }
+
+        if (id != user.id) {
+            return false;
+        }
         return name != null ? name.equals(user.name) : user.name == null;
     }
 
     @Override
     public int hashCode() {
+        final int p = 31;
         int result = age;
-        result = 31 * result + id;
-        result = 31 * result + (name != null ? name.hashCode() : 0);
+        result = p * result + id;
+        result = p * result + (name != null ? name.hashCode() : 0);
         return result;
     }
 }
