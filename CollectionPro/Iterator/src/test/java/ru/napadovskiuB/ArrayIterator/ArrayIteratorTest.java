@@ -27,15 +27,17 @@ public class ArrayIteratorTest {
         ArrayIterator arrayIterator  = new ArrayIterator(testArray);
 
         arrayIterator.next();
+        arrayIterator.next();
+        arrayIterator.next();
         int result = (Integer) arrayIterator.next();
 
-        assertThat(result, is(2));
+        assertThat(result, is(5));
     }
 
     /**
      *
      */
-    @Test(expected = NullPointerException.class)
+    @Test(expected = ArrayIndexOutOfBoundsException.class)
     public void whenTestNextIsUnCorrectThenReturnException() {
         final int[][] testArray = new int[][] {{1, 2},
                                                {3}};

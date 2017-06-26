@@ -43,13 +43,10 @@ public class ArrayIterator implements Iterator {
      */
     @Override
     public boolean hasNext() {
-        boolean result = false;
+        boolean result = true;
 
-        if (this.lines < this.array.length) {
-            int[] singleArray = this.array[this.lines];
-            if (this.index < singleArray.length) {
-                result = true;
-            }
+        if ((this.lines >= this.array.length-1) && (this.index >= this.array[this.lines].length-1)) {
+            result = false;
         }
 
         return result;
@@ -62,19 +59,11 @@ public class ArrayIterator implements Iterator {
      */
     @Override
     public Object next() {
-        Object result = null;
-            if (hasNext()) {
-                int[] singleArray = this.array[this.lines];
-                for (; this.index < singleArray.length;) {
-                    result = this.array[this.lines][this.index];
-                    this.index++;
-                     if (this.index == singleArray.length) {
-                        this.index = 0;
-                        this.lines++;
-                     }
-                    break;
-                }
-            }
-        return result;
+       // Object result = null;
+        if (index == array[lines].length && lines < array.length - 1) {
+            lines++;
+            index = 0;
+        }
+        return array[lines][index++];
     }
 }
