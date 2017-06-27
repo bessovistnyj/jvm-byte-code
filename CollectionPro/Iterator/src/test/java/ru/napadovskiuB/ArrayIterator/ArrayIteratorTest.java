@@ -5,8 +5,6 @@ import org.junit.Test;
 import static org.junit.Assert.assertThat;
 import static org.hamcrest.core.Is.is;
 
-
-
 /**
  * Package of chapter_003 testTask.
  *
@@ -23,6 +21,7 @@ public class ArrayIteratorTest {
     public void whenTestNextIsRightThenReturnValue() {
         final int[][] testArray = new int[][] {{1, 2},
                                                {4, 5}};
+        final int checked = 5;
 
         ArrayIterator arrayIterator  = new ArrayIterator(testArray);
 
@@ -31,7 +30,7 @@ public class ArrayIteratorTest {
         arrayIterator.next();
         int result = (Integer) arrayIterator.next();
 
-        assertThat(result, is(5));
+        assertThat(result, is(checked));
     }
 
     /**

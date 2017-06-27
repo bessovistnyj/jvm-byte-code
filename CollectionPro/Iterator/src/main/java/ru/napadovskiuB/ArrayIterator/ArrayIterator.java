@@ -36,7 +36,6 @@ public class ArrayIterator implements Iterator {
 
     }
 
-
     /**
      *Method check can move in array.
      * @return result.
@@ -45,7 +44,7 @@ public class ArrayIterator implements Iterator {
     public boolean hasNext() {
         boolean result = true;
 
-        if ((this.lines >= this.array.length-1) && (this.index >= this.array[this.lines].length-1)) {
+        if ((this.lines >= this.array.length - 1) && (this.index >= this.array[this.lines].length - 1)) {
             result = false;
         }
 
