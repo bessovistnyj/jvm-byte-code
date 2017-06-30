@@ -10,10 +10,22 @@ import ru.napadovskiuB.board.*;
  *@version 1
  */
 public class King implements Figure {
-
+    /**
+     *
+     */
     private Position position;
+
+    /**
+     *
+     */
     private boolean isWhite;
 
+    /**
+     *
+     * @param y
+     * @param x
+     * @param isWhite
+     */
     public King(int y, int x, boolean isWhite){
         this.position = new Position(y,x);
         this.isWhite   = isWhite;

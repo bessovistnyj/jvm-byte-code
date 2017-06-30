@@ -1,6 +1,6 @@
 package ru.napadovskiuB.figure;
 
-import ru.napadovskiuB.board.*;
+import ru.napadovskiuB.board.Position;
 
 /**
     * Created by Napadovskiy
@@ -9,10 +9,22 @@ import ru.napadovskiuB.board.*;
     *@version 1
  */
 public class Horse implements Figure {
-
+    /**
+     *
+     */
     private Position position;
+
+    /**
+     *
+     */
     private boolean isWhite;
 
+    /**
+     *
+     * @param y
+     * @param x
+     * @param isWhite
+     */
     public Horse(int y, int x, boolean isWhite){
         this.position = new Position(y,x);
         this.isWhite   = isWhite;

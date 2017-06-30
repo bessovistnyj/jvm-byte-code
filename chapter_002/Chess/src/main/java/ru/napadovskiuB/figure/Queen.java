@@ -10,9 +10,22 @@ import ru.napadovskiuB.board.Position;
  */
 public class Queen implements Figure {
 
+    /**
+     *
+     */
     private Position position;
+
+    /**
+     *
+     */
     private boolean isWhite;
 
+    /**
+     *
+     * @param y
+     * @param x
+     * @param isWhite
+     */
     public Queen(int y, int x, boolean isWhite){
         this.position = new Position(y,x);
         this.isWhite   = isWhite;
@@ -84,20 +97,20 @@ public class Queen implements Figure {
         int tmpY = this.getPositionY();
         int tmpX = this.getPositionX();
         while (tmpY < 7 && tmpX < 7) {
-            result[counter] = new Position(++tmpY,++tmpX);
+            result[counter] = new Position(++tmpY, ++tmpX);
             counter++;
         }
 
         tmpY = this.getPositionY();
         tmpX = this.getPositionX();
         while (tmpX > 0 && tmpY < 7) {
-            result[counter] = new Position(++tmpY,--tmpX);
+            result[counter] = new Position(++tmpY, --tmpX);
             counter++;
         }
         tmpY = this.getPositionY();
         tmpX = this.getPositionX();
         while (tmpX < 7 && tmpY > 0) {
-            result[counter] = new Position(--tmpY,++tmpX);
+            result[counter] = new Position(--tmpY, ++tmpX);
             counter++;
 
         }
@@ -122,8 +135,8 @@ public class Queen implements Figure {
         Position[] availableMovesByLine = getAvailableMovesByLine();
         Position[] availableMovesByDiagonal = getAvailableMovesByDiagonal();
 
-        System.arraycopy(availableMovesByLine,0,result ,0,availableMovesByLine.length);
-        System.arraycopy(availableMovesByDiagonal,0,result ,availableMovesByLine.length,availableMovesByDiagonal.length);
+        System.arraycopy(availableMovesByLine, 0, result , 0, availableMovesByLine.length);
+        System.arraycopy(availableMovesByDiagonal, 0,result, availableMovesByLine.length, availableMovesByDiagonal.length);
 
         return result;
     }
@@ -131,8 +144,8 @@ public class Queen implements Figure {
     /**
      *The method set position
      */
-    public void setPosition(int y,int x){
-        this.position = new Position(y,x);
+    public void setPosition(int y, int x){
+        this.position = new Position(y, x);
     }
 
     /**

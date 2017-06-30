@@ -6,42 +6,43 @@ import static org.hamcrest.core.Is.is;
 
 import org.junit.Test;
 
-import static org.junit.Assert.*;
 
+/**
+ *
+ */
 public class TriangleTest {
-    
-	@Test	
+
+	/**
+	 *
+	 */
+	@Test
     public void whenRightCoordinateShouldReturnArea() {
 		//assign block
-		Point vertexA = new Point(0,0.0);
-		Point vertexB = new Point(0,3);
-		Point vertexC = new Point(4,0);
-		
-		Triangle triangle = new Triangle(vertexA ,vertexB ,vertexC );
-		
+		final Point vertexA = new Point(0, 0.0);
+		final Point vertexB = new Point(0, 3);
+		final Point vertexC = new Point(4, 0);
+		final double check = 6.0;
+		Triangle triangle = new Triangle(vertexA, vertexB, vertexC);
 		//act block
 		double result = triangle.area();
-		
 		//assert block
-		Assert.assertThat(result,is(6d));
-
+		Assert.assertThat(result, is(check));
     }
 
-	@Test	
+	/**
+	 *
+	 */
+    @Test
     public void whenWrongCoordinateShouldReturnArea() {
 		//assign block
-		Point vertexA = new Point(0.0,0.0);
-		Point vertexB = new Point(0.0,0.0);
-		Point vertexC = new Point(3.0,26.0);
-		
-		Triangle triangle = new Triangle(vertexA ,vertexB ,vertexC );
-		
+		final Point vertexA = new Point(0.0, 0.0);
+		final Point vertexB = new Point(0.0, 0.0);
+		final Point vertexC = new Point(3.0, 26.0);
+		final double check = -1.0;
+		Triangle triangle = new Triangle(vertexA, vertexB, vertexC);
 		//act block
 		double result = triangle.area();
-		
 		//assert block
-		Assert.assertThat(result,is(-1.0d));
-
+		Assert.assertThat(result, is(check));
     }
-	
 }

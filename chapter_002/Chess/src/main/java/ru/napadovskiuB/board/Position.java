@@ -7,22 +7,45 @@ public class Position {
     private int positionY;
     private int positionX;
 
-    public Position(int y, int x){
-        this.positionY =y;
-        this.positionX =x;
+    /**
+     *
+     * @param y
+     * @param x
+     */
+    public Position(int y, int x) {
+        this.positionY = y;
+        this.positionX = x;
     }
 
-    public int getPositionY(){
+    /**
+     *
+     * @return
+     */
+    public int getPositionY() {
         return this.positionY;
     }
-    public int getPositionX(){
+
+    /**
+     *
+     * @return
+     */
+    public int getPositionX() {
         return this.positionX;
     }
 
-    public void setPositionY(int y){
+    /**
+     *
+     * @param y
+     */
+    public void setPositionY(int y) {
         this.positionY = y;
     }
-    public void  setPositionX(int x){
+
+    /**
+     *
+     * @param x
+     */
+    public void  setPositionX(int x) {
         this.positionX = x;
     }
 

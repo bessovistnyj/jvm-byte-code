@@ -1,7 +1,7 @@
-package napadovskiyArrays;
+package ru.napadovskiuB;
 
 /**
-	*Class RemoveDuplicate для удаления дублей из массива
+	*Class RemoveDuplicate для удаления дублей из массива.
 	*@author napadovskiy
 	*@since 15.08.2016
 	*@version 1
@@ -9,14 +9,14 @@ package napadovskiyArrays;
 
 
 public class RemoveDuplicate {
- /**
-	*@param inputString
-	*creat new array with length of inputString
-	*and fill it with unique elements; 
-	*and decrement counter
-	*then creat new array with length of counter
-*/     
-  
+    /**
+     *Create new array with length of inputString.
+     *and fill it with unique elements;
+     *and decrement counter
+     *then create new array with length of counter
+     * @param inputString string for remove duplicate.
+     * @return result Array string.
+     */
 	public String[] removeDuplicate(String[] inputString) {
         String[] tempString = new String[inputString.length];
 
@@ -33,23 +33,20 @@ public class RemoveDuplicate {
                 }
             }
         }
-        
 		String[] resultString = new String[counter];
-		for(int i=0; i<counter; i++){
+		for (int i = 0; i < counter; i++) {
 			resultString[i] = tempString[i];
 		}
 		return resultString;
     }
 
-	/**
-		*@param tempString;
-		*@param value;
-		*@return findeElement;
-		*find value in tempString 
-		*If found then it is not necessary to add 
-	*/     
-
-
+    /**
+     *find value in tempString
+     *If found then it is not necessary to add.
+     * @param tempString string for search.
+     * @param value serch value.
+     * @return result.
+     */
     boolean findeElement(String[] tempString, String value) {
         boolean findeElement = false;
         for (int i = 0; i < tempString.length; i++) {

@@ -10,9 +10,22 @@ import ru.napadovskiuB.board.*;
  */
 public class Pawn implements Figure {
 
+    /**
+     *
+     */
     private Position position;
+
+    /**
+     *
+     */
     private boolean isWhite;
 
+    /**
+     *
+     * @param y
+     * @param x
+     * @param isWhite
+     */
     public Pawn(int y, int x, boolean isWhite){
         this.position = new Position(y,x);
         this.isWhite   = isWhite;
