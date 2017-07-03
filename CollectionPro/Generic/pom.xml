@@ -1,11 +1,11 @@
 <project>
 	<modelVersion>4.0.0</modelVersion>
-	<artifactId>CollectionPro</artifactId>
+	<artifactId>Generic</artifactId>
 	<packaging>pom</packaging>
 
 	<parent>
 		<groupId>ru.napadovskiu</groupId>
-		<artifactId>Java_Junior</artifactId>
+		<artifactId>CollectionPro</artifactId>
 		<version>1.0</version>
 	</parent>
 	
@@ -78,11 +78,6 @@
 		<maven.compiler.target>1.8</maven.compiler.target>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
-	
-	<modules>
-		<module>Iterator</module>
-		<module>Generic</module>
-	</modules>
 	
 	 <dependencies>
 		<dependency>

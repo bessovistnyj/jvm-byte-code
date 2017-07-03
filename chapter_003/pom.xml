@@ -83,6 +83,7 @@
 		<module>TestSpeedCollection</module>
 		<module>ArrayConversion</module>
 		<module>SortUser</module>
+		<module>Generic</module>
 		<module>Bank</module>
 	</modules>
 	
