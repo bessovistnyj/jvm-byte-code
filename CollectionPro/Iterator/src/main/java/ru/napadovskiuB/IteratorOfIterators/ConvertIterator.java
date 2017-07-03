@@ -11,5 +11,10 @@ import java.util.Iterator;
  */
 public interface ConvertIterator {
 
-    public Iterator<Integer> convert(Iterator<Iterator<Integer>> it);
+    /**
+     * Method convert iterators of iterator to iterator.
+     * @param it iterators of iterator.
+     * @return iterator.
+     */
+    Iterator<Integer> convert(Iterator<Iterator<Integer>> it);
 }

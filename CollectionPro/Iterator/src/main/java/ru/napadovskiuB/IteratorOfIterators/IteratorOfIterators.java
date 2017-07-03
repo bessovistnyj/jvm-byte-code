@@ -9,35 +9,35 @@ import java.util.Iterator;
  * @version 1.0
  * @since 01.07.2017
  */
-public class IteratorOfIterators implements ConvertIterator,Iterator <Integer> {
+public class IteratorOfIterators implements ConvertIterator, Iterator {
 
     /**
-     *
+     * iterator of iterators.
      */
     private Iterator<Iterator<Integer>> iteratorOfIterator;
 
     /**
-     *
+     *current iterator.
      */
-    private Iterator <Integer> currentIterator ;
+    private Iterator<Integer> currentIterator;
 
     /**
-     *
-     * @param it
-     * @return
+     *Method convert iterator of iterators to iterator.
+     * @param it iterator of iterators.
+     * @return iterator
      */
     @Override
     public Iterator<Integer> convert(Iterator<Iterator<Integer>> it) {
         this.iteratorOfIterator = it;
-        if (it.hasNext()) {
+        if (this.iteratorOfIterator.hasNext()) {
             this.currentIterator.next();
         }
         return this;
     }
 
     /**
-     *
-     * @param it
+     *Constructor class.
+     * @param it iterator of iterators.
      */
     public IteratorOfIterators(Iterator<Iterator<Integer>> it) {
         this.iteratorOfIterator = it;
@@ -45,31 +45,27 @@ public class IteratorOfIterators implements ConvertIterator,Iterator <Integer> {
     }
 
     /**
-     *
-     * @return
+     *Method check can move in iterator.
+     * @return result.
      */
     @Override
     public boolean hasNext() {
-        if (!currentIterator.hasNext()) {
-            if (iteratorOfIterator.hasNext()) {
-                this.currentIterator = iteratorOfIterator.next();
-            }
-        }
-        return currentIterator.hasNext();
+        return (this.iteratorOfIterator.hasNext() || this.currentIterator.hasNext());
     }
 
     /**
-     *
-     * @return
+     * Method take next value from iterator.
+     * @return result.
      */
     @Override
-    public Integer next() {
-        if (!currentIterator.hasNext()) {
-            if (iteratorOfIterator.hasNext()) {
-                this.currentIterator = iteratorOfIterator.next();
-            }
+    public  Iterator<Integer> next() {
+        Iterator<Integer> result = this.currentIterator;
+        if (this.iteratorOfIterator.hasNext()) {
+            this.currentIterator = this.iteratorOfIterator.next();
+        } else {
+            this.currentIterator = null;
         }
-        this.currentIterator = iteratorOfIterator.next();
-        return this.currentIterator.next();
+        return result;
+
     }
 }
