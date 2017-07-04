@@ -21,7 +21,7 @@ public class IteratorOfIteratorsTest {
     /**
      *
      */
-    final private List<Integer> firstList = Arrays.asList(4, 2, 0, 4, 6, 4, 9);
+    private final List<Integer> firstList = Arrays.asList(4, 2, 0, 4, 6, 4, 9);
 
     /**
      *
@@ -31,7 +31,7 @@ public class IteratorOfIteratorsTest {
     /**
      *
      */
-    final private List<Integer> secondList = Arrays.asList(0, 9, 8, 7, 5);
+    private final List<Integer> secondList = Arrays.asList(0, 9, 8, 7, 5);
 
     /**
      *
@@ -41,7 +41,7 @@ public class IteratorOfIteratorsTest {
     /**
      *
      */
-    final private List<Integer> thirdList = Arrays.asList(1, 3, 5, 6, 7, 0, 9, 8, 4);
+    private  final  List<Integer> thirdList = Arrays.asList(1, 3, 5, 6, 7, 0, 9, 8, 4);
 
     /**
      *
