@@ -14,6 +14,9 @@ import static org.junit.Assert.assertThat;
  **/
 public class SimpleArrayTest {
 
+    /**
+     *
+     */
     @Test
     public void whenAddStringThenReturnString() {
         final int sizeofArray = 2;
@@ -27,6 +30,9 @@ public class SimpleArrayTest {
         assertThat(simpleArray.get(1), is(stringForTest1));
     }
 
+    /**
+     *
+     */
     @Test
     public void whenDeleteElementThenReturnArray() {
         final int sizeofArray = 2;
