@@ -28,8 +28,8 @@ public class UserStoreTest {
         userStore.add(user1);
         userStore.add(user2);
 
-        Base returnValue = userStore.get(0);
-        assertThat(returnValue.getId(), is("123456"));
+        Base returnValue = userStore.get("123456");
+        assertThat(returnValue, is(user1));
 
     }
 
@@ -46,10 +46,10 @@ public class UserStoreTest {
         UserStore<User> userStore = new UserStore<User>(arraySize);
         userStore.add(user1);
 
-        userStore.update(0, user2);
+        userStore.update("123456", user2);
 
-        Base returnValue = userStore.get(0);
-        assertThat(returnValue.getId(), is("789654"));
+        Base returnValue = userStore.get("789654");
+        assertThat(returnValue.getId(), is(user2.getId()));
 
     }
 
@@ -69,7 +69,7 @@ public class UserStoreTest {
 
         userStore.delete(user1);
 
-        Base returnValue = userStore.get(0);
+        Base returnValue = userStore.get("123456");
 
     }
 

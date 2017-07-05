@@ -28,8 +28,8 @@ public class RoleStoreTest {
         roleStore.add(role1);
         roleStore.add(role2);
 
-        Base returnValue = roleStore.get(0);
-        assertThat(returnValue.getId(), is("58697"));
+        Base returnValue = roleStore.get("58697");
+        assertThat(returnValue, is(role1));
 
     }
 
@@ -46,10 +46,10 @@ public class RoleStoreTest {
         RoleStore<Role> roleStore = new RoleStore<Role>(arraySize);
         roleStore.add(role1);
 
-        roleStore.update(0, role2);
+        roleStore.update("89752", role2);
 
-        Base returnValue = roleStore.get(0);
-        assertThat(returnValue.getId(), is("56987"));
+        Base returnValue = roleStore.get("56987");
+        assertThat(returnValue, is(role2));
 
     }
 
@@ -68,7 +68,7 @@ public class RoleStoreTest {
 
         roleStore.delete(role1);
 
-        Base returnValue = roleStore.get(0);
+        Base returnValue = roleStore.get("89752");
 
     }
 

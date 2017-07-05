@@ -28,11 +28,22 @@ public class SimpleArrayStore<T extends Base> implements Store {
 
     /**
      *Method return value by index.
-     * @param index index.
+     * @param id index.
      * @return value.
      */
-    public Base get(int index) {
-        return (Base) this.objects[index];
+    public Base get(String id) {
+        Base result = null;
+
+        for (int i = 0; i < this.objects.length; i++) {
+            if (this.objects[i] != null) {
+                Base tmpResult = (Base) this.objects[i];
+                if (tmpResult.getId().equals(id)) {
+                    result = tmpResult;
+                    break;
+                }
+            }
+        }
+        return (Base) result;
     }
 
     /**
@@ -46,13 +57,19 @@ public class SimpleArrayStore<T extends Base> implements Store {
 
     /**
      * Method update value in array.
-     * @param position position.
+     * @param id position.
      * @param newValue new value.
      */
     @Override
-    public void update(int position, Base newValue) {
-        this.objects[position] = newValue;
-
+    public void update(String id, Base newValue) {
+        Base tmpResult = get(id);
+        for (int i = 0; i < this.objects.length; i++) {
+            if (this.objects[i] != null) {
+                if (this.objects[i].equals(tmpResult)) {
+                    this.objects[i] = newValue;
+                }
+            }
+        }
     }
 
     /**

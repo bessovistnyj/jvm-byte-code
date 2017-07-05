@@ -14,10 +14,10 @@ public interface Store<T extends Base> {
 
     /**
      *Method update value in array.
-     * @param position position for update.
+     * @param id position for update.
      * @param newValue new value for update.
      */
-    void update(int position, T newValue);
+    void update(String id, T newValue);
 
     /**
      *Method delete value from array.
