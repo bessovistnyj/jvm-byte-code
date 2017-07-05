@@ -8,11 +8,14 @@ package ru.napadovskiuB.store;
  */
 public abstract class Base {
 
-   private int id;
+    /**
+     * id base.
+     */
+    private int id;
 
     /**
      * Method get base id.
-     * @return
+     * @return id.
      */
     public abstract String getId();
 

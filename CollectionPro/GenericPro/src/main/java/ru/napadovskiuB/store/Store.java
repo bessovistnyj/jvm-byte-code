@@ -1,25 +1,27 @@
 package ru.napadovskiuB.store;
 
 /**
- * Created by Программист on 04.07.2017.
+ *Interface for implements.
+ * @param <T> generic.
  */
-public interface Store <T extends Base> {
+public interface Store<T extends Base> {
 
     /**
-     *
+     *Method add value to storage.
+     *@param value add value.
      */
     void add(T value);
 
     /**
-     *
-     * @param position
-     * @param newValue
+     *Method update value in array.
+     * @param position position for update.
+     * @param newValue new value for update.
      */
     void update(int position, T newValue);
 
     /**
-     *
-     * @param t
+     *Method delete value from array.
+     * @param t value for delete.
      */
     void delete(T t);
 
