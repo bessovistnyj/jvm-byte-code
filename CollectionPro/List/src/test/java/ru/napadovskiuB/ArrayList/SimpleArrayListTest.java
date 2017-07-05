@@ -9,30 +9,33 @@ import static org.hamcrest.Matchers.is;
 /**
  * Created by Программист on 05.07.2017.
  */
-public class MyArrayListTest {
+public class SimpleArrayListTest {
 
+    /**
+     *
+     */
     @Test
     public void whenAddNewElementThanReturnValue() {
         String firstValue = "Иван";
         String secondValue = "Михаил";
 
-        MyArrayList<String> arrayList = new MyArrayList<String>();
+        SimpleArrayList<String> arrayList = new SimpleArrayList<String>();
 
         arrayList.add(firstValue);
         arrayList.add(secondValue);
 
         assertThat(arrayList.get(0), is(firstValue));
-
-
     }
 
-
+    /**
+     *
+     */
     @Test
     public void whenGetThenReturnValue() {
         String firstValue = "Иван";
         String secondValue = "Михаил";
 
-        MyArrayList<String> arrayList = new MyArrayList<String>();
+        SimpleArrayList<String> arrayList = new SimpleArrayList<String>();
 
         arrayList.add(firstValue);
         arrayList.add(secondValue);
@@ -41,12 +44,15 @@ public class MyArrayListTest {
 
     }
 
+    /**
+     *
+     */
     @Test
     public void whenIteratorHasNextThenReturnTrue() {
         String firstValue = "Иван";
         String secondValue = "Михаил";
 
-        MyArrayList<String> arrayList = new MyArrayList<String>();
+        SimpleArrayList<String> arrayList = new SimpleArrayList<String>();
 
         arrayList.add(firstValue);
         arrayList.add(secondValue);

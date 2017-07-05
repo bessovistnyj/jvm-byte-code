@@ -1,17 +1,18 @@
 package ru.napadovskiuB.ArrayList;
 
+import ru.napadovskiuB.SimpleContainer;
+
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 /**
- * Package of CollectionPro testTask.
- *
  * @author Napadovskiy Bohdan
  * @version 1.0
  * @since 05.06.2017
+ * @param <E> generic.
  */
-public class MyArrayList<E> implements Iterable<E>{
+public class SimpleArrayList<E> implements SimpleContainer<E> {
 
     /**
      *Main array.
@@ -37,7 +38,7 @@ public class MyArrayList<E> implements Iterable<E>{
     /**
      *Default constructor for array.
      */
-    public MyArrayList() {
+    public SimpleArrayList() {
         this.mainArray = new Object[defaultSize];
         this.currentIndex = 0;
         this.indexForWrite = 0;
@@ -48,7 +49,7 @@ public class MyArrayList<E> implements Iterable<E>{
      *Constructor with size.
      * @param size array size.
      */
-    public MyArrayList( int size) {
+    public SimpleArrayList(int size) {
         this.mainArray = new Object[size];
         this.currentIndex = 0;
     }
@@ -56,8 +57,8 @@ public class MyArrayList<E> implements Iterable<E>{
     /**
      * Method to resize array if needed.
      */
-    private void grow() {
-       int newCapacity = (this.mainArray.length*2);
+    private void resizeArray() {
+       int newCapacity = (this.mainArray.length * 2);
        this.mainArray = Arrays.copyOf(this.mainArray, newCapacity);
     }
 
@@ -65,9 +66,10 @@ public class MyArrayList<E> implements Iterable<E>{
      *Method add value too array.
      * @param value
      */
+    @Override
     public void add(E value) {
         if (this.indexForWrite == (this.mainArray.length)) {
-            grow();
+            resizeArray();
         }
         this.mainArray[this.indexForWrite++] = value;
     }
@@ -78,6 +80,7 @@ public class MyArrayList<E> implements Iterable<E>{
      * @return value.
      * @throws NullPointerException exception.
      */
+    @Override
     public E get(int index) throws NullPointerException {
         if (index < this.mainArray.length) {
             this.currentIndex = index;
@@ -104,7 +107,7 @@ public class MyArrayList<E> implements Iterable<E>{
              */
             @Override
             public boolean hasNext() {
-                return currentIndex < (mainArray.length-1);
+                return currentIndex < (mainArray.length - 1);
             }
 
             /**
@@ -113,10 +116,10 @@ public class MyArrayList<E> implements Iterable<E>{
              * @throws NoSuchElementException exception.
              */
             @Override
-            public Object next() throws NoSuchElementException{
+            public Object next() throws NoSuchElementException {
                 if (hasNext()) {
                     int current = currentIndex;
-                    currentIndex ++;
+                    currentIndex++;
                     return current;
                 }
                 throw new NoSuchElementException();
