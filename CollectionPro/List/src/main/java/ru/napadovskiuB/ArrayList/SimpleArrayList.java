@@ -120,7 +120,7 @@ public class SimpleArrayList<E> implements SimpleContainer<E> {
                 if (hasNext()) {
                     int current = currentIndex;
                     currentIndex++;
-                    return current;
+                    return mainArray[current];
                 }
                 throw new NoSuchElementException();
 
