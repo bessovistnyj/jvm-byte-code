@@ -51,7 +51,6 @@ public class SimpleArraySet<T> implements Iterable<T> {
     public SimpleArraySet(int size) {
         this.mainArray = new Object[size];
         this.indexForWrite = 0;
-
     }
 
 
@@ -61,7 +60,6 @@ public class SimpleArraySet<T> implements Iterable<T> {
     private void resizeArray() {
         int newCapacity = (this.mainArray.length * 2);
         this.mainArray = Arrays.copyOf(this.mainArray, newCapacity);
-
     }
 
     /**
@@ -69,7 +67,7 @@ public class SimpleArraySet<T> implements Iterable<T> {
      * @param t element for find.
      * @return result.
      */
-    private boolean checkElement(T t) {
+    public boolean checkElement(T t) {
         boolean result = true;
         for (int i = 0; i < this.mainArray.length; i++) {
             if (this.mainArray[i] != null) {
@@ -104,6 +102,16 @@ public class SimpleArraySet<T> implements Iterable<T> {
      */
     public int getSize() {
         return this.size;
+    }
+
+
+    /**
+     *Method return element by index.
+     * @param index for search.
+     * @return element.
+     */
+    public T getElement(int index) {
+        return (T) this.mainArray[index];
     }
 
 
