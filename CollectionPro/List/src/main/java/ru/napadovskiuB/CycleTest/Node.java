@@ -53,13 +53,16 @@ public class Node<T> {
      */
     boolean hasCycle(Node first) {
         boolean result = false;
-        Node tmpValue = first;
-        while (tmpValue.next != null) {
-            if (tmpValue.next.equals(first) || tmpValue.next.equals(tmpValue)) {
+        Node tmpValue = first.next;
+        Node tmpValueNext = first.next.next;
+        while (tmpValueNext != null) {
+            if (tmpValue.equals(first) || tmpValueNext.equals(first)) {
                 result = true;
                 break;
+
             }
             tmpValue = tmpValue.next;
+            tmpValueNext = tmpValue.next.next;
         }
         return result;
     }
