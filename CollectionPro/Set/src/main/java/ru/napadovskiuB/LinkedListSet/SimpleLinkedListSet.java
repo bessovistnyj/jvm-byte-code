@@ -46,7 +46,6 @@ public class SimpleLinkedListSet<E> implements Iterable<E> {
         }
     }
 
-
     /**
      * Method return list size.
      * @return result.
