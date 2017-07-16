@@ -17,7 +17,7 @@ public class UserEquals extends User {
      * @param name     name user.
      * @param birthday date of birthday.
      */
-    public UserEquals( String name, Calendar birthday ) {
+    public UserEquals(String name, Calendar birthday) {
         super(name, birthday);
     }
 
@@ -36,5 +36,10 @@ public class UserEquals extends User {
             return false;
         }
         return getBirthday().equals(user.getBirthday());
+    }
+
+    @Override
+    public int hashCode() {
+        return super.hashCode();
     }
 }

@@ -9,7 +9,7 @@ import java.util.Calendar;
  * @version 1.0
  * @since 17.07.2017
  */
-public class UserEqualsHashCode extends User{
+public class UserEqualsHashCode extends User {
 
     /**
      * Constructor for class user.
@@ -17,7 +17,7 @@ public class UserEqualsHashCode extends User{
      * @param name     name user.
      * @param birthday date of birthday.
      */
-    public UserEqualsHashCode( String name, Calendar birthday ) {
+    public UserEqualsHashCode(String name, Calendar birthday) {
         super(name, birthday);
     }
 
@@ -30,7 +30,7 @@ public class UserEqualsHashCode extends User{
     }
 
     @Override
-    public boolean equals( Object obj ) {
+    public boolean equals(Object obj) {
         if (this == obj) {
             return true;
         }

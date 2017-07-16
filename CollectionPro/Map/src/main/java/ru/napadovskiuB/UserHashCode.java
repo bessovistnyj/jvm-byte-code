@@ -9,14 +9,14 @@ import java.util.Calendar;
  * @version 1.0
  * @since 17.07.2017
  */
-public class UserHashCode  extends User{
+public class UserHashCode  extends User {
 
     /**
      * Constructor for class user.
      * @param name     name user.
      * @param birthday date of birthday.
      */
-    public UserHashCode( String name, Calendar birthday ) {
+    public UserHashCode(String name, Calendar birthday) {
         super(name, birthday);
     }
 
