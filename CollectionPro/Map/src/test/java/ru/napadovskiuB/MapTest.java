@@ -6,6 +6,8 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
 
+import static org.hamcrest.MatcherAssert.assertThat;
+
 /**
  *
  */
@@ -49,6 +51,7 @@ public class MapTest {
 
         mapTest.put(firstUser, firstUser);
         mapTest.put(secondUser, secondUser);
+        boolean result =  firstUser.equals(secondUser);
 
         System.out.println(mapTest);
 

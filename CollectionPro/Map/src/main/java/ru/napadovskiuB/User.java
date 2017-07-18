@@ -34,7 +34,15 @@ public class User {
     public User(String name, Calendar birthday) {
         this.name = name;
         this.birthday = birthday;
+        this.children = 0;
     }
+
+    public User(String name, Calendar birthday, int children) {
+        this.name = name;
+        this.birthday = birthday;
+        this.children = children;
+    }
+
 
     /**
      * Method return user name.

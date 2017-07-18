@@ -22,10 +22,11 @@ public class UserHashCode  extends User {
 
     @Override
     public int hashCode() {
-        final int var = 32;
-        int result = getName().hashCode();
-        result = (var - 1) * result + getBirthday().hashCode();
+        final int prime = 31;
+        int result = 17;
+        result = prime * result + getName().hashCode();
+        result = prime * result + getBirthday().hashCode();
+        result = prime * result + getChildren();
         return result;
-
     }
 }
