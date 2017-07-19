@@ -37,6 +37,12 @@ public class User {
         this.children = 0;
     }
 
+    /**
+     * Constructor with parameters.
+     * @param name name user.
+     * @param birthday date of birthday.
+     * @param children number of children.
+     */
     public User(String name, Calendar birthday, int children) {
         this.name = name;
         this.birthday = birthday;

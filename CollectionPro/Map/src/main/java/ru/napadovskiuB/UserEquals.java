@@ -21,6 +21,11 @@ public class UserEquals extends User {
         super(name, birthday);
     }
 
+    /**
+     *
+     * @param obj
+     * @return
+     */
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {
@@ -38,6 +43,10 @@ public class UserEquals extends User {
         return getBirthday().equals(user.getBirthday());
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public int hashCode() {
         return super.hashCode();
