@@ -1,23 +1,47 @@
 package ru.napadovskiuB;
 
-import static org.junit.Assert.*;
 import org.junit.Test;
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
+
 /**
- * Created by Программист on 18.07.2017.
+ *
  */
 public class SimpleMapTest {
 
+    /**
+     *
+     */
     @Test
-    public void whenInsert() {
-        SimpleMap<Integer,String> myMap = new SimpleMap<>();
+    public void whenInsertThenReturnValue() {
+        SimpleMap<Integer, String> myMap = new SimpleMap<>();
 
-        myMap.insert(5,"Пятый");
-        myMap.insert(4,"Четвертый");
-        myMap.insert(6,"Шестой");
-        myMap.insert(3,"Третий");
-        myMap.insert(1,"Первый");
-        int a =1;
+        myMap.insert(5, "Пятый");
+        myMap.insert(4, "Четвертый");
+        myMap.insert(2, "Второй");
+
+        String checkValue = myMap.get(4);
+
+        assertThat(checkValue, is("Четвертый"));
+
+    }
+
+
+    /**
+     *
+     */
+    @Test (expected = NullPointerException.class)
+    public void whenDeleteItemThenReturnNull() {
+        SimpleMap<Integer, String> myMap = new SimpleMap<>();
+
+        myMap.insert(5, "Пятый");
+        myMap.insert(4, "Четвертый");
+        myMap.insert(2, "Второй");
+
+
+        myMap.delete(4);
+        String checkValue = myMap.get(4);
 
     }
 

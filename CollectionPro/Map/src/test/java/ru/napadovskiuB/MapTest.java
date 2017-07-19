@@ -6,8 +6,6 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-
 /**
  *
  */

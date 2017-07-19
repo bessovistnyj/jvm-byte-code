@@ -2,30 +2,40 @@ package ru.napadovskiuB;
 
 
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 /**
- * Class user.
- *
+ * Class simple map.
  * @author Napadovskiy Bohdan
  * @version 1.0
  * @since 17.07.2017
+ * @param <T> key element.
+ * @param <V> value by element.
  */
 public class SimpleMap<T, V> implements MyMap<T, V> {
 
     /**
-     *
+     *Default capacity for table.
+     */
+    private final int defaultCapacity = 4;
+
+    /**
+     * Table for element.
      */
     private Entry[] table;
 
     /**
-     *
+     * current position.
      */
-    private int defaultCapacity = 4;
-
     private int currentPosition = 0;
 
     /**
-     *
+     * size of table.
+     */
+    private int size;
+
+    /**
+     *Default constructor.
      */
     public SimpleMap() {
         this.table = new Entry[defaultCapacity];
@@ -33,28 +43,39 @@ public class SimpleMap<T, V> implements MyMap<T, V> {
     }
 
     /**
-     *
-     * @param capacity
+     *Constructor with capacity.
+     * @param capacity capacity of table.
      */
     public SimpleMap(int capacity) {
         this.table = new Entry[capacity];
     }
 
+    /**
+     * Method calculate hash code.
+     * @param key key for calculate.
+     * @return hash code.
+     */
+    private static int hash(Object key) {
+        int h;
+        final int var = 16;
+        h = key.hashCode();
+        return (key == null) ? 0 : h ^ (h >>> var);
+    }
 
     /**
-     *
-     * @param key
-     * @param value
-     * @return
+     * Method insert element too collection.
+     * @param key key for add
+     * @param value value element.
+     * @return result.
      */
     @Override
-    public boolean insert( T key, V value ) {
+    public boolean insert(T key, V value) {
         boolean result = true;
-        int hashCode = hash(key);
-        this.currentPosition = indexFor(hashCode, table.length);
+        this.currentPosition = indexFor(hash(key), table.length);
         resizeTable();
-        if (table[currentPosition] == null) {
-            table[currentPosition] = new Entry(key, value);
+        if (table[this.currentPosition] == null) {
+            table[this.currentPosition] = new Entry(key, value);
+            this.size++;
         } else {
             result = false;
         }
@@ -64,14 +85,13 @@ public class SimpleMap<T, V> implements MyMap<T, V> {
     }
 
     /**
-     *
-     * @param key
-     * @return
+     * Method return element from collection by key.
+     * @param key key for search.
+     * @return value from table.
      */
     @Override
-    public V get( T key ) {
-        int hashCode = hash(key);
-        int index = indexFor(hashCode, table.length);
+    public V get(T key) {
+        int index = indexFor(hash(key), table.length);
 
         return (V) table[index].getValue();
 
@@ -83,11 +103,12 @@ public class SimpleMap<T, V> implements MyMap<T, V> {
      * @return
      */
     @Override
-    public boolean delete( T key ) {
+    public boolean delete(T key) {
         boolean result = true;
-        int index = indexFor(key.hashCode(), table.length);
-        if(this.table[index] != null) {
+        int index = indexFor(hash(key), table.length);
+        if (this.table[index] != null) {
             this.table[index] = null;
+            this.size--;
         } else {
             result = false;
         }
@@ -95,81 +116,119 @@ public class SimpleMap<T, V> implements MyMap<T, V> {
         return result;
     }
 
-
     /**
-     *
-     * @param h
-     * @param length
-     * @return
+     * Method calculate index by hashCode.
+     * @param h hashCode.
+     * @param length table length.
+     * @return return index for add.
      */
     private int indexFor(int h, int length) {
         return h & (length - 1);
     }
 
-
+    /**
+     * Method resize table.
+     */
     private void resizeTable() {
-        if (this.table.length * 0.75 <= this.currentPosition) {
-            int newCapacity  = (this.table.length*2);
+        final double kof = 0.75;
+        if (this.table.length * kof <= this.currentPosition) {
+            int newCapacity  = (this.table.length * 2);
             Entry<T, V>[] newArray = new Entry[newCapacity];
-            for (int j = 0; j < this.table.length-1; ++j) {
-                Entry<T,V> checkElement;
-                if ((checkElement = this.table[j]) != null)
+            for (int j = 0; j < this.table.length - 1; ++j) {
+                Entry<T, V> checkElement;
+                checkElement = this.table[j];
+                if (checkElement != null) {
                     newArray[hash(checkElement.getKey()) & (newCapacity - 1)] = checkElement;
+                }
+
             }
             this.table = newArray;
         }
     }
 
-    private static final int hash(Object key) {
-        int h;
-        return (key == null) ? 0 : (h = key.hashCode()) ^ (h >>> 16);
-    }
+    /**
+     * Inner class iterator.
+     * @return iterator.
+     */
+    public Iterator iterator() {
 
+        /**
+         *Inner class iterator.
+         */
+        return new Iterator() {
 
+           /**
+            * current index.
+            */
+           private int index = 0;
 
-    public Iterator keyIterator() {
-       return new Iterator<T>() {
+           /**
+            * method check next position.
+            * @return result.
+            */
            @Override
            public boolean hasNext() {
-               return false;
+               return  this.index < size;
            }
 
+           /**
+            * Method return value and move current index.
+            * @return value.
+            */
            @Override
-           public T next() {
-               return null;
+           public V next() {
+               if (hasNext()) {
+                   Integer current = this.index;
+                   this.index++;
+                   return get((T) current);
+               }
+               throw new NoSuchElementException();
            }
        };
    }
 
-    public Iterator valueIterator() {
-        return new Iterator<V>() {
-            @Override
-            public boolean hasNext() {
-                return false;
-            }
 
-            @Override
-            public V next() {
-                return null;
-            }
-        };
-    }
+    /**
+     * Inner class element.
+     * @param <T> key element.
+     * @param <V> value element.
+     */
+   private class Entry<T, V> {
 
-    private class Entry<T, V> {
-        private T key;
-        private V value;
+       /**
+        * key element.
+        */
+       private T key;
 
-        public Entry( T key, V value ) {
-            this.key = key;
-            this.value = value;
-        }
+       /**
+       * value element.
+       */
+       private V value;
 
-        public T getKey() {
+       /**
+        *Constructor with key and value.
+        * @param key key element.
+        * @param value value element.
+        */
+       Entry(T key, V value) {
+           this.key = key;
+           this.value = value;
+       }
+
+       /**
+        * Method return key of element.
+        * @return key.
+        */
+       public T getKey() {
             return key;
         }
 
-        public V getValue() {
+       /**
+        * Method return value of element.
+        * @return value.
+        */
+       public V getValue() {
             return value;
-        }
+       }
     }
 }
