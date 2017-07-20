@@ -1,7 +1,7 @@
 package ru.napadovskiyB;
 
 /**
- *
+ * Interface Simple tree.
  * @param <E>
  */
 public interface SimpleTree<E extends Comparable<E>> extends Iterable<E> {

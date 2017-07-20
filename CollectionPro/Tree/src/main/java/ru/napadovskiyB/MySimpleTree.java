@@ -5,23 +5,22 @@ import java.util.Iterator;
 import java.util.List;
 
 /**
- *
- * @param <E>
+ * Class implements interface SimpleTree.
+ * extends Comparable.
+ * @param <E> generic
  */
 class MySimpleTree<E extends Comparable<E>> implements SimpleTree<E> {
 
     /**
-     *
+     * root element.
      */
     private Node<E> root;
 
-
-
     /**
-     *
-     * @param first
-     * @param second
-     * @return
+     * Method check element with parent.
+     * @param first element for check.
+     * @param second element with check
+     * @return result.
      */
     public Node<E> search(Node<E> first, E second) {
         Node<E> result = null;
@@ -33,12 +32,19 @@ class MySimpleTree<E extends Comparable<E>> implements SimpleTree<E> {
       return result;
     }
 
+    /**
+     * Method return list children of root.
+     * @return child list.
+     */
+    public List<Node<E>> getListOfChild() {
+        return root.getChildren();
+    }
 
     /**
-     *
+     * Method add element to collection.
      * @param parent parent.
      * @param child child.
-     * @return
+     * @return result.
      */
     @Override
     public boolean add(E parent, E child) {
@@ -50,62 +56,46 @@ class MySimpleTree<E extends Comparable<E>> implements SimpleTree<E> {
             Node<E> root = search(this.root, parent);
             if (root != null) {
                 result = root.children.add(new Node<>(child));
+            } else {
+                result = false;
             }
         }
         return result;
     }
 
-    /**
-     *
-     * @param <E>
+     /**
+     * Inner class for save element.
+     * @param <E> generic.
      */
     private class Node<E> {
+        /**
+         * list with child element.
+         */
         private List<Node<E>> children;
+
+        /**
+         * value element.
+         */
         private E value;
 
         /**
-         *
-         * @param value
+         * Constructor with parameters.
+         * @param value for add.
          */
-        public Node(E value) {
+        Node(E value) {
             this.value = value;
             this.children = new LinkedList<>();
 
         }
 
-        /**
-         *
-         * @param o
-         * @return
-         */
-        @Override
-        public boolean equals(Object o) {
-            if (this == o) {
-                return true;
-            }
-            if (o == null || getClass() != o.getClass()) {
-                return false;
-            }
-
-            Node<?> node = (Node<?>) o;
-
-            if (children != null ? !children.equals(node.children) : node.children != null) return false;
-
-            return value != null ? value.equals(node.value) : node.value == null;
+         /**
+          * Method return list of children.
+          * @return list.
+          */
+        public List<Node<E>> getChildren() {
+            return children;
         }
-
-        /**
-         *
-         * @return
-         */
-        @Override
-        public int hashCode() {
-            final int var  = 31;
-            int result = children != null ? children.hashCode() : 0;
-            result =  var * result + (value != null ? value.hashCode() : 0);
-            return result;
-        }
-    }
+     }
 
     /**
      *
