@@ -27,6 +27,10 @@ class MySimpleTree<E extends Comparable<E>> implements SimpleTree<E> {
 
         if (first.value.compareTo(second) == 0) {
             result = first;
+        } else {
+            for (Node<E> child : first.children) {
+                result = search(child, second);
+            }
         }
 
       return result;
