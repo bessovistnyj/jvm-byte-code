@@ -2,6 +2,8 @@ package ru.napadovskiyB;
 
 import org.junit.Test;
 
+import java.util.Iterator;
+
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
@@ -23,10 +25,10 @@ public class MySimpleTreeTest {
 
         this.tree.add("FirstElement", "FirstChild");
         this.tree.add("FirstElement", "SecondChild");
+        final int checkResult = 3;
 
-        int checkResult = 2;
+        assertThat(this.tree.getSize(), is(checkResult));
 
-        assertThat(this.tree.getListOfChild().size(), is(checkResult));
     }
 
     /**
@@ -41,6 +43,10 @@ public class MySimpleTreeTest {
         int checkResult = 1;
 
         assertThat(this.tree.getListOfChild().size(), is(1));
+
+
+
+
     }
 
 }

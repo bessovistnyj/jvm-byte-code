@@ -1,8 +1,11 @@
 package ru.napadovskiyB;
 
-import java.util.LinkedList;
-import java.util.Iterator;
+
 import java.util.List;
+import java.util.LinkedList;
+import java.util.Queue;
+import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 /**
  * Class implements interface SimpleTree.
@@ -15,6 +18,17 @@ class MySimpleTree<E extends Comparable<E>> implements SimpleTree<E> {
      * root element.
      */
     private Node<E> root;
+
+    /**
+     * size of tree.
+     */
+    private int size = 0;
+
+    /**
+     *
+     */
+    private int indexLastElement = 0;
+
 
     /**
      * Method check element with parent.
@@ -37,9 +51,9 @@ class MySimpleTree<E extends Comparable<E>> implements SimpleTree<E> {
     }
 
     /**
-     * Method return list children of root.
-     * @return child list.
-     */
+    * Method return list children of root.
+    * @return child list.
+    */
     public List<Node<E>> getListOfChild() {
         return root.getChildren();
     }
@@ -67,10 +81,39 @@ class MySimpleTree<E extends Comparable<E>> implements SimpleTree<E> {
         return result;
     }
 
-     /**
-     * Inner class for save element.
-     * @param <E> generic.
+
+    /**
+     *Method return size of tree.
+     * @return size tree.
      */
+    public int getSize() {
+        return size;
+    }
+
+    /**
+     * Method feel ArrayList for iterator.
+     * @param resultQueue list of iterator.
+     * @param top parent.
+     * @return list.
+     */
+    private Queue<Node<E>> filAllElementByTree(Queue<Node<E>> resultQueue, Node<E> top) {
+        if (resultQueue.size() == 0) {
+            resultQueue.add(top);
+        }
+
+        for (Node<E> tmpTop :top.getChildren()) {
+            resultQueue.add(tmpTop);
+            filAllElementByTree(resultQueue, tmpTop);
+        }
+
+        return resultQueue;
+    }
+
+
+    /**
+    * Inner class for save element.
+    * @param <E> generic.
+    */
     private class Node<E> {
         /**
          * list with child element.
@@ -78,27 +121,35 @@ class MySimpleTree<E extends Comparable<E>> implements SimpleTree<E> {
         private List<Node<E>> children;
 
         /**
-         * value element.
-         */
+        * value element.
+        */
         private E value;
 
         /**
+         * index of element.
+         */
+        private int elementIndex = 0;
+
+         /**
          * Constructor with parameters.
          * @param value for add.
          */
         Node(E value) {
             this.value = value;
             this.children = new LinkedList<>();
+            this.elementIndex = indexLastElement++;
+            size++;
 
         }
 
-         /**
-          * Method return list of children.
-          * @return list.
-          */
+        /**
+         * Method return list of children.
+         * @return list.
+         */
         public List<Node<E>> getChildren() {
             return children;
         }
+
      }
 
     /**
@@ -109,13 +160,17 @@ class MySimpleTree<E extends Comparable<E>> implements SimpleTree<E> {
     public Iterator<E> iterator() {
         return new Iterator<E>() {
 
+            private int currentIndex = 0;
+
+            private Queue<Node<E>> queue = filAllElementByTree(new LinkedList<Node<E>>(), root);
+
             /**
              *
              * @return
              */
             @Override
             public boolean hasNext() {
-                return false;
+                return (!this.queue.isEmpty());
             }
 
             /**
@@ -124,7 +179,13 @@ class MySimpleTree<E extends Comparable<E>> implements SimpleTree<E> {
              */
             @Override
             public E next() {
-                return null;
+                E result = null;
+                if (hasNext()) {
+                    this.currentIndex++;
+                    result = this.queue.poll().value;
+                    return result;
+                }
+                throw new NoSuchElementException();
             }
         };
     }
