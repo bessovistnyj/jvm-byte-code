@@ -29,6 +29,11 @@ class MySimpleTree<E extends Comparable<E>> implements SimpleTree<E> {
      */
     private int indexLastElement = 0;
 
+    /**
+     *
+     */
+    private boolean isBinary;
+
 
     /**
      * Method check element with parent.
@@ -107,6 +112,16 @@ class MySimpleTree<E extends Comparable<E>> implements SimpleTree<E> {
         }
 
         return resultQueue;
+    }
+
+    /**
+     * Method check is binary tre..
+     * @return result.
+     */
+    public boolean isBinary() {
+        Queue<Node<E>> tmpQueue = new LinkedList<>();
+        this.isBinary = (filAllElementByTree(tmpQueue, this.root).size() >= 2);
+        return this.isBinary;
     }
 
 

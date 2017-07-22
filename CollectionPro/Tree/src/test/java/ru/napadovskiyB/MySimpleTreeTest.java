@@ -2,8 +2,6 @@ package ru.napadovskiyB;
 
 import org.junit.Test;
 
-import java.util.Iterator;
-
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
@@ -44,8 +42,18 @@ public class MySimpleTreeTest {
 
         assertThat(this.tree.getListOfChild().size(), is(1));
 
+    }
 
 
+    /**
+     *
+     */
+    @Test
+    public void whenTreeIsBinaryThanReturnTrue() {
+        this.tree.add("FirstElement", "FirstChild");
+        this.tree.add("FirstChild", "SecondChild");
+
+        assertThat(this.tree.isBinary(), is(true));
 
     }
 
