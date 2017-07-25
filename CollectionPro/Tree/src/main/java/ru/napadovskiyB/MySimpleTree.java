@@ -124,12 +124,11 @@ class MySimpleTree<E extends Comparable<E>> implements SimpleTree<E> {
     }
 
     /**
-     *
-     * @param top
-     * @return
+     *Method check all tree.
+     * @param top top tree.
      */
     private void checkBinary(Node<E> top) {
-        if (top.getChildren().size() >=2) {
+        if (top.getChildren().size() >= 2) {
             this.isBinary = true;
         }
         for (Node<E> tmpTop :top.getChildren()) {
