@@ -119,27 +119,55 @@ class MySimpleTree<E extends Comparable<E>> implements SimpleTree<E> {
      * @return result.
      */
     public boolean isBinary() {
-        checkBinary(this.root);
-        return this.isBinary;
+        return checkBinary(this.root);
     }
 
     /**
      *Method check all tree.
      * @param top top tree.
      */
-    private void checkBinary(Node<E> top) {
-        if (top.getChildren().size() >= 2) {
-            this.isBinary = true;
-        }
-        for (Node<E> tmpTop :top.getChildren()) {
-            if (tmpTop.getChildren().size() >= 2) {
-                this.isBinary = true;
-            }
-            checkBinary(tmpTop);
+    private boolean checkBinary(Node<E> top) {
+        boolean result = false;
+         if (top.getChildren().size() >= 2) {
+             result = true;
+         }
+        int index =0;
+        while ((!result) & (index < top.getChildren().size() )) {
+            Node<E> tmpTop = top.getChildren().get(index);
+            result = checkBinary(tmpTop);
+            index++;
 
         }
+        return result;
     }
 
+    private Node<E> addToTree(E e) {
+        Node<E> t = this.root;
+        Node<E> parent;
+        if (t == null) {
+            this.root = new Node<>(e);
+            return this.root;
+        }
+        do {
+            parent = t;
+            if (e.compareTo(t.value) <= 0)
+                t = t.left;
+            else if (e.compareTo(t.value) > 0)
+                t = t.right;
+//            else
+//                //return t.setValue(value);
+        } while (t != null);
+        if (e.compareTo(t.value) <= 0) {
+            parent.left = new Node<>(e);
+        } else {
+            parent.right = new Node<>(e);
+        }
+        return parent;
+    }
+
+    public void add(E e) {
+        addToTree(e);
+    }
 
 
     /**
@@ -156,6 +184,11 @@ class MySimpleTree<E extends Comparable<E>> implements SimpleTree<E> {
         * value element.
         */
         private E value;
+
+        private Node<E> right;
+
+        private Node<E>left;
+
 
         /**
          * index of element.

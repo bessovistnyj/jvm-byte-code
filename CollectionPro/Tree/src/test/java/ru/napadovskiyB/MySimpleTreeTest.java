@@ -2,6 +2,8 @@ package ru.napadovskiyB;
 
 import org.junit.Test;
 
+import java.util.TreeSet;
+
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
@@ -13,7 +15,7 @@ public class MySimpleTreeTest {
     /**
      *
      */
-    private MySimpleTree<String>  tree = new MySimpleTree<>();
+    private MySimpleTree<Integer>  tree = new MySimpleTree<>();
 
     /**
      *
@@ -21,8 +23,8 @@ public class MySimpleTreeTest {
     @Test
     public void whenAddElementSaucesThenReturnSize() {
 
-        this.tree.add("FirstElement", "FirstChild");
-        this.tree.add("FirstElement", "SecondChild");
+        this.tree.add(1, 1);
+        this.tree.add(1, 2);
         final int checkResult = 3;
 
         assertThat(this.tree.getSize(), is(checkResult));
@@ -35,8 +37,8 @@ public class MySimpleTreeTest {
     @Test
     public void whenAddElementNotSaucesThenReturnSize() {
 
-        this.tree.add("FirstElement", "FirstChild");
-        this.tree.add("SecondElement", "SecondChild");
+        this.tree.add(1, 1);
+        this.tree.add(2, 2);
 
         int checkResult = 1;
 
@@ -50,13 +52,23 @@ public class MySimpleTreeTest {
      */
     @Test
     public void whenTreeIsBinaryThanReturnTrue() {
-        this.tree.add("FirstElement", "FirstChild");
-        this.tree.add("FirstChild", "SecondChild");
-        this.tree.add("SecondChild", "ThirdChild");
-        this.tree.add("SecondChild", "ThortChild");
+        this.tree.add(1, 1);
+        this.tree.add(1, 2);
+        this.tree.add(2, 3);
+
 
         assertThat(this.tree.isBinary(), is(true));
+        //TreeSet tre = new TreeSet()
 
     }
+
+    @Test
+    public void whenAddthenTest() {
+        this.tree.add(10);
+        this.tree.add(5);
+        this.tree.add(11);
+
+    }
+
 
 }
