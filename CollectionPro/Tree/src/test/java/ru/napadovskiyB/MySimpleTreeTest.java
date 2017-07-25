@@ -52,6 +52,8 @@ public class MySimpleTreeTest {
     public void whenTreeIsBinaryThanReturnTrue() {
         this.tree.add("FirstElement", "FirstChild");
         this.tree.add("FirstChild", "SecondChild");
+        this.tree.add("SecondChild", "ThirdChild");
+        this.tree.add("SecondChild", "ThortChild");
 
         assertThat(this.tree.isBinary(), is(true));
 

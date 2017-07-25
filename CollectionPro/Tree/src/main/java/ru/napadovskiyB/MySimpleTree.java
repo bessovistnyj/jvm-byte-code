@@ -119,10 +119,28 @@ class MySimpleTree<E extends Comparable<E>> implements SimpleTree<E> {
      * @return result.
      */
     public boolean isBinary() {
-        Queue<Node<E>> tmpQueue = new LinkedList<>();
-        this.isBinary = (filAllElementByTree(tmpQueue, this.root).size() >= 2);
+        checkBinary(this.root);
         return this.isBinary;
     }
+
+    /**
+     *
+     * @param top
+     * @return
+     */
+    private void checkBinary(Node<E> top) {
+        if (top.getChildren().size() >=2) {
+            this.isBinary = true;
+        }
+        for (Node<E> tmpTop :top.getChildren()) {
+            if (tmpTop.getChildren().size() >= 2) {
+                this.isBinary = true;
+            }
+            checkBinary(tmpTop);
+
+        }
+    }
+
 
 
     /**
