@@ -2,8 +2,6 @@ package ru.napadovskiyB;
 
 import org.junit.Test;
 
-import java.util.TreeSet;
-
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
@@ -43,32 +41,34 @@ public class MySimpleTreeTest {
         int checkResult = 1;
 
         assertThat(this.tree.getListOfChild().size(), is(1));
-
     }
-
 
     /**
      *
      */
     @Test
     public void whenTreeIsBinaryThanReturnTrue() {
-        this.tree.add(1, 1);
         this.tree.add(1, 2);
-        this.tree.add(2, 3);
-
+        this.tree.add(1, 4);
+        this.tree.add(3, 5);
 
         assertThat(this.tree.isBinary(), is(true));
-        //TreeSet tre = new TreeSet()
 
     }
 
+    /**
+     *
+     */
     @Test
-    public void whenAddthenTest() {
-        this.tree.add(10);
+    public void whenAddSuccessfulThenReturnSize() {
+        this.tree.add(24);
         this.tree.add(5);
-        this.tree.add(11);
+        this.tree.add(26);
+
+        final int checkResult = 3;
+
+        assertThat(this.tree.getSize(), is(checkResult));
 
     }
-
 
 }

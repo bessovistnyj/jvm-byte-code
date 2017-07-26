@@ -123,50 +123,48 @@ class MySimpleTree<E extends Comparable<E>> implements SimpleTree<E> {
     }
 
     /**
-     *Method check all tree.
-     * @param top top tree.
+     * Method che is tree binary.
+     * @param top top element.
+     * @return result.
      */
     private boolean checkBinary(Node<E> top) {
         boolean result = false;
          if (top.getChildren().size() >= 2) {
              result = true;
          }
-        int index =0;
-        while ((!result) & (index < top.getChildren().size() )) {
+        int index = 0;
+        if ((!result) & (index < top.getChildren().size())) {
             Node<E> tmpTop = top.getChildren().get(index);
             result = checkBinary(tmpTop);
             index++;
-
         }
         return result;
     }
 
-    private Node<E> addToTree(E e) {
+    /**
+     * Method add element to tree.
+     * @param e value.
+     */
+    public void add(E e) {
         Node<E> t = this.root;
         Node<E> parent;
         if (t == null) {
             this.root = new Node<>(e);
-            return this.root;
-        }
-        do {
-            parent = t;
-            if (e.compareTo(t.value) <= 0)
-                t = t.left;
-            else if (e.compareTo(t.value) > 0)
-                t = t.right;
-//            else
-//                //return t.setValue(value);
-        } while (t != null);
-        if (e.compareTo(t.value) <= 0) {
-            parent.left = new Node<>(e);
         } else {
-            parent.right = new Node<>(e);
+            do {
+                parent = t;
+                if (e.compareTo(t.value) <= 0) {
+                    t = t.left;
+                } else if (e.compareTo(t.value) > 0) {
+                    t = t.right;
+                }
+            } while (t != null);
+            if (e.compareTo(parent.value) <= 0) {
+                parent.left = new Node<>(e);
+            } else {
+                parent.right = new Node<>(e);
+            }
         }
-        return parent;
-    }
-
-    public void add(E e) {
-        addToTree(e);
     }
 
 
@@ -185,9 +183,15 @@ class MySimpleTree<E extends Comparable<E>> implements SimpleTree<E> {
         */
         private E value;
 
+        /**
+         * right element.
+         */
         private Node<E> right;
 
-        private Node<E>left;
+        /**
+         * left element.
+         */
+        private Node<E> left;
 
 
         /**
@@ -203,6 +207,8 @@ class MySimpleTree<E extends Comparable<E>> implements SimpleTree<E> {
             this.value = value;
             this.children = new LinkedList<>();
             this.elementIndex = indexLastElement++;
+            this.right = null;
+            this.left = null;
             size++;
 
         }
