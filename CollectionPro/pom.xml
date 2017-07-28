@@ -8,9 +8,18 @@
 		<artifactId>Java_Junior</artifactId>
 		<version>1.0</version>
 	</parent>
-	
+
+
 	<build>
 		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-deploy-plugin</artifactId>
+				<version>2.7</version>
+				<configuration>
+					<skip>true</skip>
+				</configuration>
+			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
@@ -94,7 +103,12 @@
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <version>4.12</version>
-        </dependency>
+	    </dependency>
+		<dependency>
+			 <groupId>org.apache.maven.plugins</groupId>
+			 <artifactId>maven-install-plugin</artifactId>
+			 <version>2.4</version>
+		</dependency>
         <dependency>
 			<groupId>org.hamcrest</groupId>
             <artifactId>hamcrest-all</artifactId>

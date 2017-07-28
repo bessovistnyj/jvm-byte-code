@@ -7,7 +7,18 @@
 	
 	<build>
 		<plugins>
-			<plugin>
+            <plugin>
+                <artifactId>maven-site-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>attach-descriptor</id>
+                        <goals>
+                            <goal>attach-descriptor</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>2.3.2</version>
@@ -84,6 +95,12 @@
             <artifactId>junit</artifactId>
             <version>4.12</version>
         </dependency>
+		<dependency>
+			<groupId>org.apache.maven.plugins</groupId>
+			<artifactId>maven-install-plugin</artifactId>
+			 <version>2.4</version>
+		</dependency>
+
         <dependency>
 			<groupId>org.hamcrest</groupId>
             <artifactId>hamcrest-all</artifactId>
