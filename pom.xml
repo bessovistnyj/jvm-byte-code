@@ -87,6 +87,7 @@
 		<module>chapter_003</module>
 		<module>CollectionPro</module>
 		<module>Input_Output</module>
+		<module>Multithreading</module>
 	</modules>
 	
 	  <dependencies>
