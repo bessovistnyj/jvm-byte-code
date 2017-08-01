@@ -60,7 +60,7 @@ public class XmlParser {
         while (streamReader.hasNext()) {
             if (streamReader.isStartElement()) {
                 if (streamReader.getLocalName().equals("AddOrder")) {
-                    int a =1;
+                    addOrderToBook(streamReader);
                 } else if (streamReader.getLocalName().equals("DeleteOrder")) {
                     int a =1;
                 }
@@ -68,6 +68,20 @@ public class XmlParser {
             }
             streamReader.next();
         }
+
+    }
+
+    /**
+     *
+     * @param stream
+     */
+    private void addOrderToBook(XMLStreamReader stream) {
+        String bookNumber = stream.getAttributeValue(0);
+        String operation = stream.getAttributeValue(1);
+
+        Order bookOrder = new Order();
+        int a = 1;
+
 
     }
 
