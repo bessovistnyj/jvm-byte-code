@@ -13,6 +13,9 @@ public class ArraySubdivision {
      */
     private ArrayList<Subdivision> arrayList;
 
+    public ArrayList<Subdivision> getArrayList() {
+        return this.arrayList;
+    }
 
     /**
      *
@@ -27,7 +30,14 @@ public class ArraySubdivision {
      * @return
      */
     private boolean checkRootElement(String code) {
-        return this.arrayList.contains(code);
+        boolean result = false;
+        for (Subdivision checkCode: this.arrayList) {
+            if (checkCode.getCode().equals(code)) {
+                result = true;
+                break;
+            }
+        }
+        return result;
     }
 
     private String[] returnArrayCode(String code) {
@@ -38,21 +48,15 @@ public class ArraySubdivision {
 
     public void addElement(String code) {
         String[] check =  returnArrayCode(code);
+        String newCode = "";
         for (String tmpCode:check) {
-            //if (tmpCode.length() == 2 ) {
-                if (!checkRootElement(tmpCode)) {
-                    Subdivision subdivision = new Subdivision(tmpCode);
-                    this.arrayList.add(subdivision);
-                }
-//            } else {
-//
-//            }
+            newCode = newCode  + tmpCode;
+            if (!checkRootElement(newCode)) {
+                Subdivision subdivision = new Subdivision(newCode);
+                this.arrayList.add(subdivision);
+            }
+            newCode = newCode+"\\";
         }
-
-//        if (!checkRootElement()) {
-//            Subdivision newElement = new Subdivision(code);
-//        }
-
     }
 
 
