@@ -1,5 +1,10 @@
 package ru.napadovskiyB;
 
+import com.sun.org.apache.xpath.internal.operations.Or;
+
+import java.util.Comparator;
+import java.util.stream.Collector;
+
 /**
  * Package of CollectionPro finalTask.
  * Class for order have info about order.
@@ -7,7 +12,7 @@ package ru.napadovskiyB;
  * @version 1.0
  * @since 01.08.2017
  */
-public class Order {
+public class Order  {
 
     /**
      * price of order.
@@ -23,6 +28,20 @@ public class Order {
      * order id.
      */
     private int idOrder;
+
+    /**
+     *
+     * @param price
+     * @param volume
+     * @param idOrder
+     * @param typeOperation
+     */
+    public Order(boolean typeOperation,double price, int volume, int idOrder) {
+        this.price = price;
+        this.volume = volume;
+        this.idOrder = idOrder;
+        this.typeOperation = typeOperation;
+    }
 
     /**
      * operation order True - buy, False -sell.
@@ -94,4 +113,5 @@ public class Order {
     public void setTypeOperation(boolean typeOperation) {
         this.typeOperation = typeOperation;
     }
+
 }

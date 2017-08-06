@@ -24,6 +24,7 @@ public class XmlParser {
      */
     private HashMap<String, OrderBook> orderBooks = new HashMap<>();
 
+
     /**
      *
      * @return
@@ -68,6 +69,7 @@ public class XmlParser {
             }
             streamReader.next();
         }
+        int a =1;
 
     }
 
@@ -78,10 +80,25 @@ public class XmlParser {
     private void addOrderToBook(XMLStreamReader stream) {
         String bookNumber = stream.getAttributeValue(0);
         String operation = stream.getAttributeValue(1);
+        Double price = Double.valueOf(stream.getAttributeValue(2));
+        Integer volume = Integer.valueOf(stream.getAttributeValue(3));
+        Integer id = Integer.valueOf(stream.getAttributeValue(4));
+        boolean typeOperation = false;
+        OrderBook newOrderBook;
+        if (operation.equals("BUY")) {
+            typeOperation = true;
+        }
 
-        Order bookOrder = new Order();
-        int a = 1;
+        Order newOrder = new Order(typeOperation,price,volume,id);
 
+        if (!this.orderBooks.containsKey(bookNumber)) {
+            newOrderBook = new OrderBook();
+            this.orderBooks.put(bookNumber,newOrderBook);
+        } else {
+            newOrderBook = this.orderBooks.get(bookNumber);
+
+        }
+        newOrderBook.addOrder(newOrder);
 
     }
 

@@ -2,6 +2,9 @@ package ru.napadovskiyB;
 
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 
 /**
  *
@@ -11,9 +14,9 @@ public class ArraySubdivision {
     /**
      *
      */
-    private ArrayList<Subdivision> arrayList;
+    private ArrayList<String> arrayList;
 
-    public ArrayList<Subdivision> getArrayList() {
+    public ArrayList<String> getArrayList() {
         return this.arrayList;
     }
 
@@ -21,7 +24,7 @@ public class ArraySubdivision {
      *
      */
     public ArraySubdivision() {
-        this.arrayList = new ArrayList<Subdivision>();
+        this.arrayList = new ArrayList<String>();
 
     }
 
@@ -31,8 +34,8 @@ public class ArraySubdivision {
      */
     private boolean checkRootElement(String code) {
         boolean result = false;
-        for (Subdivision checkCode: this.arrayList) {
-            if (checkCode.getCode().equals(code)) {
+        for (String checkCode: this.arrayList) {
+            if (checkCode.equals(code)) {
                 result = true;
                 break;
             }
@@ -40,24 +43,56 @@ public class ArraySubdivision {
         return result;
     }
 
-    private String[] returnArrayCode(String code) {
+    private ArrayList returnArrayCode(String code) {
         String[] result =  code.split("\\\\");
-        return result;
+
+        ArrayList<String> resultArray = new ArrayList<>();
+
+        for (String elem : result) {
+            resultArray.add(elem);
+        }
+
+        return resultArray;
 
     }
 
     public void addElement(String code) {
-        String[] check =  returnArrayCode(code);
+        ArrayList<String> check =  returnArrayCode(code);
         String newCode = "";
         for (String tmpCode:check) {
             newCode = newCode  + tmpCode;
             if (!checkRootElement(newCode)) {
-                Subdivision subdivision = new Subdivision(newCode);
-                this.arrayList.add(subdivision);
+                //Subdivision subdivision = new Subdivision(newCode);
+                this.arrayList.add(newCode);
             }
             newCode = newCode+"\\";
         }
     }
 
+    public void sortByIncrease() {
+        Collections.sort(this.arrayList, new Comparator<String>() {
+            @Override
+            public int compare(String o1, String o2) {
+                return o1.compareTo(o2);
+            }
+        });
+    }
 
+    public void sortByDecrease() {
+        Collections.sort(this.arrayList, new Comparator<String>() {
+            @Override
+            public int compare(String o1, String o2) {
+                int result = o2.compareTo(o1);
+                ArrayList<String> code1  = returnArrayCode(o1);
+                ArrayList<String> code2  = returnArrayCode(o2);
+                while (code1.iterator().hasNext() && code2.iterator().hasNext() && result ==0) {
+                    result = code2.iterator().next().compareTo(code1.iterator().next());
+                }
+                if (code2.iterator().hasNext() && result == 0) {
+                    result = -1;
+                }
+                return result;
+            }
+        });
+    }
 }

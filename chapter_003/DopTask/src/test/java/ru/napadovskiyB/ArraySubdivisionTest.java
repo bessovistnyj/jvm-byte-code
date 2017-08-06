@@ -12,11 +12,13 @@ public class ArraySubdivisionTest {
 
         arraySubdivision.addElement("K1\\SK1");
         arraySubdivision.addElement("K1\\SK2");
-        arraySubdivision.addElement("K1\\SK1\\SSK1");
         arraySubdivision.addElement("K1\\SK1\\SSK2");
+        arraySubdivision.addElement("K1\\SK1\\SSK1");
         arraySubdivision.addElement("K2");
-        arraySubdivision.addElement("K2\\SK1\\SSK1");
         arraySubdivision.addElement("K2\\SK1\\SSK2");
+        arraySubdivision.addElement("K2\\SK1\\SSK1");
+
+        arraySubdivision.sortByIncrease();
         int a =1;
     }
 
@@ -30,7 +32,10 @@ public class ArraySubdivisionTest {
         arraySubdivision.addElement("K2");
         arraySubdivision.addElement("K2\\SK1\\SSK1");
         arraySubdivision.addElement("K2\\SK1\\SSK2");
-        Subdivision subdivision = new Subdivision("K3");
-        arraySubdivision.getArrayList().sort(subdivision.sortByIncrease());
+        arraySubdivision.sortByDecrease();
+        int a =1;
+
+//        Subdivision subdivision = new Subdivision("K3");
+//        arraySubdivision.getArrayList().sort(subdivision.sortByIncrease());
     }
 }
