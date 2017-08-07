@@ -25,6 +25,10 @@ public class OrderBook {
         }
     });
 
+    /**
+     *
+     * @param order
+     */
     public void addOrder(Order order) {
         this.unsortedMap.put(order.getIdOrder(),order);
 
@@ -35,6 +39,10 @@ public class OrderBook {
         }
     }
 
+    /**
+     *
+     * @param order
+     */
     private void addToBuySortMap(Order order) {
 
         if (this.buyTree.containsKey(order.getPrice())) {
@@ -46,6 +54,10 @@ public class OrderBook {
         }
     }
 
+    /**
+     *
+     * @param order
+     */
     private void addToSellMap(Order order) {
 
         if (this.sellTree.containsKey(order.getPrice())) {
@@ -57,6 +69,21 @@ public class OrderBook {
         }
     }
 
-
+    /**
+     *
+     * @param id
+     */
+    public void deleteOrder(Integer id) {
+        Order deleteOrder = unsortedMap.get(id);
+        if (this.unsortedMap.containsKey(id)) {
+            this.unsortedMap.remove(id);
+            if (this.buyTree.containsKey(deleteOrder.getPrice())) {
+                this.buyTree.get(deleteOrder.getPrice()).remove(deleteOrder.getIdOrder());
+            }
+            if (this.sellTree.containsKey(deleteOrder.getPrice())) {
+                this.sellTree.get(deleteOrder.getPrice()).remove(deleteOrder.getIdOrder());
+            }
+        }
+    }
 
 }

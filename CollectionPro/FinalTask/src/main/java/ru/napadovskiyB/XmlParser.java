@@ -63,7 +63,7 @@ public class XmlParser {
                 if (streamReader.getLocalName().equals("AddOrder")) {
                     addOrderToBook(streamReader);
                 } else if (streamReader.getLocalName().equals("DeleteOrder")) {
-                    int a =1;
+                    deleteOrder(streamReader);
                 }
 
             }
@@ -87,6 +87,8 @@ public class XmlParser {
         OrderBook newOrderBook;
         if (operation.equals("BUY")) {
             typeOperation = true;
+        } else {
+            typeOperation = false;
         }
 
         Order newOrder = new Order(typeOperation,price,volume,id);
@@ -102,7 +104,11 @@ public class XmlParser {
 
     }
 
-
+    private void deleteOrder(XMLStreamReader stream) {
+        String bookNumber = stream.getAttributeValue(0);
+        Integer id = Integer.valueOf(stream.getAttributeValue(1));
+        this.orderBooks.get(bookNumber).deleteOrder(id);
+    }
 
 
 }
