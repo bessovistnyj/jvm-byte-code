@@ -1,10 +1,5 @@
 package ru.napadovskiyB;
 
-import com.sun.org.apache.xpath.internal.operations.Or;
-
-import java.util.Comparator;
-import java.util.stream.Collector;
-
 /**
  * Package of CollectionPro finalTask.
  * Class for order have info about order.
@@ -30,24 +25,24 @@ public class Order  {
     private int idOrder;
 
     /**
-     *
-     * @param price
-     * @param volume
-     * @param idOrder
-     * @param typeOperation
+     * operation order True - buy, False -sell.
      */
-    public Order(boolean typeOperation,double price, int volume, int idOrder) {
+    private boolean typeOperation;
+
+
+    /**
+     * Constructor for class.
+     * @param price price order.
+     * @param volume vo;ume order.
+     * @param idOrder id order.
+     * @param typeOperation type of operation buy-true, sell-false.
+     */
+    public Order(boolean typeOperation, double price, int volume, int idOrder) {
         this.price = price;
         this.volume = volume;
         this.idOrder = idOrder;
         this.typeOperation = typeOperation;
     }
-
-    /**
-     * operation order True - buy, False -sell.
-     */
-    private boolean typeOperation;
-
 
     /**
      * Method return price order.
@@ -67,7 +62,7 @@ public class Order  {
 
     /**
      * Method return id order.
-     * @return
+     * @return id order.
      */
     public int getIdOrder() {
         return idOrder;
@@ -76,7 +71,7 @@ public class Order  {
     /**
      * Method return type of operation.
      * True is buy, False - sell.
-     * @return
+     * @return type of order.
      */
     public boolean isTypeOperation() {
         return typeOperation;
@@ -84,7 +79,7 @@ public class Order  {
 
     /**
      * Method set price order.
-     * @param price
+     * @param price of order.
      */
     public void setPrice(double price) {
         this.price = price;
@@ -92,7 +87,7 @@ public class Order  {
 
     /**
      * Method set volume order.
-     * @param volume
+     * @param volume volume order.
      */
     public void setVolume(int volume) {
         this.volume = volume;
@@ -100,7 +95,7 @@ public class Order  {
 
     /**
      * Method set id order.
-     * @param idOrder
+     * @param idOrder order.
      */
     public void setIdOrder(int idOrder) {
         this.idOrder = idOrder;
@@ -108,7 +103,7 @@ public class Order  {
 
     /**
      * Method set type of order.
-     * @param typeOperation
+     * @param typeOperation order.
      */
     public void setTypeOperation(boolean typeOperation) {
         this.typeOperation = typeOperation;

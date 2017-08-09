@@ -1,24 +1,39 @@
 package ru.napadovskiyB;
 
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.TreeMap;
+import java.util.Comparator;
+import java.util.Iterator;
 
 /**
- *
+ * Package of CollectionPro finalTask.
+ * Main class for order book.
+ * @author Napadovskiy Bohdan
+ * @version 1.0
+ * @since 09.08.2017
  */
 public class OrderBook {
 
+    /**
+     * Unsorted map for all orders.
+     */
     private HashMap<Integer, Order> unsortedMap = new HashMap<Integer, Order>();
 
-    private TreeMap<Double, HashMap<Integer,Order>> buyTree = new TreeMap<>(new Comparator<Double>() {
+    /**
+     * TreeMap for buy orders.
+     */
+    private TreeMap<Double, HashMap<Integer, Order>> buyTree = new TreeMap<>(new Comparator<Double>() {
         @Override
         public int compare(Double o1, Double o2) {
             return o1.compareTo(o2);
         }
     });
 
-
-    private TreeMap<Double, HashMap<Integer,Order>> sellTree = new TreeMap<>(new Comparator<Double>() {
+    /***
+     *TreeMap for sell orders.
+     */
+    private TreeMap<Double, HashMap<Integer, Order>> sellTree = new TreeMap<>(new Comparator<Double>() {
         @Override
         public int compare(Double o1, Double o2) {
             return -o1.compareTo(o2);
@@ -26,11 +41,11 @@ public class OrderBook {
     });
 
     /**
-     *
-     * @param order
+     *Method add order too maps.
+     * @param order order for add.
      */
     public void addOrder(Order order) {
-        this.unsortedMap.put(order.getIdOrder(),order);
+        this.unsortedMap.put(order.getIdOrder(), order);
 
         if (order.isTypeOperation()) {
             addToBuySortMap(order);
@@ -40,8 +55,8 @@ public class OrderBook {
     }
 
     /**
-     *
-     * @param order
+     * Method for add orders too buy map.
+     * @param order for add.
      */
     private void addToBuySortMap(Order order) {
 
@@ -49,14 +64,14 @@ public class OrderBook {
             this.buyTree.get(order.getPrice()).put(order.getIdOrder(), order);
         } else {
             HashMap<Integer, Order> tmpMap = new HashMap<>();
-            tmpMap.put(order.getIdOrder(),order);
-            this.buyTree.put(order.getPrice(),tmpMap);
+            tmpMap.put(order.getIdOrder(), order);
+            this.buyTree.put(order.getPrice(), tmpMap);
         }
     }
 
     /**
-     *
-     * @param order
+     * Method add order to sellMap.
+     * @param order too add.
      */
     private void addToSellMap(Order order) {
 
@@ -64,14 +79,14 @@ public class OrderBook {
             this.sellTree.get(order.getPrice()).put(order.getIdOrder(), order);
         } else {
             HashMap<Integer, Order> tmpMap = new HashMap<>();
-            tmpMap.put(order.getIdOrder(),order);
-            this.sellTree.put(order.getPrice(),tmpMap);
+            tmpMap.put(order.getIdOrder(), order);
+            this.sellTree.put(order.getPrice(), tmpMap);
         }
     }
 
     /**
-     *
-     * @param id
+     * Method delete order from all maps.
+     * @param id id order for delete
      */
     public void deleteOrder(Integer id) {
         Order deleteOrder = unsortedMap.get(id);
@@ -93,8 +108,12 @@ public class OrderBook {
         }
     }
 
-
-    private int takeSummAllEllemnt (HashMap<Integer,Order> mapForCheck) {
+    /**
+     * Method calculate sum all element in tree.
+     * @param mapForCheck map for calculate.
+     * @return result.
+     */
+    private int takeSumAllElement(HashMap<Integer, Order> mapForCheck) {
         int result = 0;
         for (Order tmpOrder:mapForCheck.values()) {
             result = result + tmpOrder.getVolume();
@@ -102,12 +121,17 @@ public class OrderBook {
         return result;
     }
 
-    private void calculateVolume(HashMap<Integer,Order> editMap,int value) {
+    /**
+     * Method calculate value orders.
+     * @param editMap map for edit
+     * @param value value for check.
+     */
+    private void calculateVolume(HashMap<Integer, Order> editMap, int value) {
         Iterator<Order> iterMap = editMap.values().iterator();
         while (iterMap.hasNext()) {
             Order nextOrder = iterMap.next();
             if (value <= nextOrder.getVolume()) {
-                nextOrder.setVolume(nextOrder.getVolume()-value);
+                nextOrder.setVolume(nextOrder.getVolume() - value);
                 break;
             } else {
                 iterMap.remove();
@@ -117,23 +141,26 @@ public class OrderBook {
     }
 
 
+    /**
+     *
+     */
     public void checkElement() {
         Iterator<Double> buyKeys = this.buyTree.keySet().iterator();
         Iterator<Double> sellKeys = this.sellTree.keySet().iterator();
         if (buyKeys.hasNext() && sellKeys.hasNext()) {
             Double buyPrice = buyKeys.next();
             Double sellPrice = sellKeys.next();
-            while(buyKeys.hasNext() && sellKeys.hasNext()) {
+            while (buyKeys.hasNext() && sellKeys.hasNext()) {
                 HashMap buyElements = this.buyTree.get(buyPrice);
                 HashMap sellElements = this.sellTree.get(sellPrice);
-                int sumAllBuyElement = takeSummAllEllemnt(buyElements);
-                int sumAllSellElement = takeSummAllEllemnt(sellElements);
+                int sumAllBuyElement = takeSumAllElement(buyElements);
+                int sumAllSellElement = takeSumAllElement(sellElements);
                 if ((sellPrice >= buyPrice) && (sumAllBuyElement > sumAllSellElement)) {
-                    calculateVolume(buyElements,sumAllSellElement) ;
+                    calculateVolume(buyElements, sumAllSellElement);
                     sellKeys.remove();
                     sellPrice = sellKeys.next();
                 } else if ((sellPrice >= buyPrice) && (sumAllBuyElement < sumAllSellElement)) {
-                    calculateVolume(sellElements,sumAllBuyElement) ;
+                    calculateVolume(sellElements, sumAllBuyElement);
                     buyKeys.remove();
                     buyPrice = buyKeys.next();
                 } else if ((sellPrice >= buyPrice) && (sumAllBuyElement == sumAllSellElement)) {
@@ -148,5 +175,14 @@ public class OrderBook {
             }
         }
     }
+
+    /**
+     * Method return main map.
+     * @return map;
+     */
+    public HashMap<Integer, Order> getUnsortedMap() {
+        return this.unsortedMap;
+    }
+
 
 }

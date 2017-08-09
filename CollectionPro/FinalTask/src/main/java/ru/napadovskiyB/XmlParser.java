@@ -1,6 +1,4 @@
-
 package ru.napadovskiyB;
-
 
 import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamException;
@@ -20,14 +18,14 @@ import java.util.HashMap;
 public class XmlParser {
 
     /**
-     *
+     * Map for all order books.
      */
     private HashMap<String, OrderBook> orderBooks = new HashMap<>();
 
 
     /**
-     *
-     * @return
+     * Method return file name for properties.
+     * @return file name
      */
     public String getFileName() {
         String fileName = "";
@@ -35,7 +33,7 @@ public class XmlParser {
         Settings settings = new Settings();
         ClassLoader loader = Settings.class.getClassLoader();
 
-        try (InputStream is = loader.getResourceAsStream("app.properties")){
+        try (InputStream is = loader.getResourceAsStream("app.properties")) {
             settings.load(is);
 
         } catch (Exception ex) {
@@ -47,9 +45,9 @@ public class XmlParser {
 
 
     /**
-     *
-     * @throws FileNotFoundException
-     * @throws XMLStreamException
+     * Method read xml file.
+     * @throws FileNotFoundException exception.
+     * @throws XMLStreamException exception.
      */
     public void readXMLFile() throws FileNotFoundException, XMLStreamException {
 
@@ -65,24 +63,28 @@ public class XmlParser {
                 } else if (streamReader.getLocalName().equals("DeleteOrder")) {
                     deleteOrder(streamReader);
                 }
-
             }
             streamReader.next();
         }
-        int a =1;
 
     }
 
     /**
-     *
-     * @param stream
+     *Method read XML and add too map Order.
+     * @param stream stream.
      */
     private void addOrderToBook(XMLStreamReader stream) {
-        String bookNumber = stream.getAttributeValue(0);
-        String operation = stream.getAttributeValue(1);
-        Double price = Double.valueOf(stream.getAttributeValue(2));
-        Integer volume = Integer.valueOf(stream.getAttributeValue(3));
-        Integer id = Integer.valueOf(stream.getAttributeValue(4));
+        final int bookNum =  0;
+        final int operationNum = 1;
+        final int priceNum = 2;
+        final int volumeNum = 3;
+        final int idNum = 4;
+
+        String bookNumber = stream.getAttributeValue(bookNum);
+        String operation = stream.getAttributeValue(operationNum);
+        Double price = Double.valueOf(stream.getAttributeValue(priceNum));
+        Integer volume = Integer.valueOf(stream.getAttributeValue(volumeNum));
+        Integer id = Integer.valueOf(stream.getAttributeValue(idNum));
         boolean typeOperation = false;
         OrderBook newOrderBook;
         if (operation.equals("BUY")) {
@@ -91,22 +93,28 @@ public class XmlParser {
             typeOperation = false;
         }
 
-        Order newOrder = new Order(typeOperation,price,volume,id);
+        Order newOrder = new Order(typeOperation, price, volume, id);
 
         if (!this.orderBooks.containsKey(bookNumber)) {
             newOrderBook = new OrderBook();
-            this.orderBooks.put(bookNumber,newOrderBook);
+            this.orderBooks.put(bookNumber, newOrderBook);
         } else {
             newOrderBook = this.orderBooks.get(bookNumber);
 
         }
         newOrderBook.addOrder(newOrder);
-
     }
 
+    /**
+     * Method delete order from book.
+     * @param stream stream.
+     */
     private void deleteOrder(XMLStreamReader stream) {
-        String bookNumber = stream.getAttributeValue(0);
-        Integer id = Integer.valueOf(stream.getAttributeValue(1));
+        final int bookNum =  0;
+        final int idNum = 4;
+
+        String bookNumber = stream.getAttributeValue(bookNum);
+        Integer id = Integer.valueOf(stream.getAttributeValue(idNum));
         this.orderBooks.get(bookNumber).deleteOrder(id);
     }
 
