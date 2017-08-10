@@ -122,11 +122,11 @@ public class OrderBook {
     }
 
     /**
-     * Method calculate value orders.
+     * Method check value with value in map.
      * @param editMap map for edit
      * @param value value for check.
      */
-    private void calculateVolume(HashMap<Integer, Order> editMap, int value) {
+    private void checkVolume(HashMap<Integer, Order> editMap, int value) {
         Iterator<Order> iterMap = editMap.values().iterator();
         while (iterMap.hasNext()) {
             Order nextOrder = iterMap.next();
@@ -142,9 +142,9 @@ public class OrderBook {
 
 
     /**
-     *
+     * Method offset orders in book.
      */
-    public void checkElement() {
+    public void offsettingOrders() {
         Iterator<Double> buyKeys = this.buyTree.keySet().iterator();
         Iterator<Double> sellKeys = this.sellTree.keySet().iterator();
         if (buyKeys.hasNext() && sellKeys.hasNext()) {
@@ -156,11 +156,11 @@ public class OrderBook {
                 int sumAllBuyElement = takeSumAllElement(buyElements);
                 int sumAllSellElement = takeSumAllElement(sellElements);
                 if ((sellPrice >= buyPrice) && (sumAllBuyElement > sumAllSellElement)) {
-                    calculateVolume(buyElements, sumAllSellElement);
+                    checkVolume(buyElements, sumAllSellElement);
                     sellKeys.remove();
                     sellPrice = sellKeys.next();
                 } else if ((sellPrice >= buyPrice) && (sumAllBuyElement < sumAllSellElement)) {
-                    calculateVolume(sellElements, sumAllBuyElement);
+                    checkVolume(sellElements, sumAllBuyElement);
                     buyKeys.remove();
                     buyPrice = buyKeys.next();
                 } else if ((sellPrice >= buyPrice) && (sumAllBuyElement == sumAllSellElement)) {
@@ -174,6 +174,7 @@ public class OrderBook {
 
             }
         }
+
     }
 
     /**
@@ -184,5 +185,33 @@ public class OrderBook {
         return this.unsortedMap;
     }
 
+    /**
+     * Method calculate volume in map.
+     * @param map map.
+     * @return result.
+     */
+    private int calculateValueMap(HashMap<Integer, Order> map) {
+        int result = 0;
+        for (Order order : map.values()) {
+            result += order.getVolume();
+        }
+        return result;
+    }
+
+
+    /**
+     * Method print map.
+     */
+    public void printMap() {
+        Iterator<Double> buyMap = this.buyTree.keySet().iterator();
+        Iterator<Double> sellMap = this.sellTree.keySet().iterator();
+        while (buyMap.hasNext() && sellMap.hasNext()) {
+            Double nextBuy = buyMap.next();
+            Double nextSell = sellMap.next();
+            HashMap<Integer, Order> mapBuy = this.buyTree.get(nextBuy);
+            HashMap<Integer, Order> mapSell = this.sellTree.get(nextSell);
+            System.out.println(String.format("%s@%s - %s@%s", calculateValueMap(mapBuy), nextBuy, calculateValueMap(mapSell), nextSell));
+        }
+    }
 
 }

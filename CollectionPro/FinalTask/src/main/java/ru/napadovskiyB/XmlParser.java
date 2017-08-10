@@ -51,7 +51,6 @@ public class XmlParser {
      */
     public void readXMLFile() throws FileNotFoundException, XMLStreamException {
 
-
         XMLInputFactory factory = XMLInputFactory.newInstance();
         InputStream in = new FileInputStream(getFileName());
         XMLStreamReader streamReader = factory.createXMLStreamReader(in);
@@ -85,6 +84,7 @@ public class XmlParser {
         Double price = Double.valueOf(stream.getAttributeValue(priceNum));
         Integer volume = Integer.valueOf(stream.getAttributeValue(volumeNum));
         Integer id = Integer.valueOf(stream.getAttributeValue(idNum));
+
         boolean typeOperation = false;
         OrderBook newOrderBook;
         if (operation.equals("BUY")) {
@@ -94,7 +94,6 @@ public class XmlParser {
         }
 
         Order newOrder = new Order(typeOperation, price, volume, id);
-
         if (!this.orderBooks.containsKey(bookNumber)) {
             newOrderBook = new OrderBook();
             this.orderBooks.put(bookNumber, newOrderBook);
@@ -111,12 +110,40 @@ public class XmlParser {
      */
     private void deleteOrder(XMLStreamReader stream) {
         final int bookNum =  0;
-        final int idNum = 4;
+        final int idNum = 1;
 
         String bookNumber = stream.getAttributeValue(bookNum);
         Integer id = Integer.valueOf(stream.getAttributeValue(idNum));
         this.orderBooks.get(bookNumber).deleteOrder(id);
     }
 
+    /**
+     *Method print all book.
+     */
+    private void printAllBook() {
+        for (String bookNumber : orderBooks.keySet()) {
+            System.out.println(bookNumber);
+            orderBooks.get(bookNumber).offsettingOrders();
+            orderBooks.get(bookNumber).printMap();
+        }
+    }
+
+    /**
+     * Main method.
+     * @param args argument
+     * @throws Exception exception.
+     */
+    public static void main(String[] args) throws Exception {
+
+        long start = System.currentTimeMillis();
+        XmlParser xmlParser = new XmlParser();
+        xmlParser.readXMLFile();
+        xmlParser.printAllBook();
+
+        long end = System.currentTimeMillis();
+
+        long result = (end - start);
+        System.out.println(result);
+    }
 
 }
