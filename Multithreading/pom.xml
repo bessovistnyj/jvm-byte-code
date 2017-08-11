@@ -89,7 +89,7 @@
 	</properties>
 
 	<modules>
-		<module>Treads</module>
+		<module>Threads</module>
 		<!--<module>GenericPro</module>-->
 		<!--<module>List</module>-->
 		<!--<module>Set</module>-->

@@ -1,5 +1,7 @@
 package ru.napadovskiyB;
 
+import java.util.StringTokenizer;
+
 /**
  * Package of CollectionPro finalTask.
  * Main class for order book.
@@ -11,26 +13,31 @@ public class CheckString implements Runnable {
 
     private String  stringForCheck;
 
-    private int count;
-
     public CheckString(String stringForCheck) {
         this.stringForCheck = stringForCheck;
     }
 
     public int calcSpace() {
         int result = 0;
-        return result;
+        String newString = this.stringForCheck.replaceAll(" ","");
+
+        return result = this.stringForCheck.length()-newString.length();
     }
 
     public int calcWorlds() {
         int result = 0;
+        StringTokenizer stringTokenizer = new StringTokenizer(this.stringForCheck);
+        while (stringTokenizer.hasMoreTokens()) {
+            stringTokenizer.nextToken();
+            result++;
+        }
         return result;
 
     }
 
     @Override
     public void run() {
-        System.out.println(count);
+        System.out.println();
     }
 
 
