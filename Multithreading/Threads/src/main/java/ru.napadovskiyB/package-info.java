@@ -1,5 +1,5 @@
 /**
- * Package of Multithreading treads
+ * Package of Multithreading treads.
  *
  * @author Napadovskiy Bohdan
  * @version 1.0
