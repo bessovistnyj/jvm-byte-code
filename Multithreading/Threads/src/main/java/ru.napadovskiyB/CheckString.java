@@ -21,6 +21,9 @@ public class CheckString  {
         return new Thread() {
             @Override
             public void run() {
+                if (isInterrupted()) {
+                    return;
+                }
                 String newString = stringForCheck.replaceAll(" ", "").trim();
 
                 int result = stringForCheck.length() - newString.length();
@@ -42,6 +45,10 @@ public class CheckString  {
             @Override
             public void run() {
                 int count = 0;
+                if (isInterrupted()) {
+                    return;
+                }
+
                 StringTokenizer stringTokenizer = new StringTokenizer(stringForCheck);
 
                 while (stringTokenizer.hasMoreTokens()) {
@@ -55,19 +62,57 @@ public class CheckString  {
     }
 
     /**
+     * Main thread.
+     * @return thread.
+     */
+    public Thread mainThread() {
+        return new Thread() {
+
+            private String  newString = "а баба галамага тест";
+
+            private final int timeStop = 1000;
+
+            @Override
+            public void run() {
+
+                Thread firstThread = calcSpace(newString);
+                Thread secondThread = calcWorlds(newString);
+
+                try {
+                    firstThread.start();
+                    secondThread.start();
+
+                    firstThread.join(timeStop);
+                    secondThread.join(timeStop);
+
+                    firstThread.interrupt();
+                    secondThread.interrupt();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+    }
+
+    /**
      * Main method.
      * @param args array string.
      */
     public static void main(String[] args) {
-
+        System.out.println("Start");
         CheckString checkString = new CheckString();
-        String  newString = "а баба галамага тест";
+        Thread mainThread = checkString.mainThread();
+        mainThread.start();
 
-        Thread firstThread = checkString.calcSpace(newString);
-        Thread secondThread = checkString.calcWorlds(newString);
+        try {
+            mainThread.join();
 
-        firstThread.start();
-        secondThread.start();
+
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        mainThread.interrupt();
+        System.out.println("Finish");
 
     }
 
