@@ -22,6 +22,7 @@ public class CheckString  {
             @Override
             public void run() {
                 if (isInterrupted()) {
+                    interrupted();
                     return;
                 }
                 String newString = stringForCheck.replaceAll(" ", "").trim();
@@ -46,6 +47,7 @@ public class CheckString  {
             public void run() {
                 int count = 0;
                 if (isInterrupted()) {
+                    interrupted();
                     return;
                 }
 
