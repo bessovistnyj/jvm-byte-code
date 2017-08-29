@@ -13,7 +13,7 @@ public class MySimpleTreeTest {
     /**
      *
      */
-    private MySimpleTree<Integer>  tree = new MySimpleTree<>();
+    private MySimpleTree<String>  tree = new MySimpleTree<>();
 
     /**
      *
@@ -21,8 +21,8 @@ public class MySimpleTreeTest {
     @Test
     public void whenAddElementSaucesThenReturnSize() {
 
-        this.tree.add(1, 1);
-        this.tree.add(1, 2);
+        this.tree.add("1", "1");
+        this.tree.add("1", "2");
         final int checkResult = 3;
 
         assertThat(this.tree.getSize(), is(checkResult));
@@ -35,8 +35,8 @@ public class MySimpleTreeTest {
     @Test
     public void whenAddElementNotSaucesThenReturnSize() {
 
-        this.tree.add(1, 1);
-        this.tree.add(2, 2);
+        this.tree.add("1", "1");
+        this.tree.add("2", "2");
 
         int checkResult = 1;
 
@@ -48,9 +48,10 @@ public class MySimpleTreeTest {
      */
     @Test
     public void whenTreeIsBinaryThanReturnTrue() {
-        this.tree.add(1, 2);
-        this.tree.add(1, 4);
-        this.tree.add(3, 5);
+
+        this.tree.add("1", "2");
+        this.tree.add("1", "4");
+        this.tree.add("3", "5");
 
         assertThat(this.tree.isBinary(), is(true));
 
@@ -61,9 +62,9 @@ public class MySimpleTreeTest {
      */
     @Test
     public void whenAddSuccessfulThenReturnSize() {
-        this.tree.add(24);
-        this.tree.add(5);
-        this.tree.add(26);
+        this.tree.add("24");
+        this.tree.add("5");
+        this.tree.add("26");
 
         final int checkResult = 3;
 
