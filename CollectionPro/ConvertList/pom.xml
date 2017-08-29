@@ -1,25 +1,16 @@
 <project>
 	<modelVersion>4.0.0</modelVersion>
-	<artifactId>CollectionPro</artifactId>
+	<artifactId>ConvertList</artifactId>
 	<packaging>pom</packaging>
 
 	<parent>
 		<groupId>ru.napadovskiu</groupId>
-		<artifactId>Java_Junior</artifactId>
+		<artifactId>CollectionPro</artifactId>
 		<version>1.0</version>
 	</parent>
-
-
+	
 	<build>
 		<plugins>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-deploy-plugin</artifactId>
-				<version>2.7</version>
-				<configuration>
-					<skip>true</skip>
-				</configuration>
-			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
@@ -88,28 +79,12 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 	
-	<modules>
-		<module>Iterator</module>
-		<module>GenericPro</module>
-		<module>List</module>
-		<module>Set</module>
-		<module>Map</module>
-		<module>Tree</module>
-		<module>FinalTask</module>
-		<module>ConvertList</module>
-	</modules>
-	
 	 <dependencies>
 		<dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <version>4.12</version>
-	    </dependency>
-		<dependency>
-			 <groupId>org.apache.maven.plugins</groupId>
-			 <artifactId>maven-install-plugin</artifactId>
-			 <version>2.4</version>
-		</dependency>
+        </dependency>
         <dependency>
 			<groupId>org.hamcrest</groupId>
             <artifactId>hamcrest-all</artifactId>
