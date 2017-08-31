@@ -2,33 +2,40 @@ package ru.napadovskiyB;
 
 
 /**
- * Package of CollectionPro finalTask.
- * Main class for order book.
+ * Package of Multithreading finalTask.
  * @author Napadovskiy Bohdan
  * @version 1.0
- * @since 09.08.2017
+ * @since 29.08.2017
  */
 public class CountChar implements Runnable {
 
+    /**
+     * String for check.
+     */
     private String stringForCheck;
 
-    private int count;
-
+    /**
+     *Constructor for class.
+     * @param stringForCheck string.
+     */
     public CountChar(String stringForCheck) {
         this.stringForCheck = stringForCheck;
     }
 
+    /**
+     *Method run.
+     */
     @Override
     public void run() {
-        char[] charArray = this.stringForCheck.toCharArray();
-        for (int i = 0; i < charArray.length; i++) {
-            this.count++;
+        int count = 0;
+        for (char element : this.stringForCheck.toCharArray()) {
+            count++;
             if (Thread.currentThread().isInterrupted()) {
-                System.out.println("Поток был предварительно прерван число символов: "+this.count);
-                return;
+                System.out.println("Поток был принудительно завершен число символов: " + count);
+                break;
             }
         }
-
-        System.out.println("Поток был завершен число символов: "+this.count);
+        System.out.println("Поток был завершен коректно число символов: " + count);
     }
 }
+
