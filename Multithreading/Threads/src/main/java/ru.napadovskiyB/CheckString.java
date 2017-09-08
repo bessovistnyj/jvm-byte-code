@@ -25,10 +25,14 @@ public class CheckString  {
                     interrupted();
                     return;
                 }
-                String newString = stringForCheck.replaceAll(" ", "").trim();
-
-                int result = stringForCheck.length() - newString.length();
-
+                char checkChar = ' ';
+                int result = 0;
+                char[] charsString = stringForCheck.toCharArray();
+                for (char tmpChar : charsString) {
+                    if (tmpChar == checkChar) {
+                        result++;
+                    }
+                }
                 System.out.println(result);
             }
         };
@@ -108,8 +112,6 @@ public class CheckString  {
 
         try {
             mainThread.join();
-
-
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
