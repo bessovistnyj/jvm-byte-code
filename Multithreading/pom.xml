@@ -92,10 +92,8 @@
 		<module>Threads</module>
 		<module>JMM</module>
 		<module>MonitorSynchronizy</module>
-		<!--<module>Set</module>-->
-		<!--<module>Map</module>-->
-		<!--<module>Tree</module>-->
-		<!--<module>FinalTask</module>-->
+		<module>Wait</module>
+		<module>NonBlockingAlgorithm</module>
 	</modules>
 
 	<dependencies>

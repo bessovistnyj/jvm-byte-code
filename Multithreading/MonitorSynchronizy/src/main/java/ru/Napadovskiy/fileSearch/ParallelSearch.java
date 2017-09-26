@@ -16,17 +16,17 @@ public class ParallelSearch {
     /**
      * root dir.
      */
-    private String root;
+    private final String root;
 
     /**
      * text for search.
      */
-    private String text;
+    private final String text;
 
     /**
      * list exts.
      */
-    private List<String> exts;
+    private final List<String> exts;
 
 
     /**

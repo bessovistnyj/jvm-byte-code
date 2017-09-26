@@ -19,17 +19,17 @@ public class SearchTextInFile implements Runnable {
     /**
      * Queue with file for search text.
      */
-    private ConcurrentLinkedQueue<String> fileQue;
+    private final ConcurrentLinkedQueue<String> fileQue;
 
     /**
      * string for search.
      */
-    private String checkString;
+    private final String checkString;
 
     /**
      * result array.
      */
-    private CopyOnWriteArraySet resultArray;
+    private final CopyOnWriteArraySet resultArray;
 
 
     /**

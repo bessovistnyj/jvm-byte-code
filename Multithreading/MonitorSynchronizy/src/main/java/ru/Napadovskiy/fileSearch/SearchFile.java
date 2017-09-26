@@ -14,17 +14,17 @@ public class SearchFile implements Runnable {
     /**
      * Queue fo file.
      */
-    private ConcurrentLinkedQueue<String> queueFile = new ConcurrentLinkedQueue<>();
+    private final ConcurrentLinkedQueue<String> queueFile;
 
     /**
      * Root dir for search.
      */
-    private String rootDir;
+    private final String rootDir;
 
     /**
      * List of extension.
      */
-    private List<String> exts;
+    private final List<String> exts;
 
     /**
      * Constructor for class.
