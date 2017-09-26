@@ -89,11 +89,13 @@ public class UserStorage {
      * @return result.
      */
     public User getById(int userId) {
-        User result = null;
-        if (this.userStore.containsKey(userId)) {
-            result = this.userStore.get(userId);
+        synchronized (this) {
+            User result = null;
+            if (this.userStore.containsKey(userId)) {
+                result = this.userStore.get(userId);
+            }
+            return result;
         }
-        return result;
     }
 
     /**
