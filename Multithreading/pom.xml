@@ -94,6 +94,7 @@
 		<module>MonitorSynchronizy</module>
 		<module>Wait</module>
 		<module>NonBlockingAlgorithm</module>
+		<module>BomberMan</module>
 	</modules>
 
 	<dependencies>
