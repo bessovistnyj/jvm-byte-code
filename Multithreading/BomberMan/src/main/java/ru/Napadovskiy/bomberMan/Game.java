@@ -30,6 +30,7 @@ public class Game {
 
         Thread heroThread = new Thread(hero);
         heroThread.start();
+        heroThread.interrupt();
     }
 
 }

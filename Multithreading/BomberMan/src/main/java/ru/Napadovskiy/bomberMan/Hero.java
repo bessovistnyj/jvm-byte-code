@@ -112,6 +112,7 @@ public class Hero extends Unit implements Runnable {
         while (true) {
             try {
                 this.moveHero();
+                Thread.sleep(1000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
