@@ -17,9 +17,11 @@ public class Game {
 
         Game game = new Game();
 
-        final int xSize = 4;
+        final int xSize = 8;
 
-        final int ySize = 4;
+        final int ySize = 8;
+
+        final int countOfMonsters = 2;
 
 
         GameBoard gameBoard = new GameBoard(xSize, ySize);
@@ -27,6 +29,11 @@ public class Game {
         Hero hero = new Hero(gameBoard);
         Block block = new Block(gameBoard);
         block.setBlockInPosition(2, 1);
+
+        for (int i =0; i < countOfMonsters; i++) {
+
+            //new Thread(new Monster(gameBoard).setUnitInPosition()).start();
+        }
 
         Thread heroThread = new Thread(hero);
         heroThread.start();
