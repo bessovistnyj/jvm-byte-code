@@ -1,4 +1,4 @@
-package ru.napadovskiyB.Producer;
+package ru.napadovskiyb.Producer;
 
 /**
  * Package of  of Multithreading treads.
@@ -7,7 +7,7 @@ package ru.napadovskiyB.Producer;
  * @version 1.0
  * @since 11.09.2017
  */
-public class Consumer implements Runnable {
+public class Producer implements Runnable {
 
     /**
      * Queue for thread.
@@ -21,26 +21,22 @@ public class Consumer implements Runnable {
 
     /**
      * Constructor for consumer class.
-     * @param queue queue for thread.
+     * @param blockingQueue queue for thread.
      * @param maxNumber max number of thread.
      */
-    public Consumer(SimpleBlockingQueue queue, int maxNumber) {
-        this.blockingQueue = queue;
+    public Producer(SimpleBlockingQueue blockingQueue, int maxNumber) {
+        this.blockingQueue = blockingQueue;
         this.numberMaxElement = maxNumber;
-
     }
-
 
     /**
      * run method for thread.
      */
     @Override
     public void run() {
-
-        for (int i = 0; i < this.numberMaxElement; i++) {
-            System.out.println("get from pool #"  + i);
-            this.blockingQueue.poll();
+        for (int i = 0; i <  this.numberMaxElement; i++) {
+            this.blockingQueue.add(i);
+            System.out.println("Add to pool #" + i);
         }
-
     }
 }

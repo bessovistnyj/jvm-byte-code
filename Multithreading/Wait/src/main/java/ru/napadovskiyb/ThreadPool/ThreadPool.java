@@ -1,4 +1,4 @@
-package ru.napadovskiyB.ThreadPool;
+package ru.napadovskiyb.ThreadPool;
 
 import java.util.LinkedList;
 import java.util.Queue;

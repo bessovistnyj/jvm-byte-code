@@ -1,4 +1,4 @@
-package ru.napadovskiyB.Producer;
+package ru.napadovskiyb.Producer;
 
 import net.jcip.annotations.GuardedBy;
 import net.jcip.annotations.ThreadSafe;

@@ -1,4 +1,4 @@
-package ru.napadovskiyB.Producer;
+package ru.napadovskiyb.Producer;
 
 /**
  * Package of  of Multithreading treads.

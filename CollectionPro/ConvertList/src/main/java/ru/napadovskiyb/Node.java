@@ -1,4 +1,4 @@
-package ru.napadovskiyB;
+package ru.napadovskiyb;
 
 /**
  * Package of CollectionPro dop task.
