@@ -1,4 +1,4 @@
-package ru.napadovskiyB;
+package ru.napadovskiyb;
 
 import org.junit.Test;
 

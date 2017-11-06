@@ -6,4 +6,4 @@
  * @since 03.07.2017
  */
 
-package ru.napadovskiyB;
+package ru.napadovskiyb;

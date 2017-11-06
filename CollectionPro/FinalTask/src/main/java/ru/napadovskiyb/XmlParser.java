@@ -1,4 +1,4 @@
-package ru.napadovskiyB;
+package ru.napadovskiyb;
 
 import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamException;
