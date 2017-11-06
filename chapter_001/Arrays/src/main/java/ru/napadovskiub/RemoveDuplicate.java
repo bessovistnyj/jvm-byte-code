@@ -1,4 +1,4 @@
-package ru.napadovskiuB;
+package ru.napadovskiub;
 
 /**
 	*Class RemoveDuplicate для удаления дублей из массива.

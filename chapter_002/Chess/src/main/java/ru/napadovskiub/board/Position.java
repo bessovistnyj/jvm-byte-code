@@ -1,4 +1,4 @@
-package ru.napadovskiuB.board;
+package ru.napadovskiub.board;
 
 /**
  * Created by program on 24.10.2016.

@@ -1,12 +1,12 @@
-package ru.napadovskiuB.board;
+package ru.napadovskiub.board;
 
-import ru.napadovskiuB.figure.Figure;
-import ru.napadovskiuB.figure.Elephant;
-import ru.napadovskiuB.figure.Horse;
-import ru.napadovskiuB.figure.King;
-import ru.napadovskiuB.figure.Pawn;
-import ru.napadovskiuB.figure.Rook;
-import ru.napadovskiuB.figure.Queen;
+import ru.napadovskiub.figure.Figure;
+import ru.napadovskiub.figure.Elephant;
+import ru.napadovskiub.figure.Horse;
+import ru.napadovskiub.figure.King;
+import ru.napadovskiub.figure.Pawn;
+import ru.napadovskiub.figure.Rook;
+import ru.napadovskiub.figure.Queen;
 
 
 /**

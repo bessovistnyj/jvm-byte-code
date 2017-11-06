@@ -1,18 +1,18 @@
-package ru.napadovskiuB.figure;
+package ru.napadovskiub.figure;
 
-import ru.napadovskiuB.board.Position;
+import ru.napadovskiub.board.Position;
 
 /**
  *
  */
-public interface Figure{
+public interface Figure {
 
     /**
      *
      * @param y
      * @param x
      */
-    void setPosition(int y,int x);
+    void setPosition(int y, int x);
 
     /**
      *

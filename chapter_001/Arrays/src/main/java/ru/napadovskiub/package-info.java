@@ -5,4 +5,4 @@
  * @version 1.0
  * @since 07.08.2017
  */
-package ru.napadovskiuB;
+package ru.napadovskiub;

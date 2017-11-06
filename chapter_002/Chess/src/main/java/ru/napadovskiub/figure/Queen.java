@@ -1,6 +1,6 @@
-package ru.napadovskiuB.figure;
+package ru.napadovskiub.figure;
 
-import ru.napadovskiuB.board.Position;
+import ru.napadovskiub.board.Position;
 
 /**
  * Created by Napadovskiy
@@ -26,61 +26,61 @@ public class Queen implements Figure {
      * @param x
      * @param isWhite
      */
-    public Queen(int y, int x, boolean isWhite){
-        this.position = new Position(y,x);
+    public Queen(int y, int x, boolean isWhite) {
+        this.position = new Position(y, x);
         this.isWhite   = isWhite;
     }
 
     /**
      *The method get array of all available moves to line
      */
-    private Position[] getAvailableMovesByLine(){
+    private Position[] getAvailableMovesByLine() {
         Position[] result = new Position[16];
 
         int tmpY = this.getPositionY();
         int tmpX = this.getPositionX();
-        int counter =0;
+        int counter = 0;
         boolean fillMinus = false;
         boolean fillPlus = false;
 
-        for (; counter<result.length; ){
-            if (tmpX >=7) {
+        for (; counter < result.length;) {
+            if (tmpX >= 7) {
                 tmpX = this.getPositionX();
                 break;
             }
-            if (this.getPositionX() > 0 && !fillMinus){
-                result[counter] = new Position(tmpY,--tmpX);
+            if (this.getPositionX() > 0 && !fillMinus) {
+                result[counter] = new Position(tmpY, --tmpX);
                 counter++;
-                fillMinus = (tmpX ==0) ? true : false;
-                tmpX = (tmpX ==0) ? this.getPositionX() : tmpX;
+                fillMinus = (tmpX == 0) ? true : false;
+                tmpX = (tmpX == 0) ? this.getPositionX() : tmpX;
                 continue;
             }
 
-            if (!fillPlus){
-                result[counter] = new Position(tmpY,++tmpX);
+            if (!fillPlus) {
+                result[counter] = new Position(tmpY, ++tmpX);
                 counter++;
-                fillPlus = (tmpX ==7) ? true : false;
+                fillPlus = (tmpX == 7) ? true : false;
 
             }
         }
         fillMinus = false;
-        fillPlus =false;
-        for (; counter<result.length; ){
-            if (tmpY >=7){
+        fillPlus = false;
+        for (; counter < result.length;) {
+            if (tmpY >= 7) {
                 tmpY = this.getPositionY();
                 break;
             }
-            if (this.getPositionY() > 0 && !fillMinus){
-                result[counter] = new Position(--tmpY,tmpX);
+            if (this.getPositionY() > 0 && !fillMinus) {
+                result[counter] = new Position(--tmpY, tmpX);
                 counter++;
-                fillMinus = (tmpY ==0) ? true : false;
-                tmpY = (tmpY ==0) ? this.getPositionY() : tmpY;
+                fillMinus = (tmpY == 0) ? true : false;
+                tmpY = (tmpY == 0) ? this.getPositionY() : tmpY;
                 continue;
             }
-            if (!fillPlus){
-                result[counter] = new Position(++tmpY,tmpX);
+            if (!fillPlus) {
+                result[counter] = new Position(++tmpY, tmpX);
                 counter++;
-                fillPlus = (tmpY ==7) ? true : false;
+                fillPlus = (tmpY == 7) ? true : false;
 
             }
         }
@@ -128,15 +128,15 @@ public class Queen implements Figure {
      *The method check opportunity move the figure
      *@return an array of all moves
      */
-    public Position[] getAvailableMoves(){
+    public Position[] getAvailableMoves() {
         Position[] result = new Position[32];
         //Position[] availableMoves  = new Position[32];
 
         Position[] availableMovesByLine = getAvailableMovesByLine();
         Position[] availableMovesByDiagonal = getAvailableMovesByDiagonal();
 
-        System.arraycopy(availableMovesByLine, 0, result , 0, availableMovesByLine.length);
-        System.arraycopy(availableMovesByDiagonal, 0,result, availableMovesByLine.length, availableMovesByDiagonal.length);
+        System.arraycopy(availableMovesByLine, 0, result, 0, availableMovesByLine.length);
+        System.arraycopy(availableMovesByDiagonal, 0, result, availableMovesByLine.length, availableMovesByDiagonal.length);
 
         return result;
     }
@@ -144,21 +144,21 @@ public class Queen implements Figure {
     /**
      *The method set position
      */
-    public void setPosition(int y, int x){
+    public void setPosition(int y, int x) {
         this.position = new Position(y, x);
     }
 
     /**
      *The method set color
      */
-    public  void setColorFigure(boolean isWhite){
+    public  void setColorFigure(boolean isWhite) {
         this.isWhite = isWhite;
     }
 
     /**
      *The method get position Y
      */
-    public int getPositionY(){
+    public int getPositionY() {
         return this.position.getPositionY();
 
     }
@@ -166,7 +166,7 @@ public class Queen implements Figure {
     /**
      *The method get position X
      */
-    public int getPositionX(){
+    public int getPositionX() {
         return this.position.getPositionX();
 
     }
@@ -174,7 +174,7 @@ public class Queen implements Figure {
     /**
      *The method get color figure
      */
-    public boolean getColorFigure(){
+    public boolean getColorFigure() {
         return this.isWhite;
     }
 

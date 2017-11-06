@@ -1,4 +1,4 @@
-package ru.napadovskiu.consoleChat;
+package ru.napadovskiu.consolechat;
 
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
