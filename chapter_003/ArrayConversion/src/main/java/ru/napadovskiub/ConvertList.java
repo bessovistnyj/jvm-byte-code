@@ -1,4 +1,4 @@
-package ru.napadovskiuB;
+package ru.napadovskiub;
 
 import java.util.ArrayList;
 import java.util.List;

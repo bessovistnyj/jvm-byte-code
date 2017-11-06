@@ -5,4 +5,4 @@
  * @version 1.0
  * @since 15.06.2017
  */
-package ru.napadovskiuB.ClientBank;
+package ru.napadovskiub.clientbank;

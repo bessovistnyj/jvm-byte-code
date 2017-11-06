@@ -1,8 +1,7 @@
-package ru.napadovskiyB;
+package ru.napadovskiyb;
 
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 
@@ -65,7 +64,7 @@ public class ArraySubdivision {
                 //Subdivision subdivision = new Subdivision(newCode);
                 this.arrayList.add(newCode);
             }
-            newCode = newCode+"\\";
+            newCode = newCode + "\\";
         }
     }
 
@@ -85,7 +84,7 @@ public class ArraySubdivision {
                 int result = o2.compareTo(o1);
                 ArrayList<String> code1  = returnArrayCode(o1);
                 ArrayList<String> code2  = returnArrayCode(o2);
-                while (code1.iterator().hasNext() && code2.iterator().hasNext() && result ==0) {
+                while (code1.iterator().hasNext() && code2.iterator().hasNext() && result == 0) {
                     result = code2.iterator().next().compareTo(code1.iterator().next());
                 }
                 if (code2.iterator().hasNext() && result == 0) {

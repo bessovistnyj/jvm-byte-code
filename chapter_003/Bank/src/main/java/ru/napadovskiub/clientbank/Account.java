@@ -1,4 +1,4 @@
-package ru.napadovskiuB.ClientBank;
+package ru.napadovskiub.clientbank;
 
 /**
  * Package of chapter_003 testTask.

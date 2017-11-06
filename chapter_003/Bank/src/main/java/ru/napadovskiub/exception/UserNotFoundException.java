@@ -1,4 +1,4 @@
-package ru.napadovskiuB.Exception;
+package ru.napadovskiub.exception;
 
 /**
  * Package of chapter_003 testTask.

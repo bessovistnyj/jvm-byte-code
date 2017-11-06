@@ -1,8 +1,8 @@
-package ru.napadovskiuB.ClientBank;
+package ru.napadovskiub.clientbank;
 
-import ru.napadovskiuB.Exception.AccountNotFoundException;
-import ru.napadovskiuB.Exception.InsufficientFundsException;
-import ru.napadovskiuB.Exception.UserNotFoundException;
+import ru.napadovskiub.exception.AccountNotFoundException;
+import ru.napadovskiub.exception.InsufficientFundsException;
+import ru.napadovskiub.exception.UserNotFoundException;
 
 import java.util.ArrayList;
 import java.util.HashMap;

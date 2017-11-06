@@ -1,4 +1,4 @@
-package ru.napadovskiyB;
+package ru.napadovskiyb;
 
 import org.junit.Test;
 
@@ -19,7 +19,7 @@ public class ArraySubdivisionTest {
         arraySubdivision.addElement("K2\\SK1\\SSK1");
 
         arraySubdivision.sortByIncrease();
-        int a =1;
+        int a = 1;
     }
 
     @Test
@@ -33,7 +33,7 @@ public class ArraySubdivisionTest {
         arraySubdivision.addElement("K2\\SK1\\SSK1");
         arraySubdivision.addElement("K2\\SK1\\SSK2");
         arraySubdivision.sortByDecrease();
-        int a =1;
+        int a = 1;
 
 //        Subdivision subdivision = new Subdivision("K3");
 //        arraySubdivision.getArrayList().sort(subdivision.sortByIncrease());

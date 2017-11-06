@@ -1,4 +1,4 @@
-package ru.napadovskiuB;
+package napadovskiub;
 
 import java.util.Collections;
 import java.util.List;

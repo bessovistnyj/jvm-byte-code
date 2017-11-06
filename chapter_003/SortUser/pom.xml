@@ -1,6 +1,6 @@
 <project>
 	<modelVersion>4.0.0</modelVersion>
-	<artifactId>Bank</artifactId>
+	<artifactId>SortUser</artifactId>
 	<packaging>pom</packaging>
 
 	<parent>

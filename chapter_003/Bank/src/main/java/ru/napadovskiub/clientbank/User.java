@@ -1,4 +1,4 @@
-package ru.napadovskiuB.ClientBank;
+package ru.napadovskiub.clientbank;
 
 /**
  * @author Napadovskiy Bohdan.

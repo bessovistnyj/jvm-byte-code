@@ -1,12 +1,12 @@
-package ru.napadovskiuB.ClientBank;
+package ru.napadovskiub.clientbank;
 
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
-import ru.napadovskiuB.Exception.AccountNotFoundException;
-import ru.napadovskiuB.Exception.InsufficientFundsException;
-import ru.napadovskiuB.Exception.UserNotFoundException;
+import ru.napadovskiub.exception.AccountNotFoundException;
+import ru.napadovskiub.exception.InsufficientFundsException;
+import ru.napadovskiub.exception.UserNotFoundException;
 
 import static org.hamcrest.core.Is.is;
 import java.util.List;
