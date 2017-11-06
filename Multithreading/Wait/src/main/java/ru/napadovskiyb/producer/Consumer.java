@@ -1,4 +1,4 @@
-package ru.napadovskiyb.Producer;
+package ru.napadovskiyb.producer;
 
 /**
  * Package of  of Multithreading treads.
@@ -10,7 +10,7 @@ package ru.napadovskiyb.Producer;
 public class Consumer implements Runnable {
 
     /**
-     * Queue for thread.
+     * queue for thread.
      */
     private final SimpleBlockingQueue blockingQueue;
 

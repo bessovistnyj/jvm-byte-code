@@ -1,4 +1,4 @@
-package ru.napadovskiyb.Lock;
+package ru.napadovskiyb.lock;
 
 /**
  * Package of  of Multithreading treads.

@@ -1,4 +1,4 @@
-package ru.Napadovskiy.raceCondition;
+package ru.napadovskiy.racecondition;
 
 /**
  * Package of Multithreading.

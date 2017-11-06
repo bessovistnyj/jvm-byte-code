@@ -1,4 +1,4 @@
-package ru.napadovskiyb.Producer;
+package ru.napadovskiyb.producer;
 
 import net.jcip.annotations.GuardedBy;
 import net.jcip.annotations.ThreadSafe;
@@ -50,7 +50,7 @@ public class SimpleBlockingQueue<E>  {
         }
     }
     /**
-     *Method add new element to Queue.
+     *Method add new element to queue.
      * @param e value.
      */
     public synchronized void offer(E e) {
