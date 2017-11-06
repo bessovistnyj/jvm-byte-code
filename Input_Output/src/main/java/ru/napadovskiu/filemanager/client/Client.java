@@ -1,6 +1,6 @@
-package ru.napadovskiu.fileManager.client;
+package ru.napadovskiu.filemanager.client;
 
-import ru.napadovskiu.fileManager.menuFileManager.Settings;
+import ru.napadovskiu.filemanager.menufilemanager.Settings;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -26,7 +26,7 @@ public class Client  {
         try {
             InetAddress inetAddress = InetAddress.getByName(clientSettings.getInterAdress());
             System.out.println("Подключаемся к серверу");
-            Socket socket = new Socket(inetAddress,clientSettings.getServerPort());
+            Socket socket = new Socket(inetAddress, clientSettings.getServerPort());
 
             InputStream socketIn  = socket.getInputStream();
             OutputStream socketOut = socket.getOutputStream();
@@ -50,7 +50,7 @@ public class Client  {
     }
 
 
-    public static void main(String args[]) throws IOException {
+    public static void main(String[] args) throws IOException {
         Client startFileManager = new Client();
         startFileManager.connect();
    }

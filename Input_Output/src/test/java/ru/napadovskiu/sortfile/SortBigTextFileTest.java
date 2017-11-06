@@ -1,4 +1,4 @@
-package ru.napadovskiu.sortFile;
+package ru.napadovskiu.sortfile;
 
 import org.junit.Test;
 import java.io.File;

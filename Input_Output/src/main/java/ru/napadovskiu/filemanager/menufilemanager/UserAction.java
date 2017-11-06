@@ -1,4 +1,4 @@
-package ru.napadovskiu.fileManager.menuFileManager;
+package ru.napadovskiu.filemanager.menufilemanager;
 
 import java.io.IOException;
 

@@ -5,4 +5,4 @@
  * @version 1.0
  * @since 27.12.2016
  */
-package ru.napadovskiu.consoleChat;
+package ru.napadovskiu.consolechat;

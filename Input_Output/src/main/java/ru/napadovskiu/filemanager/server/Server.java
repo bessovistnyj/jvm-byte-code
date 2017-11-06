@@ -1,9 +1,9 @@
-package ru.napadovskiu.fileManager.server;
+package ru.napadovskiu.filemanager.server;
 
-import ru.napadovskiu.fileManager.menuFileManager.ConsoleInput;
-import ru.napadovskiu.fileManager.menuFileManager.Input;
-import ru.napadovskiu.fileManager.menuFileManager.Menu;
-import ru.napadovskiu.fileManager.menuFileManager.Settings;
+import ru.napadovskiu.filemanager.menufilemanager.ConsoleInput;
+import ru.napadovskiu.filemanager.menufilemanager.Input;
+import ru.napadovskiu.filemanager.menufilemanager.Menu;
+import ru.napadovskiu.filemanager.menufilemanager.Settings;
 
 import java.io.*;
 import java.net.ServerSocket;
@@ -52,15 +52,15 @@ public class Server {
 
     };
 
-    public void downloadFile (Socket socket, String pathFile, int fileSize) {
+    public void downloadFile(Socket socket, String pathFile, int fileSize) {
 
     }
 
-    public void upLoadFile (Socket socket, File file) {
+    public void upLoadFile(Socket socket, File file) {
 
     }
 
-    public void connect () throws  IOException {
+    public void connect() throws  IOException {
        boolean exit = false;
 
        Properties props = new Properties();
@@ -86,31 +86,28 @@ public class Server {
             String string = null;
             Input input = new ConsoleInput();
 
-            Menu menu = new Menu(input,dataInputStream,dataOutputStream,this.currentDirectory);
+            Menu menu = new Menu(input, dataInputStream, dataOutputStream, this.currentDirectory);
             menu.fillAction();
             do {
                 string = dataInputStream.readUTF();
                 String[] message = string.split(" ");
                 String action = message[0];
 
-                System.out.println("Сервер получил"+string);
-                if (string.equals("exit")){
+                System.out.println("Сервер получил" + string);
+                if (string.equals("exit")) {
                     exit = true;
-                }
-                else {
+                } else {
                     menu.doAction(string);
                 }
-            }
-            while(!exit );
+            } while (!exit);
 
         } catch (Exception ex) {
-
             ex.printStackTrace();
         }
 
     }
 
-    public static void main(String args[]) throws IOException {
+    public static void main(String[] args) throws IOException {
         Server server = new Server();
         server.connect();
     }

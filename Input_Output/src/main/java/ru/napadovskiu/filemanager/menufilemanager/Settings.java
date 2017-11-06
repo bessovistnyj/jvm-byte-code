@@ -1,4 +1,4 @@
-package ru.napadovskiu.fileManager.menuFileManager;
+package ru.napadovskiu.filemanager.menufilemanager;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -15,7 +15,7 @@ public class Settings {
 
         String checkString = "Input_Output";
         if (!result.contains(checkString)) {
-            result = result +"\\"+ checkString;
+            result = result + "\\" + checkString;
         }
 
         return result;
@@ -62,7 +62,7 @@ public class Settings {
 
 
 
-    public int getServerPort() throws IOException{
+    public int getServerPort() throws IOException {
 
         int result = 0;
 

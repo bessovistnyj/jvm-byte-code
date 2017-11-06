@@ -1,4 +1,4 @@
-package ru.napadovskiu.consoleChat;
+package ru.napadovskiu.consolechat;
 
 import java.io.File;
 import java.io.RandomAccessFile;

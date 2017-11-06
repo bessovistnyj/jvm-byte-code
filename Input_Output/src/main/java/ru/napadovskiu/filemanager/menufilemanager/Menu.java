@@ -1,12 +1,19 @@
-package ru.napadovskiu.fileManager.menuFileManager;
+package ru.napadovskiu.filemanager.menufilemanager;
 
-import java.io.*;
-import java.util.Properties;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+
 
 /**
  * Created by program on 04.01.2017.
  */
-public class Menu{
+public class Menu {
 
     private UserAction[] actions = new UserAction[6];
 
@@ -20,7 +27,7 @@ public class Menu{
 
     private String clientCurrentDirectory;
 
-    public Menu (Input input,DataInputStream inStr, DataOutputStream outStr,String currentDirectory) {
+    public Menu(Input input, DataInputStream inStr, DataOutputStream outStr, String currentDirectory) {
         this.input = input;
         this.inStr = inStr;
         this.outStr = outStr;
@@ -29,7 +36,7 @@ public class Menu{
 
     }
 
-    private  void setClientCurrentDirectory()  {
+    private  void setClientCurrentDirectory() {
         Settings settings = new Settings();
 
         try {
@@ -40,7 +47,7 @@ public class Menu{
 
     }
 
-    public void fillAction(){
+    public void fillAction() {
         this.actions[0] = new ShowMenu();
         this.actions[1] = new ShowAllFiles();
         this.actions[2] = new GoToParentDirectory();
@@ -65,7 +72,7 @@ public class Menu{
         } else if (action.equals("upload")) {
             String fileName = message[1];
             this.actions[4].execute(fileName);
-        } else if (action.equals("cd..")){
+        } else if (action.equals("cd..")) {
             String newDir = message[1];
             this.actions[3].execute(newDir);
         }
@@ -74,19 +81,19 @@ public class Menu{
      /**
      *The method show users menu
      */
-    public void showMenu(){
-        System.out.println("help"+" Show menu file manager");
-        System.out.println("dir" +" Show all files current directory");
-        System.out.println("cd"  +" Go to parent directory ");
+    public void showMenu() {
+        System.out.println("help" + " Show menu file manager");
+        System.out.println("dir" + " Show all files current directory");
+        System.out.println("cd"  + " Go to parent directory ");
         System.out.println("cd.. <name sub dir>" + " Go to sub directory ");
-        System.out.println("download <file name>" +" Download file ");
-        System.out.println("upload <file name>" +" Upload file  ");
-        System.out.println("exit" +" Exit");
+        System.out.println("download <file name>" + " Download file ");
+        System.out.println("upload <file name>" + " Upload file  ");
+        System.out.println("exit" + " Exit");
     }
 
     private class ShowMenu  implements  UserAction {
 
-        public String key(){
+        public String key() {
             return "help";
         }
 
@@ -94,7 +101,7 @@ public class Menu{
             showMenu();
         }
 
-        public String info(){
+        public String info() {
             return String.format("%s. %s", this.key(), "Show all files current directory");
         }
 
@@ -102,7 +109,7 @@ public class Menu{
 
     private class ShowAllFiles  implements  UserAction {
 
-        public String key(){
+        public String key() {
             return "dir";
         }
 
@@ -119,36 +126,36 @@ public class Menu{
 
         }
 
-        public String info(){
+        public String info() {
             return String.format("%s. %s", this.key(), "Show all files current directory");
         }
 
     }
 
-    private class GoToSubDirectory  implements  UserAction{
+    private class GoToSubDirectory  implements  UserAction {
 
-        public String key(){
+        public String key() {
             return "cd..";
         }
 
         public void execute(String string) throws IOException {
-            String newDir = "\\"+string+"\\";
-            File currentPath = new File(serverCurrentDirectory+newDir);
+            String newDir = "\\" + string + "\\";
+            File currentPath = new File(serverCurrentDirectory + newDir);
             if (currentPath.isDirectory()) {
                 outStr.writeUTF("Пермещение в каталог " + currentPath.getPath());
-                serverCurrentDirectory =currentPath.toString();
+                serverCurrentDirectory = currentPath.toString();
             }
         }
 
-        public String info(){
+        public String info() {
             return String.format("%s. %s", this.key(), "Show all menu");
         }
 
     }
 
-    private class GoToParentDirectory implements  UserAction{
+    private class GoToParentDirectory implements  UserAction {
 
-        public String key(){
+        public String key() {
             return "cd";
         }
 
@@ -159,28 +166,28 @@ public class Menu{
             } else {
                 currentPath = new File(currentPath.getParent());
                 outStr.writeUTF("Пермещение в каталог " + currentPath.getPath());
-                serverCurrentDirectory =currentPath.toString();
+                serverCurrentDirectory = currentPath.toString();
             }
         }
 
-        public String info(){
+        public String info() {
             return String.format("%s. %s", this.key(), "Show all menu");
         }
 
     }
 
-    private class UploadFile implements  UserAction{
+    private class UploadFile implements  UserAction {
 
-        public String key(){
+        public String key() {
             return "upload";
         }
 
-        public void execute(String string) throws IOException{
+        public void execute(String string) throws IOException {
             InputStream in = null;
             OutputStream out = null;
             try {
-                File fileSource = new File(serverCurrentDirectory+"\\"+string);
-                File fileDest   = new File(clientCurrentDirectory+"\\"+string);
+                File fileSource = new File(serverCurrentDirectory + "\\" + string);
+                File fileDest   = new File(clientCurrentDirectory + "\\" + string);
                 in = new FileInputStream(fileSource);
                 out = new FileOutputStream(fileDest);
                 byte[] bytes = new byte[1024];
@@ -195,15 +202,15 @@ public class Menu{
             outStr.writeUTF("Загрузка файла с сервера");
         }
 
-        public String info(){
+        public String info() {
             return String.format("%s. %s", this.key(), "Show all menu");
         }
 
     }
 
-    private class DownLoadFile implements  UserAction{
+    private class DownLoadFile implements  UserAction {
 
-        public String key(){
+        public String key() {
             return "download";
         }
 
@@ -211,8 +218,8 @@ public class Menu{
             InputStream in = null;
             OutputStream out = null;
             try {
-                File fileSource = new File(clientCurrentDirectory+"\\"+string);
-                File fileDest   = new File(serverCurrentDirectory+"\\"+string);
+                File fileSource = new File(clientCurrentDirectory + "\\" + string);
+                File fileDest   = new File(serverCurrentDirectory + "\\" + string);
                 in = new FileInputStream(fileSource);
                 out = new FileOutputStream(fileDest);
                 byte[] bytes = new byte[1024];
@@ -229,7 +236,7 @@ public class Menu{
 
         }
 
-        public String info(){
+        public String info() {
             return String.format("%s. %s", this.key(), "Show all menu");
         }
 

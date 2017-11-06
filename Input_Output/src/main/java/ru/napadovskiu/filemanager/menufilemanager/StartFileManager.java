@@ -1,7 +1,7 @@
-package ru.napadovskiu.fileManager.menuFileManager;
+package ru.napadovskiu.filemanager.menufilemanager;
 
-import ru.napadovskiu.fileManager.client.Client;
-import ru.napadovskiu.fileManager.server.Server;
+import ru.napadovskiu.filemanager.client.Client;
+import ru.napadovskiu.filemanager.server.Server;
 
 import java.io.IOException;
 
@@ -21,11 +21,11 @@ public class StartFileManager {
     }
 
 
-    public static void main(String args[]) throws IOException {
+    public static void main(String[] args) throws IOException {
         Client client = new Client();
         Server server = new Server();
         Input input = new ConsoleInput();
-        StartFileManager startFileManager = new StartFileManager(input,client,server);
+        StartFileManager startFileManager = new StartFileManager(input, client, server);
 
 
     }

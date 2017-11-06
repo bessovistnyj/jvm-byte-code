@@ -1,4 +1,4 @@
-package ru.napadovskiu.sortFile;
+package ru.napadovskiu.sortfile;
 
 import java.io.RandomAccessFile;
 import java.io.IOException;
