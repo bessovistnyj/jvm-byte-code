@@ -1,4 +1,4 @@
-package ru.Napadovskiy.fileSearch;
+package ru.napadovskiy.filesearch;
 
 import java.io.FileReader;
 

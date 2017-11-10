@@ -5,4 +5,4 @@
  * @version 1.0
  * @since 05.09.2017
  */
-package ru.Napadovskiy.fileSearch;
+package ru.napadovskiy.filesearch;
