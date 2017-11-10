@@ -5,4 +5,4 @@
  * @version 1.0
  * @since 05.07.2017
  */
-package ru.Napadovskiy.threadSafeStorage.arrayList;
+package ru.napadovskiy.threadsafestorage.arraylist;

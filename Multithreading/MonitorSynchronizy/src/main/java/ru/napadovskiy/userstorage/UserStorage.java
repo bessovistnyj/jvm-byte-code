@@ -1,4 +1,4 @@
-package ru.Napadovskiy.userStorage;
+package ru.napadovskiy.userstorage;
 
 import net.jcip.annotations.ThreadSafe;
 

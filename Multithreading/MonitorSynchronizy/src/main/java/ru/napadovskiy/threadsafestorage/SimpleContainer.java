@@ -1,4 +1,4 @@
-package ru.Napadovskiy.threadSafeStorage;
+package ru.napadovskiy.threadsafestorage;
 
 /**
  * Package of CollectionPro testTask.

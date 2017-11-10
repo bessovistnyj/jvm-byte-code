@@ -5,4 +5,4 @@
  * @version 1.0
  * @since 08.09.2017
  */
-package ru.Napadovskiy.threadSafeStorage;
+package ru.napadovskiy.threadsafestorage;

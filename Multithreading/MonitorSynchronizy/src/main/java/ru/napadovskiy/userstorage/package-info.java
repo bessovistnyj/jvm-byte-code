@@ -6,4 +6,4 @@
  * @since 31.08.2017
  */
 
-package ru.Napadovskiy.userStorage;
+package ru.napadovskiy.userstorage;

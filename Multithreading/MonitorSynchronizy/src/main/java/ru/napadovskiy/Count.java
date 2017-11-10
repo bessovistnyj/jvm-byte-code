@@ -1,4 +1,4 @@
-package ru.Napadovskiy;
+package ru.napadovskiy;
 
 import net.jcip.annotations.GuardedBy;
 import net.jcip.annotations.ThreadSafe;

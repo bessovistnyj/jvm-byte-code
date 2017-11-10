@@ -1,8 +1,8 @@
-package ru.Napadovskiy.threadSafeStorage.arrayList;
+package ru.napadovskiy.threadsafestorage.arraylist;
 
 import net.jcip.annotations.GuardedBy;
 import net.jcip.annotations.ThreadSafe;
-import ru.Napadovskiy.threadSafeStorage.SimpleContainer;
+import ru.napadovskiy.threadsafestorage.SimpleContainer;
 
 import java.util.Arrays;
 import java.util.Iterator;
