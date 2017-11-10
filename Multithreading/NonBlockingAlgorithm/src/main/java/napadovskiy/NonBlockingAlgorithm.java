@@ -1,4 +1,4 @@
-package ru.Napadovskiy;
+package ru.napadovskiy;
 
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.BiFunction;

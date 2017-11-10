@@ -5,4 +5,4 @@
  * @version 1.0
  * @since 25.09.2017
  */
-package ru.Napadovskiy;
+package ru.napadovskiy;

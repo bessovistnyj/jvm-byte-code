@@ -1,4 +1,4 @@
-package ru.Napadovskiy;
+package ru.napadovskiy;
 
 /**
  * Package of Multithreading treads.
