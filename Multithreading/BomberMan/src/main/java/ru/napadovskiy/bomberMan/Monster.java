@@ -1,4 +1,4 @@
-package ru.Napadovskiy.bomberMan;
+package ru.napadovskiy.bomberMan;
 
 
 import java.util.concurrent.TimeUnit;

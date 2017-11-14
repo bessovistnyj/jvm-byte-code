@@ -1,8 +1,8 @@
-package ru.Napadovskiy.bomberMan;
+package ru.napadovskiy.bomberMan;
 
-import java.util.concurrent.TimeUnit;
+
+import java.util.concurrent.ExecutorService;
 import java.util.concurrent.locks.ReentrantLock;
-
 
 /**
  * Package of Multithreading test task.
@@ -11,14 +11,15 @@ import java.util.concurrent.locks.ReentrantLock;
  * @version 1.0
  * @since 10.10.2017
  */
-public class Hero extends Unit {//implements Runnable {
+public class Hero extends Unit implements Runnable {
 
     /**
      * Constructor for hero class.
      * @param board board game.
      */
-    public Hero(GameBoard board) {
-        super(board);
+    public Hero(int x, int y, GameBoard board, ExecutorService service) {
+        super(board,service);
+        this.getBoard().getBoard()[x][y] = new ReentrantLock();
     }
 
     /**
@@ -26,50 +27,43 @@ public class Hero extends Unit {//implements Runnable {
      * @param positionX position x.
      * @param positionY position y.
      */
-    public void setUnitInPosition(int positionX, int positionY) {
+    public void setHeroInPosition(int positionX, int positionY) {
         this.setXCoordinate(positionX);
         this.setYCoordinate(positionY);
 
         this.getBoard().getBoard()[positionX][positionY].lock();
     }
 
-//    /**
-//     * Method calculate new x coordinate.
-//     * @param oldX old coordinate x.
-//     * @return new coordinate x.
-//     */
-//    private int getNewXCoordinate(int oldX) {
-//        int newX = 0;
-//        if (oldX < this.getBoard().getXSize() - 1) {
-//            newX = oldX + 1;
-//        }
-//        return newX;
-//    }
-//
-//    /**
-//     * Method calculate new y coordinate.
-//     * @param oldY old coordinate y.
-//     * @return new coordinate y.
-//     */
-//    private int getNewYCoordinate(int oldY) {
-//        int newY = 0;
-//            if (oldY < this.getBoard().getYSize() - 1) {
-//                newY = oldY + 1;
-//            }
-//        return newY;
-//    }
-//
+
+    public void clearPosition(int x, int y) {
+        this.getBoard().getBoard()[x][y] = null;
+    }
+
+    public int getNewXCoordinate(int oldx, Direction direction) {
+        int result = 0;
+
+        return result;
+    }
+
+    public int getNewYCoordinate(int oldy, Direction direction) {
+        int result = 0;
+
+        return result;
+    }
+
     /**
      * Method move the hero.
      * @throws InterruptedException exception.
      */
-    private void moveHero() throws InterruptedException {
+    private void moveHero(Direction direction) throws InterruptedException {
 
-        boolean canMovie = false;
+        int y = this.getNewYCoordinate(this.getYCoordinate(), direction);
+
+        int x =  getNewXCoordinate(this.getYCoordinate(), direction);
+
+
+//        boolean canMovie = false;
 //
-//        int y = this.getNewYCoordinate(this.getYCoordinate());
-//
-//        int x =  getNewXCoordinate(this.getXCoordinate());
 //
 //        final int waitTime = 500;
 //
@@ -88,17 +82,29 @@ public class Hero extends Unit {//implements Runnable {
     }
 
 
-    /**
-     * Method check move the element.
-     * @param newPositionX new position x.
-     * @param newPositionY new position y.
-     * @return result.
-     */
-    public boolean tryMoveHero(int newPositionX, int newPositionY) {
-        boolean result = false;
-        if (newPositionX <= this.getBoard().getXSize() || newPositionX > 0 || newPositionY <= this.getBoard().getYSize() || newPositionY > 0) {
-            result = true;
+//    /**
+//     * Method check move the element.
+//     * @param newPositionX new position x.
+//     * @param newPositionY new position y.
+//     * @return result.
+//     */
+//    public boolean tryMoveHero(int newPositionX, int newPositionY) {
+//        boolean result = false;
+//        if (newPositionX <= this.getBoard().getXSize() || newPositionX > 0 || newPositionY <= this.getBoard().getYSize() || newPositionY > 0) {
+//            result = true;
+//        }
+//        return result;
+//    }
+
+    @Override
+    public void run() {
+        while (!getService().isShutdown()) {
+            try {
+                this.moveHero();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
-        return result;
+
     }
 }

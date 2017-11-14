@@ -1,4 +1,4 @@
-package ru.napadovskiyb.ThreadPool;
+package ru.napadovskiyb.threadpool;
 
 /**
  * Package of  of Multithreading treads.

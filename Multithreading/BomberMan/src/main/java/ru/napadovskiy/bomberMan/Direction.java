@@ -1,4 +1,4 @@
-package ru.Napadovskiy.bomberMan;
+package ru.napadovskiy.bomberMan;
 
 public enum Direction {
     /**

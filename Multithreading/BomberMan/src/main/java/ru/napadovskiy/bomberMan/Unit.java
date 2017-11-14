@@ -1,4 +1,6 @@
-package ru.Napadovskiy.bomberMan;
+package ru.napadovskiy.bomberMan;
+
+import java.util.concurrent.ExecutorService;
 
 /**
  * Package of Multithreading test task.
@@ -7,7 +9,7 @@ package ru.Napadovskiy.bomberMan;
  * @version 1.0
  * @since 10.10.2017
  */
-public abstract class Unit {
+public abstract class Unit implements  Runnable{
 
     /**
      * x coordinate.
@@ -22,14 +24,22 @@ public abstract class Unit {
     /**
      * board for game.
      */
-    private GameBoard board;
+    private final GameBoard board;
+
+    /**
+     *
+     */
+
+    private final ExecutorService service;
 
     /**
      * Constructor for all unit.
      * @param board board for game.
      */
-    public Unit(GameBoard board) {
+    public Unit(final GameBoard board, final ExecutorService service) {
         this.board  = board;
+        this.service = service;
+        this.service.execute(this);
     }
 
     /**
@@ -69,7 +79,10 @@ public abstract class Unit {
      * @return board.
      */
     public GameBoard getBoard() {
-        return board;
+        return this.board;
     }
 
+    public ExecutorService getService() {
+        return this.service;
+    }
 }
