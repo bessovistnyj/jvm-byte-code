@@ -5,4 +5,4 @@
  * @version 1.0
  * @since 10.10.2017
  */
-package ru.Napadovskiy.bomberMan;
+package ru.napadovskiy.bomberMan;
