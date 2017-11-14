@@ -1,6 +1,7 @@
 package ru.napadovskiy.bomberMan;
 
 
+import java.util.Random;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.locks.ReentrantLock;
 
@@ -27,7 +28,7 @@ public class Hero extends Unit implements Runnable {
      * @param positionX position x.
      * @param positionY position y.
      */
-    public void setHeroInPosition(int positionX, int positionY) {
+    private void setHeroInPosition(int positionX, int positionY) {
         this.setXCoordinate(positionX);
         this.setYCoordinate(positionY);
 
@@ -36,18 +37,49 @@ public class Hero extends Unit implements Runnable {
 
 
     public void clearPosition(int x, int y) {
+        this.getBoard().getBoard()[x][y].unlock();
         this.getBoard().getBoard()[x][y] = null;
     }
 
     public int getNewXCoordinate(int oldx, Direction direction) {
-        int result = 0;
+        int result = oldx;
+        if (direction.equals(Direction.LEFT)) {
+            result--;
+        } else if(direction.equals(Direction.RIGHT)) {
+            result++;
+        }
 
         return result;
     }
 
-    public int getNewYCoordinate(int oldy, Direction direction) {
-        int result = 0;
+    private int getNewYCoordinate(int oldy, Direction direction) {
+        int result = oldy;
+        if (direction.equals(Direction.DOWN)) {
+            result--;
+        } else if(direction.equals(Direction.UP)) {
+            result++;
+        }
 
+        return result;
+    }
+
+    /**
+     *
+     * @return direction
+     */
+    private Direction getRandomDirection() {
+        Direction result = null;
+        Random random = new Random();
+        int randomCount = random.nextInt(4);
+        if (randomCount == 0) {
+            result = Direction.DOWN;
+        } else if(randomCount == 1) {
+            result = Direction.LEFT;
+        } else if (randomCount == 2) {
+            result = Direction.RIGHT;
+        } else if (randomCount == 3) {
+            result = Direction.UP;
+        }
         return result;
     }
 
@@ -55,11 +87,25 @@ public class Hero extends Unit implements Runnable {
      * Method move the hero.
      * @throws InterruptedException exception.
      */
-    private void moveHero(Direction direction) throws InterruptedException {
+    private void moveHero() throws InterruptedException {
 
-        int y = this.getNewYCoordinate(this.getYCoordinate(), direction);
+        Direction direction = getRandomDirection();
 
-        int x =  getNewXCoordinate(this.getYCoordinate(), direction);
+        int y = getNewYCoordinate(this.getYCoordinate(), direction);
+
+        int x = getNewXCoordinate(this.getXCoordinate(), direction);
+
+        ReentrantLock newCell = this.getBoard().getBoard()[x][y];
+
+        ReentrantLock oldCell = this.getBoard().getBoard()[this.getXCoordinate()][this.getYCoordinate()];
+
+        if (newCell.tryLock()) {
+            clearPosition(this.getXCoordinate(), this.getYCoordinate());
+            //newCell.lock();
+            setHeroInPosition(x, y);
+        }
+
+
 
 
 //        boolean canMovie = false;
