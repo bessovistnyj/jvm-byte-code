@@ -14,6 +14,9 @@ import java.util.concurrent.locks.ReentrantLock;
  */
 public class Hero extends Unit implements Runnable {
 
+    private int xCoordinate;
+
+
     /**
      * Constructor for hero class.
      * @param board board game.
@@ -21,6 +24,7 @@ public class Hero extends Unit implements Runnable {
     public Hero(int x, int y, GameBoard board, ExecutorService service) {
         super(board,service);
         this.getBoard().getBoard()[x][y] = new ReentrantLock();
+        setHeroInPosition(x, y);
     }
 
     /**
@@ -31,8 +35,9 @@ public class Hero extends Unit implements Runnable {
     private void setHeroInPosition(int positionX, int positionY) {
         this.setXCoordinate(positionX);
         this.setYCoordinate(positionY);
-
-        this.getBoard().getBoard()[positionX][positionY].lock();
+        if (this.getBoard().getBoard()[positionX][positionY].tryLock()) {
+            this.getBoard().getBoard()[positionX][positionY].lock();
+        }
     }
 
 
@@ -83,64 +88,48 @@ public class Hero extends Unit implements Runnable {
         return result;
     }
 
+
+    private boolean checkCoordinate(int x, int y) {
+        boolean result = false;
+
+        if ((x >= 0 || x < this.getBoard().getXSize()) && ((y >= 0 || y < this.getBoard().getYSize())) ) {
+            result = true;
+        }
+
+        return result;
+     }
+
+
     /**
      * Method move the hero.
      * @throws InterruptedException exception.
      */
     private void moveHero() throws InterruptedException {
 
-        Direction direction = getRandomDirection();
 
-        int y = getNewYCoordinate(this.getYCoordinate(), direction);
+        int y = this.getYCoordinate();
 
-        int x = getNewXCoordinate(this.getXCoordinate(), direction);
+        int x = this.getXCoordinate();
+
+
+        while (!checkCoordinate(x, y)) {
+            Direction direction = getRandomDirection();
+
+            y = getNewYCoordinate(this.getYCoordinate(), direction);
+
+            x = getNewXCoordinate(this.getXCoordinate(), direction);
+
+        }
 
         ReentrantLock newCell = this.getBoard().getBoard()[x][y];
 
-        ReentrantLock oldCell = this.getBoard().getBoard()[this.getXCoordinate()][this.getYCoordinate()];
-
         if (newCell.tryLock()) {
             clearPosition(this.getXCoordinate(), this.getYCoordinate());
-            //newCell.lock();
+            System.out.println("Убрали героя с координат "+this.getXCoordinate()+ " "+ this.getYCoordinate() );
             setHeroInPosition(x, y);
+            System.out.println("Установили героя на координаты координат "+this.getXCoordinate()+ " "+ this.getYCoordinate() );
         }
-
-
-
-
-//        boolean canMovie = false;
-//
-//
-//        final int waitTime = 500;
-//
-//        while (!canMovie) {
-//            if (tryMoveUnit(x, y)) {
-//                ReentrantLock cell = this.getBoard().getBoard()[x][y];
-//                canMovie = cell.tryLock(waitTime, TimeUnit.MILLISECONDS);
-//                if (!canMovie) {
-//                    y = getNewYCoordinate(y);
-//                    x = getNewXCoordinate(x);
-//                }
-//            }
-//        }
-//        this.getBoard().getBoard()[this.getXCoordinate()][this.getYCoordinate()].unlock();
-//        this.setUnitInPosition(x, y);
     }
-
-
-//    /**
-//     * Method check move the element.
-//     * @param newPositionX new position x.
-//     * @param newPositionY new position y.
-//     * @return result.
-//     */
-//    public boolean tryMoveHero(int newPositionX, int newPositionY) {
-//        boolean result = false;
-//        if (newPositionX <= this.getBoard().getXSize() || newPositionX > 0 || newPositionY <= this.getBoard().getYSize() || newPositionY > 0) {
-//            result = true;
-//        }
-//        return result;
-//    }
 
     @Override
     public void run() {

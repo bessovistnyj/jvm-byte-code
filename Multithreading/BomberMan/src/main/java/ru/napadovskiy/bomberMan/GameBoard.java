@@ -61,16 +61,5 @@ public class GameBoard {
         return this.board;
     }
 
-//    /**
-//     *Method fill board.
-//     */
-//    public void generateBoard() {
-//        for (int i = 0; i < this.xSize; i++) {
-//            for (int j = 0; j < this.ySize; j++) {
-//                this.board[i][j] = new ReentrantLock();
-//            }
-//        }
-//    }
-
 
 }

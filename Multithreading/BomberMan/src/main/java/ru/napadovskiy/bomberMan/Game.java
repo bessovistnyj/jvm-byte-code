@@ -15,21 +15,18 @@ public class Game {
      */
     public static void main(String[] args) {
 
-//        Game game = new Game();
-//
-//        final int xSize = 8;
-//
-//        final int ySize = 8;
-//
-//        final int countOfMonsters = 2;
-//
-//
-//        GameBoard gameBoard = new GameBoard(xSize, ySize);
-//        gameBoard.generateBoard();
-//        Hero hero = new Hero(gameBoard);
-//        Block block = new Block(gameBoard);
-//        block.setBlockInPosition(2, 1);
-//
+        Game game = new Game();
+
+        final int xSize = 8;
+
+        final int ySize = 8;
+
+        final int countOfMonsters = 5;
+
+
+        GameBoard gameBoard = new GameBoard(xSize, ySize);
+
+
 //        for (int i =0; i < countOfMonsters; i++) {
 //
 //            //new Thread(new Monster(gameBoard).setUnitInPosition()).start();
