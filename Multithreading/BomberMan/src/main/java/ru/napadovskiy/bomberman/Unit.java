@@ -1,4 +1,4 @@
-package ru.napadovskiy.bomberMan;
+package ru.napadovskiy.bomberman;
 
 import java.util.concurrent.ExecutorService;
 
@@ -9,7 +9,7 @@ import java.util.concurrent.ExecutorService;
  * @version 1.0
  * @since 10.10.2017
  */
-public abstract class Unit implements  Runnable{
+public abstract class Unit implements  Runnable {
 
     /**
      * x coordinate.
@@ -29,16 +29,17 @@ public abstract class Unit implements  Runnable{
     /**
      *
      */
-
     private final ExecutorService service;
 
     /**
      * Constructor for all unit.
      * @param board board for game.
      */
-    public Unit(final GameBoard board, final ExecutorService service) {
+    public Unit(final int x, final int y, final GameBoard board, final ExecutorService service) {
         this.board  = board;
         this.service = service;
+        this.xCoordinate = x;
+        this.yCoordinate = y;
         this.service.execute(this);
     }
 
@@ -82,7 +83,20 @@ public abstract class Unit implements  Runnable{
         return this.board;
     }
 
+    /**
+     *
+     * @return
+     */
     public ExecutorService getService() {
         return this.service;
     }
+
+    /**
+     *
+     * @param x
+     * @param y
+     * @return
+     */
+    abstract boolean checkCoordinate(int x, int y);
+
 }

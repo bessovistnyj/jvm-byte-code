@@ -1,4 +1,4 @@
-package ru.napadovskiy.bomberMan;
+package ru.napadovskiy.bomberman;
 
 
 import java.util.Random;
@@ -17,43 +17,25 @@ public class Monster extends Unit implements Runnable {
 
 
     /**
-     * x coordinate.
-     */
-    private int xCoordinate;
-
-    /**
-     * y coordinate.
-     */
-    private int yCoordinate;
-
-
-    /**
      * Constructor for all unit.
      * @param board board for game.
      */
     public Monster(int x, int y, GameBoard board, ExecutorService service) {
-        super(board,service);
-        this.getBoard().getBoard()[x][y] = new ReentrantLock();
-        setMonsterInPosition(x, y);
-    }
+         super(x, y, board, service);
+
+   }
 
     /**
-     * Method set unit in position.
-     * @param positionX position x.
-     * @param positionY position y.
+     *
+     * @param x
+     * @param direction
+     * @return
      */
-    private void setMonsterInPosition(int positionX, int positionY)  {
-        this.setXCoordinate(positionX);
-        this.setYCoordinate(positionY);
-        this.getBoard().getBoard()[positionX][positionY].lock();
-    }
-
-
     private int calculateNewXCoordinate(int x, Direction direction) {
         int result = x;
         if (direction.equals(Direction.LEFT)) {
             result--;
-        } else if(direction.equals(Direction.RIGHT)) {
+        } else if (direction.equals(Direction.RIGHT)) {
             result++;
         }
 
@@ -61,14 +43,19 @@ public class Monster extends Unit implements Runnable {
 
     }
 
+    /**
+     *
+     * @param oldy
+     * @param direction
+     * @return
+     */
     private int calculateNewYCoordinate(int oldy, Direction direction) {
         int result = oldy;
         if (direction.equals(Direction.DOWN)) {
             result--;
-        } else if(direction.equals(Direction.UP)) {
+        } else if (direction.equals(Direction.UP)) {
             result++;
         }
-
         return result;
     }
 
@@ -82,7 +69,7 @@ public class Monster extends Unit implements Runnable {
         int randomCount = random.nextInt(4);
         if (randomCount == 0) {
             result = Direction.DOWN;
-        } else if(randomCount == 1) {
+        } else if (randomCount == 1) {
             result = Direction.LEFT;
         } else if (randomCount == 2) {
             result = Direction.RIGHT;
@@ -92,45 +79,87 @@ public class Monster extends Unit implements Runnable {
         return result;
     }
 
+    /**
+     * Method clear position.
+     * @param x
+     * @param y
+     */
     public void clearPosition(int x, int y) {
-        this.getBoard().getBoard()[x][y].unlock();
-        this.getBoard().getBoard()[x][y] = null;
+        if (this.getBoard().getBoard()[x][y].tryLock()) {
+            this.getBoard().getBoard()[x][y].unlock();
+            this.getBoard().getBoard()[x][y] = new ReentrantLock();
+        }
+
     }
 
-
+    /**
+     * Method move monster in new position.
+     * @throws InterruptedException
+     */
     private void moveMonster() throws InterruptedException {
-
-
-        final int waitTime = 5;
 
         int newX = this.getXCoordinate();
 
         int newY = this.getYCoordinate();
 
+        final int waitTime = 5;
+
         boolean canMove = false;
+
+        ReentrantLock newCell = null;
 
         while (!canMove) {
             Direction direction = getRandomDirection();
+
             newX = calculateNewXCoordinate(this.getXCoordinate(), direction);
 
             newY = calculateNewYCoordinate(this.getYCoordinate(), direction);
 
-            if (this.getBoard().getBoard()[newX][newY].tryLock(waitTime, TimeUnit.SECONDS)) {
-                canMove = true;
+            if (checkCoordinate(newX, newY)) {
+                newCell = this.getBoard().getBoard()[newX][newY];
+                if (newCell == null) {
+                    newCell = new ReentrantLock();
+                    this.getBoard().getBoard()[newX][newY] = new ReentrantLock();
+                }
+                if (newCell.tryLock(waitTime, TimeUnit.SECONDS)) {
+
+                    canMove = true;
+                }
             }
         }
-        this.clearPosition(this.getXCoordinate(), this.getYCoordinate());
-        System.out.println("Убрали монстра "+ Thread.currentThread().getName()+" с координат "+this.getXCoordinate()+" "+this.getYCoordinate());
-        this.setMonsterInPosition(newX, newY);
-        System.out.println("Установили монстра "+ Thread.currentThread().getName()+" на координаты "+this.getXCoordinate()+" "+this.getYCoordinate());
+        clearPosition(this.getXCoordinate(), this.getYCoordinate());
+
+        newCell.lock();
+        this.setXCoordinate(newX);
+        this.setYCoordinate(newY);
 
     }
+
+    /**
+     *
+     * @param x
+     * @param y
+     * @return
+     */
+    @Override
+    boolean checkCoordinate(int x, int y) {
+        boolean result = false;
+
+        if ((x >= 0 && x < this.getBoard().getXSize()) && ((y >= 0 && y < this.getBoard().getYSize()))) {
+            result = true;
+        }
+
+        return result;
+
+    }
+
 
     /**
      * Method for start move hero.
      */
     @Override
     public void run() {
+        this.getBoard().getBoard()[this.getXCoordinate()][this.getYCoordinate()] = new ReentrantLock();
         while (!getService().isShutdown()) {
             try {
                 moveMonster();

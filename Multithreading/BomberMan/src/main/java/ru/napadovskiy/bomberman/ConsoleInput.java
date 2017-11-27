@@ -3,7 +3,12 @@ package ru.napadovskiy.bomberman;
 import java.util.Scanner;
 
 /**
- *
+ * Package of Multithreading test task.
+ * Class console input.
+ * @author Napadovskiy Bohdan
+ * @version 1.0
+ * @since 23.11.2017
+
  */
 public class ConsoleInput {
 

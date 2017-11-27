@@ -1,11 +1,12 @@
-package ru.napadovskiy.bomberMan;
+package ru.napadovskiy.bomberman;
 
+import java.util.Random;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 /**
  * Package of Multithreading.
- * Main class for test.
+ * Main class start game.
  * @author Napadovskiy Bohdan
  * @version 1.0
  * @since 10.10.2017
@@ -13,48 +14,118 @@ import java.util.concurrent.Executors;
 public class Game {
 
 
-    private final int countOfMonsters = 5;
+    /**
+     * Count of monsters.
+     */
+    private int countOfMonsters;
 
-    private final int xSizeBoard = 8;
+    /**
+     * Count of block.
+     */
+    private int countOfBlocks;
 
-    private final int ySizeBoard = 8;
+    /**
+     * x size of Board.
+     */
+    private int xSizeBoard;
 
-    private  final GameBoard board;
+    /**
+     *x size of Board.
+     */
+    private int ySizeBoard;
 
+    /**
+     * Game board.
+     */
+    private final GameBoard board;
 
+    /**
+     * Executor service.
+     */
     private static ExecutorService service = Executors.newCachedThreadPool();
 
-    private Game(int xSize, int ySize) {
-        this.board = new GameBoard(xSize, ySize);
+    /**
+     * Constructor for class.
+     * @param x x size.
+     * @param y y size.
+     * @param countOfMonsters count of monster.
+     * @param countOfBlocks count of blocks.
+     */
+    private Game(int x, int y, int countOfMonsters, int countOfBlocks) {
+        this.xSizeBoard = x;
+        this.ySizeBoard = y;
+        this.countOfMonsters = countOfMonsters;
+        this.countOfBlocks = countOfBlocks;
+        this.board = new GameBoard(x, y);
+    }
+
+
+    /**
+     * Method return random x coordinate.
+     * @return x coordinate.
+     */
+    private int getRandomXCoordinate() {
+        Random random = new Random();
+        int randomCount = random.nextInt(this.xSizeBoard);
+
+        return randomCount;
 
     }
 
-    private void addHero() {
+    /**
+     * Method return random y coordinate.
+     * @return y coordinate.
+     */
+    private int getRandomYCoordinate() {
+        Random random = new Random();
+        int randomCount = random.nextInt(this.ySizeBoard);
 
-        if (this.board.getBoard()[0][0] != null) {
-            if (this.board.getBoard()[0][0].tryLock()) {
-                Hero hero = new Hero(0, 0, board, service);
-            }
-        } else {
+        return randomCount;
+
+    }
+
+    /**
+     * Method add hero in game.
+     */
+    private void addHero() {
+        if ((this.board.getBoard()[0][0] == null) || (this.board.getBoard()[0][0].tryLock())) {
             Hero hero = new Hero(0, 0, board, service);
         }
     }
 
+    /**
+     * Method adds monsters in game.
+     */
     private void addMonster() {
-        if (this.board.getBoard()[3][3] != null) {
-            if (this.board.getBoard()[3][3].tryLock()) {
-                Monster monster = new Monster(3,3, board,service);
-            }
-        } else {
-            Monster monster = new Monster(3,3, board,service);
+        for (int i = 0; i < this.countOfMonsters; i++) {
+            int x = getRandomXCoordinate();
+            int y = getRandomYCoordinate();
+            Monster monster = new Monster(x, y, board, service);
         }
     }
+
+    /**
+     * Method add blocks in game.
+     */
+    private void addBlock() {
+        for (int i = 0; i < this.countOfBlocks; i++) {
+            int x = getRandomXCoordinate();
+            int y = getRandomYCoordinate();
+            Block block = new Block(x, y, board, service);
+
+        }
+    }
+
+
+    /**
+     * Method start game.
+     */
     private void initGame() {
+        addBlock();
         addHero();
         addMonster();
 
     }
-
 
 
     /**
@@ -63,7 +134,15 @@ public class Game {
      */
     public static void main(String[] args) {
 
-        Game game = new Game(8, 8);
+        final int x = 8;
+
+        final int y = 8;
+
+        final int countOfMonster = 2;
+
+        final int countOfBlocks = 2;
+
+        Game game = new Game(x, y, countOfMonster, countOfBlocks);
         game.initGame();
         try {
             Thread.sleep(5000);

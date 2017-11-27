@@ -1,4 +1,4 @@
-package ru.napadovskiy.bomberMan;
+package ru.napadovskiy.bomberman;
 
 import java.util.concurrent.locks.ReentrantLock;
 
@@ -60,6 +60,5 @@ public class GameBoard {
     public ReentrantLock[][] getBoard() {
         return this.board;
     }
-
 
 }

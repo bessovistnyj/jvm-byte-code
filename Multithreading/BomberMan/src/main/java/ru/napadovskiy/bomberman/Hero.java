@@ -1,7 +1,6 @@
-package ru.napadovskiy.bomberMan;
+package ru.napadovskiy.bomberman;
 
 
-import java.util.Random;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.locks.ReentrantLock;
 
@@ -14,54 +13,43 @@ import java.util.concurrent.locks.ReentrantLock;
  */
 public class Hero extends Unit implements Runnable {
 
-    private int xCoordinate;
-
-
     /**
-     * Constructor for hero class.
-     * @param board board game.
+     *
+     * @param x
+     * @param y
+     * @param board
+     * @param service
      */
     public Hero(int x, int y, GameBoard board, ExecutorService service) {
-        super(board,service);
-        this.getBoard().getBoard()[x][y] = new ReentrantLock();
-        setHeroInPosition(x, y);
+        super(x, y, board, service);
     }
+
 
     /**
-     * Method set unit in position.
-     * @param positionX position x.
-     * @param positionY position y.
+     *
+     * @param x
+     * @param y
      */
-    private void setHeroInPosition(int positionX, int positionY) {
-        this.setXCoordinate(positionX);
-        this.setYCoordinate(positionY);
-        if (this.getBoard().getBoard()[positionX][positionY].tryLock()) {
-            this.getBoard().getBoard()[positionX][positionY].lock();
-        }
-    }
-
-
     public void clearPosition(int x, int y) {
-        this.getBoard().getBoard()[x][y].unlock();
-        this.getBoard().getBoard()[x][y] = null;
+        if (this.getBoard().getBoard()[x][y].tryLock()) {
+            this.getBoard().getBoard()[x][y].unlock();
+            this.getBoard().getBoard()[x][y] = new ReentrantLock();
+        }
+
     }
 
-    public int getNewXCoordinate(int oldx, Direction direction) {
-        int result = oldx;
+
+    /**
+     *
+     * @param oldX
+     * @param direction
+     * @return
+     */
+    public int getNewXCoordinate(int oldX, Direction direction) {
+        int result = oldX;
         if (direction.equals(Direction.LEFT)) {
             result--;
-        } else if(direction.equals(Direction.RIGHT)) {
-            result++;
-        }
-
-        return result;
-    }
-
-    private int getNewYCoordinate(int oldy, Direction direction) {
-        int result = oldy;
-        if (direction.equals(Direction.DOWN)) {
-            result--;
-        } else if(direction.equals(Direction.UP)) {
+        } else if (direction.equals(Direction.RIGHT)) {
             result++;
         }
 
@@ -70,33 +58,60 @@ public class Hero extends Unit implements Runnable {
 
     /**
      *
-     * @return direction
+     * @param oldY
+     * @param direction
+     * @return
      */
-    private Direction getRandomDirection() {
-        Direction result = null;
-        Random random = new Random();
-        int randomCount = random.nextInt(4);
-        if (randomCount == 0) {
-            result = Direction.DOWN;
-        } else if(randomCount == 1) {
-            result = Direction.LEFT;
-        } else if (randomCount == 2) {
-            result = Direction.RIGHT;
-        } else if (randomCount == 3) {
-            result = Direction.UP;
+    private int getNewYCoordinate(int oldY, Direction direction) {
+        int result = oldY;
+        if (direction.equals(Direction.DOWN)) {
+            result--;
+        } else if (direction.equals(Direction.UP)) {
+            result++;
         }
+
         return result;
     }
 
+    /**
+     *
+     * @param x
+     * @param y
+     * @return
+     */
+    @Override
 
-    private boolean checkCoordinate(int x, int y) {
+    boolean checkCoordinate(int x, int y) {
         boolean result = false;
 
-        if ((x >= 0 || x < this.getBoard().getXSize()) && ((y >= 0 || y < this.getBoard().getYSize())) ) {
+        if ((x >= 0 && x < this.getBoard().getXSize()) && ((y >= 0 && y < this.getBoard().getYSize()))) {
             result = true;
         }
 
         return result;
+     }
+
+    /**
+     *
+     * @return
+     */
+    private Direction getDirection() {
+        Direction result = null;
+
+        String text = "";
+        new ConsoleInput().askUser(text);
+        if (text.equals("s"))  {
+            result = Direction.DOWN;
+        } else if (text.equals("w")) {
+            result = Direction.UP;
+        } else if (text.equals("a")) {
+            result = Direction.LEFT;
+        } else if (text.equals("d")) {
+            result = Direction.RIGHT;
+        }
+
+        return  result;
+
      }
 
 
@@ -107,32 +122,33 @@ public class Hero extends Unit implements Runnable {
     private void moveHero() throws InterruptedException {
 
 
-        int y = this.getYCoordinate();
+        ReentrantLock newCell = null;
 
-        int x = this.getXCoordinate();
+        Direction direction = getDirection();
 
+        int newX = getNewXCoordinate(this.getXCoordinate(), direction);
 
-        while (!checkCoordinate(x, y)) {
-            Direction direction = getRandomDirection();
+        int newY = getNewYCoordinate(this.getYCoordinate(), direction);
 
-            y = getNewYCoordinate(this.getYCoordinate(), direction);
+        if (checkCoordinate(newX, newY)) {
+            newCell = this.getBoard().getBoard()[newX][newY];
+            if (newCell == null) {
+                newCell = new ReentrantLock();
+                this.getBoard().getBoard()[newX][newY] = new ReentrantLock();
+            }
 
-            x = getNewXCoordinate(this.getXCoordinate(), direction);
-
-        }
-
-        ReentrantLock newCell = this.getBoard().getBoard()[x][y];
-
-        if (newCell.tryLock()) {
             clearPosition(this.getXCoordinate(), this.getYCoordinate());
-            System.out.println("Убрали героя с координат "+this.getXCoordinate()+ " "+ this.getYCoordinate() );
-            setHeroInPosition(x, y);
-            System.out.println("Установили героя на координаты координат "+this.getXCoordinate()+ " "+ this.getYCoordinate() );
+
+            newCell.lock();
+            this.setXCoordinate(newX);
+            this.setYCoordinate(newY);
         }
+
     }
 
     @Override
     public void run() {
+        this.getBoard().getBoard()[this.getXCoordinate()][this.getYCoordinate()] = new ReentrantLock();
         while (!getService().isShutdown()) {
             try {
                 this.moveHero();
