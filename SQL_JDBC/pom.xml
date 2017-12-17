@@ -89,9 +89,9 @@
 	</properties>
 
 	<modules>
-		<module>1.Create Update Insert</module>
+		<module>1.Create_Update_Insert</module>
 		<module>2.Query</module>
-		<module>3.Outer join</module>
+		<module>3.Outer_join</module>
 		<module>4.JDBC</module>
 		<module>5.TestTask</module>
 	</modules>
@@ -117,6 +117,11 @@
 			<artifactId>jcip-annotations</artifactId>
 			<version>1.0</version>
 		</dependency>
+        <dependency>
+            <groupId>postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>9.1-901-1.jdbc4</version>
+        </dependency>
 	</dependencies>
 
 
