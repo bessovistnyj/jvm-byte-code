@@ -4,6 +4,7 @@ package ru.napadovskiu.tracker;
 import ru.napadovskiu.sqlstorage.Settings;
 
 import java.io.IOException;
+import java.io.InputStream;
 
 /**
  *Class for users.
@@ -56,12 +57,15 @@ public class StartUI {
      */
     public static void main(String[] args) {
         Settings settings = new Settings();
-        try {
-            String result = settings.getInterAdress();
-            int a = 1;
+        ClassLoader loader = Settings.class.getClassLoader();
+        try (InputStream io = loader.getResourceAsStream("app.properties")) {
+            settings.load(io);
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        String value = settings.getValue("url");
+        int a =1;
 //        Tracker tracker = new Tracker();
 //        Input input = new ConsoleInput();
 //        StartUI startUI = new StartUI(input, tracker);

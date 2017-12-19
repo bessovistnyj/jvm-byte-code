@@ -3,78 +3,25 @@ package ru.napadovskiu.sqlstorage;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Properties;
 
 /**
  * Created by program on 31.01.2017.
  */
 public class Settings {
+    private final Properties prs = new Properties();
 
-    private String returnPathOfProperty() {
-        String result = System.getProperty("user.dir");
-
-        String checkString = "Input_Output";
-        if (!result.contains(checkString)) {
-            result = result + "\\" + checkString;
+    public void load (InputStream io) {
+        try {
+            this.prs.load(io);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-
-        return result;
     }
 
-    public String getInterAdress()  throws IOException {
-        String result = null;
-
-        Properties props = new Properties();
-
-        props.load(new FileInputStream(new File(returnPathOfProperty() + "\\app.properties")));
-
-        result     = props.getProperty("serverAddress");
-
-        return result;
-
+    public String getValue (String key) {
+        return this.prs.getProperty(key);
     }
 
-    public String getParentDir()  throws IOException {
-        String result = null;
-
-        Properties props = new Properties();
-
-        props.load(new FileInputStream(new File(returnPathOfProperty() + "\\app.properties")));
-
-        result  = props.getProperty("serverHomePath");
-
-        return result;
-
-    }
-
-    public String getClientHomePath()  throws IOException {
-        String result = null;
-
-        Properties props = new Properties();
-
-        props.load(new FileInputStream(new File(returnPathOfProperty() + "\\app.properties")));
-
-        result  = props.getProperty("clientHomePath");
-
-        return result;
-
-    }
-
-
-
-    public int getServerPort() throws IOException {
-
-        int result = 0;
-
-        Properties props = new Properties();
-
-        props.load(new FileInputStream(new File(returnPathOfProperty() + "\\app.properties")));
-
-        String strServerPort     = props.getProperty("port");
-
-        result = Integer.valueOf(strServerPort);
-
-        return result;
-
-    }
 }
