@@ -1,10 +1,11 @@
 package ru.napadovskiu.tracker;
 
 
-import ru.napadovskiu.sqlstorage.Settings;
+import ru.napadovskiu.sqlstorage.SqlStorage;
 
-import java.io.IOException;
-import java.io.InputStream;
+import java.sql.Connection;
+import java.sql.SQLException;
+
 
 /**
  *Class for users.
@@ -56,19 +57,17 @@ public class StartUI {
      * @param args args.
      */
     public static void main(String[] args) {
-        Settings settings = new Settings();
-        ClassLoader loader = Settings.class.getClassLoader();
-        try (InputStream io = loader.getResourceAsStream("app.properties")) {
-            settings.load(io);
-        } catch (IOException e) {
+        SqlStorage sqlStorage = new SqlStorage();
+        String result = sqlStorage.getSQLQuery("createDataBaseQuery");
+        Connection connection = sqlStorage.getConnection();
+        try {
+            connection.close();
+        } catch (SQLException e) {
             e.printStackTrace();
         }
 
-        String value = settings.getValue("url");
-        int a =1;
-//        Tracker tracker = new Tracker();
-//        Input input = new ConsoleInput();
-//        StartUI startUI = new StartUI(input, tracker);
+
+//        StartUI startUI = new StartUI(new ConsoleInput(), new Tracker());
 //        startUI.init();
     }
 

@@ -1,7 +1,13 @@
 package ru.napadovskiu.tracker;
 
 import ru.napadovskiu.items.Item;
+import ru.napadovskiu.sqlstorage.Settings;
+import ru.napadovskiu.sqlstorage.SqlStorage;
 
+import java.io.InputStream;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -23,6 +29,26 @@ import java.util.Random;
      *arguments for generate id item.
      */
     private static  final Random RN = new Random();
+
+    private Connection connection;
+
+    private SqlStorage sqlStorage;
+
+
+    public Tracker() {
+        this.sqlStorage = new SqlStorage();
+        this.connection = sqlStorage.getConnection();
+        init();
+    }
+
+
+    private void init() {
+        try (PreparedStatement pst = connection.prepareStatement(sqlStorage.getSQLQuery("createDataBaseQuery"))) {
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+    }
 
     /**
      *The method add new item to items array.
