@@ -5,6 +5,7 @@ import ru.napadovskiu.sqlstorage.SqlStorage;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -48,27 +49,31 @@ import java.util.Random;
      * @return item.
      */
     public Item addNewItem(Item item) {
-		Item result = null;
-        boolean newItem = false;
-
+		boolean newItem = false;
 
         item.setId(generateId());
         item.setCreateDate(System.currentTimeMillis());
 
         Connection connection = this.sqlStorage.getConnection();
+        PreparedStatement pst = null;
         try {
-            PreparedStatement pst = connection.prepareStatement("INSERT INTO items (item_id, item_name, item_date) VALUES(?,?,?)");
+            pst = connection.prepareStatement("INSERT INTO table_items (item_id, item_name, item_date) VALUES(?,?,?)");
             pst.setString(1,item.getId());
             pst.setString(2,item.getName());
             pst.setTimestamp(3,new java.sql.Timestamp(item.getCreateDate()));
+            pst.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-
+            try {
+                pst.close();
+                connection.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
-
         // this.takeItems.add(item);
-        return result;
+        return item;
 	}
 
     /**
@@ -77,7 +82,28 @@ import java.util.Random;
      * @return result if delete.
      */
     public boolean deleteItem(Item item) {
-        //return this.takeItems.remove(item);
+        boolean result = false;
+        int i =0 ;
+        Connection connection = this.sqlStorage.getConnection();
+        PreparedStatement pst = null;
+        try {
+            pst = connection.prepareStatement("DELETE FROM table_items WHERE item_id = ?");
+            pst.setString(1, item.getId());
+            i = pst.executeUpdate();
+            result =true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                pst.close();
+                connection.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+
+            //return this.takeItems.remove(item);
+        }
+        return result;
     }
 
 	 /**
@@ -86,16 +112,34 @@ import java.util.Random;
 	 *@return an array of items found.
 	 */
     public Item findItemById(String id) {
-//        Item result = null;
+        Item result = null;
+        Connection connection = this.sqlStorage.getConnection();
+        PreparedStatement pst = null;
+        try {
+            pst = connection.prepareStatement("SELECT * FROM table_items WHERE item_id = ?");
+            pst.setString(1,id);
+            ResultSet resultQuery =  pst.executeQuery();
+            //result = getItemFroResultQuery(resultQuery);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                pst.close();
+                connection.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+
+
 //        for (Item tmpItem: this.takeItems) {
 //            if (tmpItem != null && tmpItem.getId().equals(id)) {
 //                result = tmpItem;
 //                break;
 //            }
 //        }
-//        return result;
+        return result;
     }
-
 
     /**
      *
@@ -118,12 +162,23 @@ import java.util.Random;
      *@return an array of items found.
      */
      public ArrayList findItemByName(String name) {
-        ArrayList<Item> resultArray = new ArrayList<Item>();
-//        for (Item tmpItem: this.takeItems) {
-//            if (tmpItem != null && findSubString(tmpItem.getName(), name)) {
-//                resultArray.add(tmpItem);
-//            }
-//        }
+         ArrayList resultArray = null;
+         Connection connection = this.sqlStorage.getConnection();
+         PreparedStatement pst = null;
+         try {
+             pst = connection.prepareStatement("SELECT * FROM table_items");
+             ResultSet resultQuery =  pst.executeQuery();
+             //resultArray = getItemFroResultQuery(resultQuery);
+         } catch (SQLException e) {
+             e.printStackTrace();
+         } finally {
+             try {
+                 pst.close();
+                 connection.close();
+             } catch (SQLException e) {
+                 e.printStackTrace();
+             }
+         }
         return resultArray;
     }
 
@@ -149,6 +204,24 @@ import java.util.Random;
 	*@param editItem item for edit.
 	*/
     public void editItem(Item editItem) {
+        Connection connection = this.sqlStorage.getConnection();
+        PreparedStatement pst = null;
+        try {
+            pst = connection.prepareStatement("SELECT * FROM table_items");
+            ResultSet resultQuery =  pst.executeQuery();
+            //resultArray = getItemFroResultQuery(resultQuery);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                pst.close();
+                connection.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return resultArray;
+
 //        for (Item tmpItem: this.takeItems) {
 //            if (tmpItem != null && tmpItem.getId().equals(editItem.getId())) {
 //                tmpItem.setName(editItem.getName());
