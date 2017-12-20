@@ -1,10 +1,8 @@
 package ru.napadovskiu.tracker;
 
 import ru.napadovskiu.items.Item;
-import ru.napadovskiu.sqlstorage.Settings;
 import ru.napadovskiu.sqlstorage.SqlStorage;
 
-import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -23,31 +21,25 @@ import java.util.Random;
     /**
     *Array list items.
     */
-    private ArrayList<Item> takeItems = new ArrayList<Item>();
+    //private ArrayList<Item> takeItems = new ArrayList<Item>();
 
     /**
      *arguments for generate id item.
      */
     private static  final Random RN = new Random();
 
-    private Connection connection;
-
     private SqlStorage sqlStorage;
 
 
     public Tracker() {
         this.sqlStorage = new SqlStorage();
-        this.connection = sqlStorage.getConnection();
         init();
     }
 
 
     private void init() {
-        try (PreparedStatement pst = connection.prepareStatement(sqlStorage.getSQLQuery("createDataBaseQuery"))) {
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
+        SqlStorage sqlStorage = new SqlStorage();
+        sqlStorage.createDateBase();
     }
 
     /**
@@ -58,9 +50,24 @@ import java.util.Random;
     public Item addNewItem(Item item) {
 		Item result = null;
         boolean newItem = false;
+
+
         item.setId(generateId());
         item.setCreateDate(System.currentTimeMillis());
-        this.takeItems.add(item);
+
+        Connection connection = this.sqlStorage.getConnection();
+        try {
+            PreparedStatement pst = connection.prepareStatement("INSERT INTO items (item_id, item_name, item_date) VALUES(?,?,?)");
+            pst.setString(1,item.getId());
+            pst.setString(2,item.getName());
+            pst.setTimestamp(3,new java.sql.Timestamp(item.getCreateDate()));
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+
+        }
+
+        // this.takeItems.add(item);
         return result;
 	}
 
@@ -70,7 +77,7 @@ import java.util.Random;
      * @return result if delete.
      */
     public boolean deleteItem(Item item) {
-        return this.takeItems.remove(item);
+        //return this.takeItems.remove(item);
     }
 
 	 /**
@@ -79,14 +86,14 @@ import java.util.Random;
 	 *@return an array of items found.
 	 */
     public Item findItemById(String id) {
-        Item result = null;
-        for (Item tmpItem: this.takeItems) {
-            if (tmpItem != null && tmpItem.getId().equals(id)) {
-                result = tmpItem;
-                break;
-            }
-        }
-        return result;
+//        Item result = null;
+//        for (Item tmpItem: this.takeItems) {
+//            if (tmpItem != null && tmpItem.getId().equals(id)) {
+//                result = tmpItem;
+//                break;
+//            }
+//        }
+//        return result;
     }
 
 
@@ -112,11 +119,11 @@ import java.util.Random;
      */
      public ArrayList findItemByName(String name) {
         ArrayList<Item> resultArray = new ArrayList<Item>();
-        for (Item tmpItem: this.takeItems) {
-            if (tmpItem != null && findSubString(tmpItem.getName(), name)) {
-                resultArray.add(tmpItem);
-            }
-        }
+//        for (Item tmpItem: this.takeItems) {
+//            if (tmpItem != null && findSubString(tmpItem.getName(), name)) {
+//                resultArray.add(tmpItem);
+//            }
+//        }
         return resultArray;
     }
 
@@ -127,13 +134,13 @@ import java.util.Random;
      */
     public List<Item> findItemByDescription(String description) {
         ArrayList<Item> resultArray = new ArrayList<Item>();
-        for (Item tmpItem : this.takeItems) {
-            if (findSubString(tmpItem.getDescription(), description)) {
-                if (!tmpItem.equals(tmpItem)) {
-                    resultArray.add(tmpItem);
-                }
-            }
-        }
+//        for (Item tmpItem : this.takeItems) {
+//            if (findSubString(tmpItem.getDescription(), description)) {
+//                if (!tmpItem.equals(tmpItem)) {
+//                    resultArray.add(tmpItem);
+//                }
+//            }
+//        }
         return resultArray;
     }
 
@@ -142,12 +149,12 @@ import java.util.Random;
 	*@param editItem item for edit.
 	*/
     public void editItem(Item editItem) {
-        for (Item tmpItem: this.takeItems) {
-            if (tmpItem != null && tmpItem.getId().equals(editItem.getId())) {
-                tmpItem.setName(editItem.getName());
-                tmpItem.setDescription(editItem.getDescription());
-            }
-        }
+//        for (Item tmpItem: this.takeItems) {
+//            if (tmpItem != null && tmpItem.getId().equals(editItem.getId())) {
+//                tmpItem.setName(editItem.getName());
+//                tmpItem.setDescription(editItem.getDescription());
+//            }
+//        }
     }
 
     /**
@@ -155,7 +162,7 @@ import java.util.Random;
      *@return an array all items.
      */
     public ArrayList<Item> getAllItem() {
-        return this.takeItems;
+        //return this.takeItems;
 
     }
 

@@ -4,9 +4,7 @@ import  org.slf4j.Logger;
 import  org.slf4j.LoggerFactory;
 
 import java.io.*;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
+import java.sql.*;
 
 /**
  *
@@ -26,37 +24,51 @@ public class SqlStorage {
         this.loader = Settings.class.getClassLoader();
         this.io = loader.getResourceAsStream("app.properties");
         this.settings.load(io);
+    }
+
+    public Connection getConnection() {
         try {
             this.connection = DriverManager.getConnection(settings.getValue("url"),settings.getValue("userName"),settings.getValue("password"));
         } catch (SQLException e ) {
             log.error(e.getMessage(),e);
         }
-    }
-
-    public Connection getConnection() {
         return this.connection;
     }
 
-    public String getSQLQuery(String value) {
+    public void createDateBase()  {
         String result = "";
-        File fileQuery = new File(this.settings.getValue(value));
+        RandomAccessFile randomAccessFile = null;
+        Statement st = null;
+        File fileQuery = new File("SQL_JDBC\\4.JDBC\\Trackerbd\\src\\main\\resources\\sqlquery\\createTable.sql");
+
         try {
-            RandomAccessFile randomAccessFile = new RandomAccessFile(fileQuery.getAbsoluteFile(), "r");
+            randomAccessFile = new RandomAccessFile(fileQuery.getAbsoluteFile(), "r");
+            this.connection = DriverManager.getConnection(settings.getValue("url"),settings.getValue("userName"),settings.getValue("password"));
+
+            st = this.connection.createStatement();
+
+            StringBuffer sb  = new StringBuffer();
             String line;
+
             while((line = randomAccessFile.readLine()) != null ) {
-                result = result+line;
+            sb.append(line);
+                if (line.endsWith(";")) {
+                    st.addBatch(sb.toString());
+                    sb = new StringBuffer();
+                }
             }
-
-            randomAccessFile.close();
-
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
+            st.executeBatch();
+        } catch ( IOException | SQLException e ) {
+            log.error(e.getMessage(),e);
+        } finally {
+            try {
+                st.close();
+                this.connection.close();
+                randomAccessFile.close();
+            } catch (IOException | SQLException e) {
+                log.error(e.getMessage(),e);
+            }
         }
-
-        return result;
-
     }
 
 }

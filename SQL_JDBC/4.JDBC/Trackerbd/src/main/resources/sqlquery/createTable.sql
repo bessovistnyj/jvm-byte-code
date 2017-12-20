@@ -1,2 +1,2 @@
- CREATE TABLE IF NOT EXISTS tracker(item_id SERIAL PRIMARY KEY, item_name VARCHAR(100),item_date timestamp, item_description varchar(200));
- CREATE TABLE IF NOT EXISTS comments(item_id SERIAL PRIMARY KEY, item_description varchar(200));
+ CREATE TABLE IF NOT EXISTS table_items(item_id  VARCHAR(50) PRIMARY KEY, item_name VARCHAR(100),item_date timestamp);
+ CREATE TABLE IF NOT EXISTS table_comments(comments_id SERIAL PRIMARY KEY, comments_description varchar(200), item_id integer references table_items(item_id));

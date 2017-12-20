@@ -57,14 +57,8 @@ public class StartUI {
      * @param args args.
      */
     public static void main(String[] args) {
-        SqlStorage sqlStorage = new SqlStorage();
-        String result = sqlStorage.getSQLQuery("createDataBaseQuery");
-        Connection connection = sqlStorage.getConnection();
-        try {
-            connection.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+
+
 
 
 //        StartUI startUI = new StartUI(new ConsoleInput(), new Tracker());
