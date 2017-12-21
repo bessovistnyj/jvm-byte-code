@@ -57,12 +57,8 @@ public class StartUI {
      * @param args args.
      */
     public static void main(String[] args) {
-
-
-
-
-//        StartUI startUI = new StartUI(new ConsoleInput(), new Tracker());
-//        startUI.init();
+        StartUI startUI = new StartUI(new ConsoleInput(), new Tracker());
+        startUI.init();
     }
 
 }

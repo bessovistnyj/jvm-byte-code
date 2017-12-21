@@ -39,7 +39,7 @@ public class SqlStorage {
         String result = "";
         RandomAccessFile randomAccessFile = null;
         Statement st = null;
-        File fileQuery = new File("SQL_JDBC\\4.JDBC\\Trackerbd\\src\\main\\resources\\sqlquery\\createTable.sql");
+        File fileQuery = new File("C:\\projects\\jvm-byte-code\\SQL_JDBC\\4.JDBC\\Trackerbd\\src\\main\\resources\\sqlquery\\createTable.sql");
 
         try {
             randomAccessFile = new RandomAccessFile(fileQuery.getAbsoluteFile(), "r");

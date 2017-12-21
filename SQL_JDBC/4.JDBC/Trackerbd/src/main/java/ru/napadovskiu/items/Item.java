@@ -57,6 +57,15 @@ public class Item {
         this.description = desc;
 	}
 
+    public Item(String id, String name, String desc, long createDate) {
+        this.setId(id);
+        this.name = name;
+        this.description = desc;
+        this.createDate = createDate;
+    }
+
+
+
     /**
      *Method to set id Item.
      * @param id id Item.
@@ -136,7 +145,6 @@ public class Item {
      * @return item comment.
      */
     public Comments addComment(Comments comment) {
-        //comments[this.commentPosition++] = comment;
         this.comments.add(comment);
         return comment;
     }

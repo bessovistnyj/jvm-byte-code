@@ -55,7 +55,7 @@ public class MenuTracker {
      */
    public void doAction(String action) {
        this.actions.get(Integer.valueOf(action) - 1).execute(this.input, this.tracker);
-    }
+   }
 
 
     /**
