@@ -1,5 +1,13 @@
 package ru.napadovskiu.items;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import ru.napadovskiu.sqlstorage.SqlStorage;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -46,6 +54,8 @@ public class Item {
     public Item() {
 
     }
+
+    private static final Logger log = LoggerFactory.getLogger(SqlStorage.class);
 
     /**
      * Constructor for class Item.
@@ -146,6 +156,24 @@ public class Item {
      */
     public Comments addComment(Comments comment) {
         this.comments.add(comment);
+        SqlStorage sqlStorage = new SqlStorage();
+        Connection connection = sqlStorage.getConnection();
+        PreparedStatement pst = null;
+        try {
+            pst = connection.prepareStatement("INSERT INTO table_comments (comments_description, item_id) VALUES(?,?)");
+            pst.setString(1,comment.getComment());
+            pst.setString(2,this.getId());
+            pst.executeUpdate();
+        } catch (SQLException e) {
+            log.error(e.getMessage(),e);
+        } finally {
+            try {
+                pst.close();
+                connection.close();
+            } catch (SQLException e) {
+                log.error(e.getMessage(),e);
+            }
+        }
         return comment;
     }
 
@@ -155,11 +183,26 @@ public class Item {
      */
     public String getComment() {
         String result = "";
-//        for (int i = 0; i < comments.size(); i++) {
-//            if (this.comments[i] != null) {
-//                result = comments[i].getComment();
-//            }
-//        }
+        SqlStorage sqlStorage = new SqlStorage();
+        ArrayList<Item> resultArray = new ArrayList<Item>();
+        Connection connection = sqlStorage.getConnection();
+        PreparedStatement pst = null;
+        try {
+            pst = connection.prepareStatement("SELECT * FROM table_comments WHERE item_id =? ");
+            pst.setString(1,this.getId());
+            ResultSet resultQuery =  pst.executeQuery();
+            //resultArray = getItemsFromResultQuery(resultQuery);
+        } catch (SQLException e) {
+            log.error(e.getMessage(),e);
+        } finally {
+            try {
+                pst.close();
+                connection.close();
+            } catch (SQLException e) {
+                log.error(e.getMessage(),e);
+            }
+        }
+        //return resultArray;
 
         for (Comments comment: this.comments) {
             result = comment.getComment();

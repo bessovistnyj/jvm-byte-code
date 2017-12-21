@@ -1,5 +1,7 @@
 package ru.napadovskiu.tracker;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import ru.napadovskiu.items.Item;
 import ru.napadovskiu.sqlstorage.SqlStorage;
 
@@ -8,7 +10,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.List;
+
 import java.util.Random;
 
 /**
@@ -19,19 +21,13 @@ import java.util.Random;
  */
  public class Tracker {
 
-    /**
-    *Array list items.
-    */
-    //private ArrayList<Item> takeItems = new ArrayList<Item>();
-
+    private static final Logger log = LoggerFactory.getLogger(SqlStorage.class);
     /**
      *arguments for generate id item.
      */
     private static  final Random RN = new Random();
 
     private SqlStorage sqlStorage;
-    private ResultSet resultQuery;
-
 
     public Tracker() {
         this.sqlStorage = new SqlStorage();
@@ -64,10 +60,18 @@ import java.util.Random;
             newItem.setId(resultQuery.getString("item_id"));
             newItem.setName(resultQuery.getString("item_name"));
             newItem.setDescription(resultQuery.getString("item_desc"));
-            newItem.setCreateDate(resultQuery.getLong("item_date"));
+            newItem.setCreateDate(resultQuery.getTimestamp("item_date").getTime());
             result.add(newItem);
         }
         return result;
+    }
+
+    /**
+     *The method generate id for new item.
+     *@return id id.
+     */
+    private String generateId() {
+        return String.valueOf(System.currentTimeMillis() + RN.nextInt());
     }
 
      /**
@@ -76,8 +80,6 @@ import java.util.Random;
      * @return item.
      */
     public Item addNewItem(Item item) {
-		boolean newItem = false;
-
         item.setId(generateId());
         item.setCreateDate(System.currentTimeMillis());
 
@@ -91,16 +93,15 @@ import java.util.Random;
             pst.setString(4,item.getDescription());
             pst.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            log.error(e.getMessage(),e);
         } finally {
             try {
                 pst.close();
                 connection.close();
             } catch (SQLException e) {
-                e.printStackTrace();
+                log.error(e.getMessage(),e);
             }
         }
-        // this.takeItems.add(item);
         return item;
 	}
 
@@ -120,13 +121,13 @@ import java.util.Random;
             i = pst.executeUpdate();
             result =true;
         } catch (SQLException e) {
-            e.printStackTrace();
+            log.error(e.getMessage(),e);
         } finally {
             try {
                 pst.close();
                 connection.close();
             } catch (SQLException e) {
-                e.printStackTrace();
+                log.error(e.getMessage(),e);
             }
         }
         return result;
@@ -147,32 +148,17 @@ import java.util.Random;
             ResultSet resultQuery =  pst.executeQuery();
             result = getItemFroResultQuery(resultQuery);
         } catch (SQLException e) {
-            e.printStackTrace();
+            log.error(e.getMessage(),e);
         } finally {
             try {
                 pst.close();
                 connection.close();
             } catch (SQLException e) {
-                e.printStackTrace();
+                log.error(e.getMessage(),e);
             }
         }
         return result;
     }
-
-    /**
-     *
-     * @param str string.
-     * @param findStr find for find.
-     * @return result string.
-     */
-    private boolean findSubString(String str, String findStr) {
-        boolean result = false;
-        if (str.indexOf(findStr) != -1) {
-            result  = true;
-        }
-        return result;
-    }
-
 
     /**
      *The method find item by name.
@@ -189,13 +175,13 @@ import java.util.Random;
              ResultSet resultQuery =  pst.executeQuery();
              resultArray = getItemsFromResultQuery(resultQuery);
          } catch (SQLException e) {
-             e.printStackTrace();
+             log.error(e.getMessage(),e);
          } finally {
              try {
                  pst.close();
                  connection.close();
              } catch (SQLException e) {
-                 e.printStackTrace();
+                 log.error(e.getMessage(),e);
              }
          }
         return resultArray;
@@ -208,22 +194,20 @@ import java.util.Random;
      */
     public ArrayList<Item> findItemByDescription(String description) {
         ArrayList<Item> resultArray = new ArrayList<Item>();
-        String descForSearch = new StringBuilder().append("'%").append(description).append("%'").toString();
         Connection connection = this.sqlStorage.getConnection();
         PreparedStatement pst = null;
         try {
-            pst = connection.prepareStatement("SELECT * FROM table_items WHERE item_desc LIKE ?");
-            pst.setString(1,descForSearch);
+            pst = connection.prepareStatement(String.format("SELECT * FROM table_items WHERE item_desc LIKE  \'%%%s%%\'",description));
             ResultSet resultQuery =  pst.executeQuery();
             resultArray = getItemsFromResultQuery(resultQuery);
         } catch (SQLException e) {
-            e.printStackTrace();
+            log.error(e.getMessage(),e);
         } finally {
             try {
                 pst.close();
                 connection.close();
             } catch (SQLException e) {
-                e.printStackTrace();
+                log.error(e.getMessage(),e);
             }
         }
         return resultArray;
@@ -245,13 +229,13 @@ import java.util.Random;
             pst.executeUpdate();
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            log.error(e.getMessage(),e);
         } finally {
             try {
                 pst.close();
                 connection.close();
             } catch (SQLException e) {
-                e.printStackTrace();
+                log.error(e.getMessage(),e);
             }
         }
     }
@@ -261,18 +245,25 @@ import java.util.Random;
      *@return an array all items.
      */
     public ArrayList<Item> getAllItem() {
-        ArrayList result = null;
-        //return this.takeItems;
-
-        return result;
+        ArrayList<Item> resultArray = new ArrayList<Item>();
+        Connection connection = this.sqlStorage.getConnection();
+        PreparedStatement pst = null;
+        try {
+            pst = connection.prepareStatement("SELECT * FROM table_items");
+            ResultSet resultQuery =  pst.executeQuery();
+            resultArray = getItemsFromResultQuery(resultQuery);
+        } catch (SQLException e) {
+            log.error(e.getMessage(),e);
+        } finally {
+            try {
+                pst.close();
+                connection.close();
+            } catch (SQLException e) {
+                log.error(e.getMessage(),e);
+            }
+        }
+        return resultArray;
     }
 
-    /**
-     *The method generate id for new item.
-     *@return id id.
-     */
-    private String generateId() {
-        return String.valueOf(System.currentTimeMillis() + RN.nextInt());
-    }
 
 }

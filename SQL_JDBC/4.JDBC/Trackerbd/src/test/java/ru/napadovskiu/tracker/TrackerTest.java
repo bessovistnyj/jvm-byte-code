@@ -79,6 +79,10 @@ public class TrackerTest {
 
     @Test
     public void findItemByDescription() {
+        Item tmpItem = new Item("firstItemName","tmpDescription");
+        this.tracker.addNewItem(firstItem);
+        this.tracker.addNewItem(secondItem);
+        this.tracker.addNewItem(tmpItem);
 
         ArrayList<Item> itemArrayList = tracker.findItemByDescription("Item");
         assertThat(itemArrayList.isEmpty(), is(false));
@@ -91,5 +95,11 @@ public class TrackerTest {
 
     @Test
     public void getAllItem() {
+        this.tracker.addNewItem(firstItem);
+        this.tracker.addNewItem(secondItem);
+ 
+        ArrayList<Item> itemArrayList = tracker.findItemByName("firstItemName");
+        assertThat(itemArrayList.isEmpty(), is(false));
+
     }
 }
