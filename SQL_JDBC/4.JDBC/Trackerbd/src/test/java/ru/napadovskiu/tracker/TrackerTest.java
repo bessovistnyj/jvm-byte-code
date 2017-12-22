@@ -52,6 +52,10 @@ public class TrackerTest {
 
     @Test
     public void deleteItem() {
+        Item tmpItem = new Item("firstItemName","tmpDescription");
+        this.tracker.addNewItem(tmpItem);this.tracker.addNewItem(tmpItem);
+        Boolean result = this.tracker.deleteItem(tmpItem);
+        assertThat(result, is(true));
     }
 
     @Test
@@ -91,6 +95,14 @@ public class TrackerTest {
 
     @Test
     public void editItem() {
+        Item tmpItem = new Item("newNameOfItem","newDescriptionOfItem");
+        this.tracker.addNewItem(tmpItem);
+        tmpItem.setId("1511963533489");
+        this.tracker.editItem(tmpItem);
+        Item findItem = this.tracker.findItemById(tmpItem.getId());
+        assertThat(findItem.getName(), is("newNameOfItem"));
+
+
     }
 
     @Test

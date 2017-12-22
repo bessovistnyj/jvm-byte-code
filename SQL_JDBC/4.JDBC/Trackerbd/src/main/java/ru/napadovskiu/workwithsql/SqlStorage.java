@@ -1,4 +1,4 @@
-package ru.napadovskiu.sqlstorage;
+package ru.napadovskiu.workwithsql;
 
 import  org.slf4j.Logger;
 import  org.slf4j.LoggerFactory;

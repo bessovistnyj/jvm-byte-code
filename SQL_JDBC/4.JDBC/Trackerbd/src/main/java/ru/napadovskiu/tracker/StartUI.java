@@ -1,12 +1,6 @@
 package ru.napadovskiu.tracker;
 
 
-import ru.napadovskiu.sqlstorage.SqlStorage;
-
-import java.sql.Connection;
-import java.sql.SQLException;
-
-
 /**
  *Class for users.
  */

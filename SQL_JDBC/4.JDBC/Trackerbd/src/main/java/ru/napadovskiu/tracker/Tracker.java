@@ -3,7 +3,8 @@ package ru.napadovskiu.tracker;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ru.napadovskiu.items.Item;
-import ru.napadovskiu.sqlstorage.SqlStorage;
+import ru.napadovskiu.workwithsql.ResultsFromQuery;
+import ru.napadovskiu.workwithsql.SqlStorage;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -38,32 +39,6 @@ import java.util.Random;
     private void init() {
         SqlStorage sqlStorage = new SqlStorage();
         sqlStorage.createDateBase();
-    }
-
-    private Item getItemFroResultQuery( ResultSet resultQuery) throws SQLException {
-        Item result = null;
-        while (resultQuery.next()) {
-            Item newItem = new Item();
-            newItem.setId(resultQuery.getString("item_id"));
-            newItem.setName(resultQuery.getString("item_name"));
-            newItem.setDescription(resultQuery.getString("item_desc"));
-            newItem.setDescription(resultQuery.getString("item_date"));
-            result = newItem;
-        }
-        return result;
-    }
-
-    private ArrayList<Item> getItemsFromResultQuery( ResultSet resultQuery) throws SQLException {
-        ArrayList<Item> result = new ArrayList<Item>();
-        while (resultQuery.next()) {
-            Item newItem = new Item();
-            newItem.setId(resultQuery.getString("item_id"));
-            newItem.setName(resultQuery.getString("item_name"));
-            newItem.setDescription(resultQuery.getString("item_desc"));
-            newItem.setCreateDate(resultQuery.getTimestamp("item_date").getTime());
-            result.add(newItem);
-        }
-        return result;
     }
 
     /**
@@ -146,7 +121,8 @@ import java.util.Random;
             pst = connection.prepareStatement("SELECT * FROM table_items WHERE item_id = ?");
             pst.setString(1,id);
             ResultSet resultQuery =  pst.executeQuery();
-            result = getItemFroResultQuery(resultQuery);
+            ResultsFromQuery resultsFromQuery = new ResultsFromQuery();
+            result = resultsFromQuery.getItemFromResultQuery(resultQuery);
         } catch (SQLException e) {
             log.error(e.getMessage(),e);
         } finally {
@@ -173,7 +149,8 @@ import java.util.Random;
              pst = connection.prepareStatement("SELECT * FROM table_items WHERE item_name = ?");
              pst.setString(1,name);
              ResultSet resultQuery =  pst.executeQuery();
-             resultArray = getItemsFromResultQuery(resultQuery);
+             ResultsFromQuery resultsFromQuery = new ResultsFromQuery();
+             resultArray = resultsFromQuery.getItemsFromResultQuery(resultQuery);
          } catch (SQLException e) {
              log.error(e.getMessage(),e);
          } finally {
@@ -199,7 +176,8 @@ import java.util.Random;
         try {
             pst = connection.prepareStatement(String.format("SELECT * FROM table_items WHERE item_desc LIKE  \'%%%s%%\'",description));
             ResultSet resultQuery =  pst.executeQuery();
-            resultArray = getItemsFromResultQuery(resultQuery);
+            ResultsFromQuery resultsFromQuery = new ResultsFromQuery();
+            resultArray = resultsFromQuery.getItemsFromResultQuery(resultQuery);
         } catch (SQLException e) {
             log.error(e.getMessage(),e);
         } finally {
@@ -225,7 +203,7 @@ import java.util.Random;
             pst.setString(1,editItem.getId());
             pst.setString(2,editItem.getName());
             pst.setTimestamp(3,new java.sql.Timestamp(editItem.getCreateDate()));
-            pst.setString(4,editItem.getId());
+            pst.setString(4,editItem.getDescription());
             pst.executeUpdate();
 
         } catch (SQLException e) {
@@ -251,7 +229,8 @@ import java.util.Random;
         try {
             pst = connection.prepareStatement("SELECT * FROM table_items");
             ResultSet resultQuery =  pst.executeQuery();
-            resultArray = getItemsFromResultQuery(resultQuery);
+            ResultsFromQuery resultsFromQuery = new ResultsFromQuery();
+            resultArray = resultsFromQuery.getItemsFromResultQuery(resultQuery);
         } catch (SQLException e) {
             log.error(e.getMessage(),e);
         } finally {
@@ -264,6 +243,5 @@ import java.util.Random;
         }
         return resultArray;
     }
-
 
 }

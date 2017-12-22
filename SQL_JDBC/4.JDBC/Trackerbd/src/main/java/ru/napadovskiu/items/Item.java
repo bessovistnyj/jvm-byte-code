@@ -2,7 +2,8 @@ package ru.napadovskiu.items;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import ru.napadovskiu.sqlstorage.SqlStorage;
+import ru.napadovskiu.workwithsql.ResultsFromQuery;
+import ru.napadovskiu.workwithsql.SqlStorage;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -181,17 +182,18 @@ public class Item {
      * Method return comment item.
      * @return item comment.
      */
-    public String getComment() {
-        String result = "";
+    public ArrayList<Comments> getComment() {
+        ArrayList<Comments> resultArray = new ArrayList<Comments>();
+
         SqlStorage sqlStorage = new SqlStorage();
-        ArrayList<Item> resultArray = new ArrayList<Item>();
         Connection connection = sqlStorage.getConnection();
         PreparedStatement pst = null;
         try {
             pst = connection.prepareStatement("SELECT * FROM table_comments WHERE item_id =? ");
             pst.setString(1,this.getId());
             ResultSet resultQuery =  pst.executeQuery();
-            //resultArray = getItemsFromResultQuery(resultQuery);
+            ResultsFromQuery resultsFromQuery = new ResultsFromQuery();
+            resultArray = resultsFromQuery.getCommentsFromResultQuery(resultQuery);
         } catch (SQLException e) {
             log.error(e.getMessage(),e);
         } finally {
@@ -202,12 +204,7 @@ public class Item {
                 log.error(e.getMessage(),e);
             }
         }
-        //return resultArray;
-
-        for (Comments comment: this.comments) {
-            result = comment.getComment();
-        }
-        return result;
+        return resultArray;
     }
 
     /**
