@@ -3,6 +3,6 @@
  *
  * @author Napadovskiy Bohdan
  * @version 1.0
- * @since 01.06.2017
+ * @since 21.12.2017
  */
 package ru.napadovskiu.items;

@@ -3,7 +3,7 @@ package ru.napadovskiu.items;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ru.napadovskiu.workwithsql.ResultsFromQuery;
-import ru.napadovskiu.workwithsql.SqlStorage;
+import ru.napadovskiu.workwithsql.WorkWithSQL;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -43,20 +43,11 @@ public class Item {
     /**
      *
      */
-    private final ArrayList<Comments> comments = new ArrayList<>();
-    /**
-     *
-     */
-    private Integer commentPosition = 0;
-
-    /**
-     *
-     */
     public Item() {
 
     }
 
-    private static final Logger log = LoggerFactory.getLogger(SqlStorage.class);
+    private static final Logger LOG = LoggerFactory.getLogger(WorkWithSQL.class);
 
     /**
      * Constructor for class Item.
@@ -110,15 +101,6 @@ public class Item {
     }
 
     /**
-     * Method set Item comment.
-     * @param comment Item comment.
-     */
-    public void setComment(Comments comment) {
-        this.comments.set(this.commentPosition, comment);
-
-    }
-
-    /**
      * Method get Item id.
      * @return item id.
      */
@@ -156,23 +138,22 @@ public class Item {
      * @return item comment.
      */
     public Comments addComment(Comments comment) {
-        this.comments.add(comment);
-        SqlStorage sqlStorage = new SqlStorage();
-        Connection connection = sqlStorage.getConnection();
+        WorkWithSQL workWithSQL = new WorkWithSQL();
+        Connection connection = workWithSQL.getConnection();
         PreparedStatement pst = null;
         try {
             pst = connection.prepareStatement("INSERT INTO table_comments (comments_description, item_id) VALUES(?,?)");
-            pst.setString(1,comment.getComment());
-            pst.setString(2,this.getId());
+            pst.setString(1, comment.getComment());
+            pst.setString(2, this.getId());
             pst.executeUpdate();
         } catch (SQLException e) {
-            log.error(e.getMessage(),e);
+            LOG.error(e.getMessage(), e);
         } finally {
             try {
                 pst.close();
                 connection.close();
             } catch (SQLException e) {
-                log.error(e.getMessage(),e);
+                LOG.error(e.getMessage(), e);
             }
         }
         return comment;
@@ -185,23 +166,23 @@ public class Item {
     public ArrayList<Comments> getComment() {
         ArrayList<Comments> resultArray = new ArrayList<Comments>();
 
-        SqlStorage sqlStorage = new SqlStorage();
-        Connection connection = sqlStorage.getConnection();
+        WorkWithSQL workWithSQL = new WorkWithSQL();
+        Connection connection = workWithSQL.getConnection();
         PreparedStatement pst = null;
         try {
             pst = connection.prepareStatement("SELECT * FROM table_comments WHERE item_id =? ");
-            pst.setString(1,this.getId());
+            pst.setString(1, this.getId());
             ResultSet resultQuery =  pst.executeQuery();
             ResultsFromQuery resultsFromQuery = new ResultsFromQuery();
             resultArray = resultsFromQuery.getCommentsFromResultQuery(resultQuery);
         } catch (SQLException e) {
-            log.error(e.getMessage(),e);
+            LOG.error(e.getMessage(), e);
         } finally {
             try {
                 pst.close();
                 connection.close();
             } catch (SQLException e) {
-                log.error(e.getMessage(),e);
+                LOG.error(e.getMessage(), e);
             }
         }
         return resultArray;

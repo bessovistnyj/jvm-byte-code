@@ -2,8 +2,6 @@ package ru.napadovskiu.tracker;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import ru.napadovskiu.items.Item;
 import static org.hamcrest.core.Is.is;
 
@@ -13,7 +11,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Properties;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertThat;
 
 
 
@@ -21,13 +19,8 @@ public class TrackerTest {
 
     private Tracker tracker = null;
 
-    final Logger log = LoggerFactory.getLogger("TrackerTest");
-
     private Connection connection = null;
 
-    private Item firstItem;
-
-    private Item secondItem;
 
     @Before
     public void initialize() {
@@ -39,28 +32,29 @@ public class TrackerTest {
         }
         this.tracker = new Tracker();
 
-        this.firstItem = new Item("firstItemName", "FisrtItemDesc");
-        this.secondItem = new Item("2ItemName", "2ItemDesc");
 
     }
 
-
     @Test
-    public void addNewItem() {
-        Item addItem = this.tracker.addNewItem(this.firstItem);
+    public void whenAddItemThenReturnItem() {
+        Item firstItem = new Item("firstItemName", "FisrtItemDesc");
+        Item addItem = this.tracker.addNewItem(firstItem);
+        assertThat(addItem, is(firstItem));
     }
 
     @Test
-    public void deleteItem() {
-        Item tmpItem = new Item("firstItemName","tmpDescription");
-        this.tracker.addNewItem(tmpItem);this.tracker.addNewItem(tmpItem);
+    public void whenDeleteItemThenReturnTrue() {
+        Item tmpItem = new Item("firstItemName", "tmpDescription");
+        this.tracker.addNewItem(tmpItem);
+        this.tracker.addNewItem(tmpItem);
         Boolean result = this.tracker.deleteItem(tmpItem);
         assertThat(result, is(true));
     }
 
     @Test
-    public void findItemById() {
-
+    public void whenFindByIdThenReturnItem() {
+        Item firstItem = new Item("firstItemName", "FisrtItemDesc");
+        Item secondItem = new Item("2ItemName", "2ItemDesc");
         this.tracker.addNewItem(firstItem);
         this.tracker.addNewItem(secondItem);
         Item findItem = this.tracker.findItemById(firstItem.getId());
@@ -69,11 +63,8 @@ public class TrackerTest {
     }
 
     @Test
-    public void findItemByName() {
-        Item tmpItem = new Item("firstItemName","tmpDescription");
-
-        this.tracker.addNewItem(firstItem);
-        this.tracker.addNewItem(secondItem);
+    public void whenFindByNameThenReturnArrayOfItem() {
+        Item tmpItem = new Item("firstItemName", "tmpDescription");
         this.tracker.addNewItem(tmpItem);
 
         ArrayList<Item> itemArrayList = tracker.findItemByName("firstItemName");
@@ -82,31 +73,38 @@ public class TrackerTest {
     }
 
     @Test
-    public void findItemByDescription() {
-        Item tmpItem = new Item("firstItemName","tmpDescription");
+    public void whenFindByDescriptionThenReturnArrayOfItem() {
+
+        Item firstItem = new Item("firstItemName", "FisrtItemDesc");
+        Item secondItem = new Item("2ItemName", "2ItemDesc");
+        Item tmpItem = new Item("firstItemName", "tmpDescription");
+
         this.tracker.addNewItem(firstItem);
         this.tracker.addNewItem(secondItem);
         this.tracker.addNewItem(tmpItem);
 
         ArrayList<Item> itemArrayList = tracker.findItemByDescription("Item");
         assertThat(itemArrayList.isEmpty(), is(false));
-        int a=1;
     }
 
     @Test
-    public void editItem() {
-        Item tmpItem = new Item("newNameOfItem","newDescriptionOfItem");
-        this.tracker.addNewItem(tmpItem);
-        tmpItem.setId("1511963533489");
-        this.tracker.editItem(tmpItem);
-        Item findItem = this.tracker.findItemById(tmpItem.getId());
+    public void whenEditItemThenReturnNewItem() {
+        Item firstItem = new Item("firstItemName", "FisrtItemDesc");
+        Item editItem = new Item("newNameOfItem", "newDescriptionOfItem");
+
+        this.tracker.addNewItem(firstItem);
+        editItem.setId(firstItem.getId());
+
+        this.tracker.editItem(editItem);
+        Item findItem = this.tracker.findItemById(editItem.getId());
         assertThat(findItem.getName(), is("newNameOfItem"));
 
-
     }
 
     @Test
-    public void getAllItem() {
+    public void whenGetAllItemThenReturnArrayOfAllItem() {
+        Item firstItem = new Item("firstItemName", "FisrtItemDesc");
+        Item secondItem = new Item("2ItemName", "2ItemDesc");
         this.tracker.addNewItem(firstItem);
         this.tracker.addNewItem(secondItem);
  

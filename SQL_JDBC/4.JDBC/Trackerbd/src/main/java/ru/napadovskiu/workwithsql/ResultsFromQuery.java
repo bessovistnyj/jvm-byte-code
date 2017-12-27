@@ -7,8 +7,18 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+
+/**
+ * Class for work with result of query.
+ */
 public class ResultsFromQuery {
 
+    /**
+     * Method return item from result of SQL Query.
+     * @param resultQuery result of Query
+     * @return result Item.
+     * @throws SQLException exception.
+     */
     public Item getItemFromResultQuery(ResultSet resultQuery) throws SQLException {
         Item result = null;
         while (resultQuery.next()) {
@@ -22,6 +32,12 @@ public class ResultsFromQuery {
         return result;
     }
 
+    /**
+     *  Method return arrays of items from result of Query.
+     * @param resultQuery result of Query
+     * @return result array of Items.
+     * @throws SQLException exception.
+     */
     public ArrayList<Item> getItemsFromResultQuery(ResultSet resultQuery) throws SQLException {
         ArrayList<Item> result = new ArrayList<Item>();
         while (resultQuery.next()) {
@@ -35,6 +51,12 @@ public class ResultsFromQuery {
         return result;
     }
 
+    /**
+     *  Method return arrays of comments from result of Query.
+     * @param resultQuery result of Query
+     * @return result array of Comments.
+     * @throws SQLException exception.
+     */
     public ArrayList<Comments> getCommentsFromResultQuery(ResultSet resultQuery) throws SQLException {
         ArrayList<Comments> result = new ArrayList<Comments>();
         while (resultQuery.next()) {

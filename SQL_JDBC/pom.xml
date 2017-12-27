@@ -93,7 +93,6 @@
 		<module>2.Query</module>
 		<module>3.Outer_join</module>
 		<module>4.JDBC</module>
-		<module>5.TestTask</module>
 	</modules>
 
 	<dependencies>
