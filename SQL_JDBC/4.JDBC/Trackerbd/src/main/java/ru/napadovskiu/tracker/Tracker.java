@@ -4,13 +4,17 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ru.napadovskiu.items.Item;
 import ru.napadovskiu.workwithsql.ResultsFromQuery;
+import ru.napadovskiu.workwithsql.Settings;
 import ru.napadovskiu.workwithsql.WorkWithSQL;
 
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.DriverManager;
 import java.util.ArrayList;
+
 
 import java.util.Random;
 
@@ -26,12 +30,26 @@ import java.util.Random;
     /**
      *arguments for generate id item.
      */
-    private static  final Random RN = new Random();
+    private static final Random RN = new Random();
 
-    private WorkWithSQL workWithSQL;
+    /**
+     *
+     */
+    private final Settings settings;
 
+    /**
+     *
+      */
+    private Connection connection;
+
+    /**
+     *
+     */
     public Tracker() {
-        this.workWithSQL = new WorkWithSQL();
+        ClassLoader loader = Settings.class.getClassLoader();
+        InputStream io = loader.getResourceAsStream("app.properties");
+        this.settings = new Settings();
+        this.settings.load(io);
         init();
     }
 
@@ -39,6 +57,11 @@ import java.util.Random;
     private void init() {
         WorkWithSQL workWithSQL = new WorkWithSQL();
         workWithSQL.createDateBase();
+        try {
+            this.connection = DriverManager.getConnection(this.settings.getValue("url"), this.settings.getValue("userName"), this.settings.getValue("password"));
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -57,25 +80,15 @@ import java.util.Random;
     public Item addNewItem(Item item) {
         item.setId(generateId());
         item.setCreateDate(System.currentTimeMillis());
-
-        Connection connection = this.workWithSQL.getConnection();
-        PreparedStatement pst = null;
-        try {
-            pst = connection.prepareStatement("INSERT INTO table_items (item_id, item_name, item_date, item_desc) VALUES(?,?,?,?)");
+        try (PreparedStatement pst = this.connection.prepareStatement("INSERT INTO table_items (item_id, item_name, item_date, item_desc) VALUES(?,?,?,?)");) {
             pst.setString(1, item.getId());
             pst.setString(2, item.getName());
             pst.setTimestamp(3, new java.sql.Timestamp(item.getCreateDate()));
             pst.setString(4, item.getDescription());
             pst.executeUpdate();
+            pst.close();
         } catch (SQLException e) {
             LOG.error(e.getMessage(), e);
-        } finally {
-            try {
-                pst.close();
-                connection.close();
-            } catch (SQLException e) {
-                LOG.error(e.getMessage(), e);
-            }
         }
         return item;
 	}
@@ -87,23 +100,14 @@ import java.util.Random;
      */
     public boolean deleteItem(Item item) {
         boolean result = false;
-
-        Connection connection = this.workWithSQL.getConnection();
-        PreparedStatement pst = null;
-        try {
-            pst = connection.prepareStatement("DELETE FROM table_items WHERE item_id = ?");
+        try (PreparedStatement pst = connection.prepareStatement("DELETE FROM table_items WHERE item_id = ?")) {
             pst.setString(1, item.getId());
             pst.executeUpdate();
             result = true;
+            pst.close();
+//            connection.close();
         } catch (SQLException e) {
             LOG.error(e.getMessage(), e);
-        } finally {
-            try {
-                pst.close();
-                connection.close();
-            } catch (SQLException e) {
-                LOG.error(e.getMessage(), e);
-            }
         }
         return result;
     }
@@ -115,23 +119,16 @@ import java.util.Random;
 	 */
     public Item findItemById(String id) {
         Item result = null;
-        Connection connection = this.workWithSQL.getConnection();
-        PreparedStatement pst = null;
-        try {
-            pst = connection.prepareStatement("SELECT * FROM table_items WHERE item_id = ?");
+
+        try (PreparedStatement pst = this.connection.prepareStatement("SELECT * FROM table_items WHERE item_id = ?")) {
             pst.setString(1, id);
             ResultSet resultQuery =  pst.executeQuery();
             ResultsFromQuery resultsFromQuery = new ResultsFromQuery();
             result = resultsFromQuery.getItemFromResultQuery(resultQuery);
+            pst.close();
+
         } catch (SQLException e) {
             LOG.error(e.getMessage(), e);
-        } finally {
-            try {
-                pst.close();
-                connection.close();
-            } catch (SQLException e) {
-                LOG.error(e.getMessage(), e);
-            }
         }
         return result;
     }
@@ -143,23 +140,14 @@ import java.util.Random;
      */
      public ArrayList<Item> findItemByName(String name) {
          ArrayList<Item> resultArray = null;
-         Connection connection = this.workWithSQL.getConnection();
-         PreparedStatement pst = null;
-         try {
-             pst = connection.prepareStatement("SELECT * FROM table_items WHERE item_name = ?");
+         try (PreparedStatement pst = connection.prepareStatement("SELECT * FROM table_items WHERE item_name = ?")) {
              pst.setString(1, name);
              ResultSet resultQuery =  pst.executeQuery();
              ResultsFromQuery resultsFromQuery = new ResultsFromQuery();
              resultArray = resultsFromQuery.getItemsFromResultQuery(resultQuery);
+             pst.close();
          } catch (SQLException e) {
              LOG.error(e.getMessage(), e);
-         } finally {
-             try {
-                 pst.close();
-                 connection.close();
-             } catch (SQLException e) {
-                 LOG.error(e.getMessage(), e);
-             }
          }
         return resultArray;
     }
@@ -171,22 +159,13 @@ import java.util.Random;
      */
     public ArrayList<Item> findItemByDescription(String description) {
         ArrayList<Item> resultArray = new ArrayList<Item>();
-        Connection connection = this.workWithSQL.getConnection();
-        PreparedStatement pst = null;
-        try {
-            pst = connection.prepareStatement(String.format("SELECT * FROM table_items WHERE item_desc LIKE  \'%%%s%%\'", description));
+        try (PreparedStatement pst = connection.prepareStatement(String.format("SELECT * FROM table_items WHERE item_desc LIKE  \'%%%s%%\'", description));) {
             ResultSet resultQuery =  pst.executeQuery();
             ResultsFromQuery resultsFromQuery = new ResultsFromQuery();
             resultArray = resultsFromQuery.getItemsFromResultQuery(resultQuery);
+            pst.close();
         } catch (SQLException e) {
             LOG.error(e.getMessage(), e);
-        } finally {
-            try {
-                pst.close();
-                connection.close();
-            } catch (SQLException e) {
-                LOG.error(e.getMessage(), e);
-            }
         }
         return resultArray;
     }
@@ -196,24 +175,14 @@ import java.util.Random;
 	*@param editItem item for edit.
 	*/
     public void editItem(Item editItem) {
-        Connection connection = this.workWithSQL.getConnection();
-        PreparedStatement pst = null;
-        try {
-            pst = connection.prepareStatement("UPDATE table_items SET item_name = ?, item_date =? WHERE item_id = ?");
+        try (PreparedStatement pst = connection.prepareStatement("UPDATE table_items SET item_name = ?, item_date =? WHERE item_id = ?")) {
             pst.setString(1, editItem.getName());
             pst.setTimestamp(2, new java.sql.Timestamp(editItem.getCreateDate()));
             pst.setString(3, editItem.getId());
             pst.executeUpdate();
-
+            pst.close();
         } catch (SQLException e) {
             LOG.error(e.getMessage(), e);
-        } finally {
-            try {
-                pst.close();
-                connection.close();
-            } catch (SQLException e) {
-                LOG.error(e.getMessage(), e);
-            }
         }
     }
 
@@ -223,24 +192,34 @@ import java.util.Random;
      */
     public ArrayList<Item> getAllItem() {
         ArrayList<Item> resultArray = new ArrayList<Item>();
-        Connection connection = this.workWithSQL.getConnection();
-        PreparedStatement pst = null;
-        try {
-            pst = connection.prepareStatement("SELECT * FROM table_items");
+        try (PreparedStatement pst = connection.prepareStatement("SELECT * FROM table_items")) {
             ResultSet resultQuery =  pst.executeQuery();
             ResultsFromQuery resultsFromQuery = new ResultsFromQuery();
             resultArray = resultsFromQuery.getItemsFromResultQuery(resultQuery);
+            pst.close();
         } catch (SQLException e) {
             LOG.error(e.getMessage(), e);
-        } finally {
-            try {
-                pst.close();
-                connection.close();
-            } catch (SQLException e) {
-                LOG.error(e.getMessage(), e);
-            }
         }
         return resultArray;
+    }
+
+    /**
+     *
+     */
+    public void closeConnection() {
+        try {
+            this.connection.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            if (this.connection != null) {
+                try {
+                    this.connection.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
     }
 
 }

@@ -44,6 +44,7 @@ public class StartUI {
             }
         }
         while (!exit);
+        this.tracker.closeConnection();
     }
 
     /**

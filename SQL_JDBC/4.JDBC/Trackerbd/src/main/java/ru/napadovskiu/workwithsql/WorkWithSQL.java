@@ -26,56 +26,35 @@ public class WorkWithSQL {
     /**
      *
      */
-    private Settings settings = new Settings();
+    private final Settings settings = new Settings();
 
     /**
      *
      */
-    private Connection connection;
+    private final ClassLoader loader;
 
-    /**
-     *
-     */
-    private ClassLoader loader;
-    InputStream io;
 
     /**
      *
      */
     public WorkWithSQL() {
         this.loader = Settings.class.getClassLoader();
-        this.io = loader.getResourceAsStream("app.properties");
+        InputStream io = loader.getResourceAsStream("app.properties");
         this.settings.load(io);
     }
 
-    /**
-     *
-     * @return
-     */
-    public Connection getConnection() {
-        try {
-            this.connection = DriverManager.getConnection(settings.getValue("url"), settings.getValue("userName"), settings.getValue("password"));
-        } catch (SQLException e) {
-            LOG.error(e.getMessage(), e);
-        }
-        return this.connection;
-    }
 
     /**
      *
      */
     public void createDateBase() {
-        RandomAccessFile randomAccessFile = null;
-        Statement st = null;
         File fileQuery1 = new File(this.loader.getResource("app.properties").getFile());
 
         File fileQuery =  new File(fileQuery1.getParent() + (settings.getValue("createDataBaseQuery")));
 
-        try {
-            randomAccessFile = new RandomAccessFile(fileQuery.getAbsoluteFile(), "r");
-            this.connection = DriverManager.getConnection(settings.getValue("url"), settings.getValue("userName"), settings.getValue("password"));
-
-            st = this.connection.createStatement();
+        try (RandomAccessFile randomAccessFile = new RandomAccessFile(fileQuery.getAbsoluteFile(), "r");
+            Connection connection = DriverManager.getConnection(this.settings.getValue("url"), this.settings.getValue("userName"), this.settings.getValue("password"));) {
+            Statement st = connection.createStatement();
 
             StringBuffer sb  = new StringBuffer();
             String line;
@@ -87,16 +66,11 @@ public class WorkWithSQL {
                 }
             }
             st.executeBatch();
+            st.close();
+            connection.close();
+            randomAccessFile.close();
         } catch (IOException | SQLException e) {
             LOG.error(e.getMessage(), e);
-        } finally {
-            try {
-                st.close();
-                this.connection.close();
-                randomAccessFile.close();
-            } catch (IOException | SQLException e) {
-                LOG.error(e.getMessage(), e);
-            }
         }
     }
 

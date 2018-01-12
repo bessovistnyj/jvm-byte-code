@@ -3,12 +3,11 @@ package ru.napadovskiu.items;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ru.napadovskiu.workwithsql.ResultsFromQuery;
+import ru.napadovskiu.workwithsql.Settings;
 import ru.napadovskiu.workwithsql.WorkWithSQL;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.io.InputStream;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -43,8 +42,13 @@ public class Item {
     /**
      *
      */
-    public Item() {
+    private final Settings settings = new Settings();
 
+    /**
+     *
+     */
+    public Item() {
+        initSettings();
     }
 
     private static final Logger LOG = LoggerFactory.getLogger(WorkWithSQL.class);
@@ -57,6 +61,7 @@ public class Item {
     public Item(String name, String desc) {
         this.name = name;
         this.description = desc;
+        initSettings();
 	}
 
     public Item(String id, String name, String desc, long createDate) {
@@ -64,8 +69,15 @@ public class Item {
         this.name = name;
         this.description = desc;
         this.createDate = createDate;
+        initSettings();
     }
 
+
+    private  void initSettings() {
+        ClassLoader loader = Settings.class.getClassLoader();
+        InputStream io = loader.getResourceAsStream("app.properties");
+        this.settings.load(io);
+    }
 
 
     /**
@@ -138,23 +150,15 @@ public class Item {
      * @return item comment.
      */
     public Comments addComment(Comments comment) {
-        WorkWithSQL workWithSQL = new WorkWithSQL();
-        Connection connection = workWithSQL.getConnection();
-        PreparedStatement pst = null;
-        try {
-            pst = connection.prepareStatement("INSERT INTO table_comments (comments_description, item_id) VALUES(?,?)");
+        try (Connection connection = DriverManager.getConnection(this.settings.getValue("url"), this.settings.getValue("userName"), this.settings.getValue("password"));
+             PreparedStatement pst = connection.prepareStatement("INSERT INTO table_comments (comments_description, item_id) VALUES(?,?)");) {
             pst.setString(1, comment.getComment());
             pst.setString(2, this.getId());
             pst.executeUpdate();
+            pst.close();
+            connection.close();
         } catch (SQLException e) {
             LOG.error(e.getMessage(), e);
-        } finally {
-            try {
-                pst.close();
-                connection.close();
-            } catch (SQLException e) {
-                LOG.error(e.getMessage(), e);
-            }
         }
         return comment;
     }
@@ -165,25 +169,16 @@ public class Item {
      */
     public ArrayList<Comments> getComment() {
         ArrayList<Comments> resultArray = new ArrayList<Comments>();
-
-        WorkWithSQL workWithSQL = new WorkWithSQL();
-        Connection connection = workWithSQL.getConnection();
-        PreparedStatement pst = null;
-        try {
-            pst = connection.prepareStatement("SELECT * FROM table_comments WHERE item_id =? ");
+        try (Connection connection = DriverManager.getConnection(this.settings.getValue("url"), this.settings.getValue("userName"), this.settings.getValue("password"));
+            PreparedStatement pst = connection.prepareStatement("SELECT * FROM table_comments WHERE item_id =? ");) {
             pst.setString(1, this.getId());
             ResultSet resultQuery =  pst.executeQuery();
             ResultsFromQuery resultsFromQuery = new ResultsFromQuery();
             resultArray = resultsFromQuery.getCommentsFromResultQuery(resultQuery);
+            pst.close();
+            connection.close();
         } catch (SQLException e) {
             LOG.error(e.getMessage(), e);
-        } finally {
-            try {
-                pst.close();
-                connection.close();
-            } catch (SQLException e) {
-                LOG.error(e.getMessage(), e);
-            }
         }
         return resultArray;
     }
