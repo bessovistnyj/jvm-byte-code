@@ -1,11 +1,11 @@
 <project>
 	<modelVersion>4.0.0</modelVersion>
-	<artifactId>4.JDBC</artifactId>
+	<artifactId>XML_XLST</artifactId>
 	<packaging>pom</packaging>
 
 	<parent>
 		<groupId>ru.napadovskiu</groupId>
-		<artifactId>SQL_JDBC</artifactId>
+		<artifactId>4.JDBC</artifactId>
 		<version>1.0</version>
 	</parent>
 	
@@ -79,12 +79,8 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 
-	<modules>
-		<module>Trackerbd</module>
-		<module>XML_XLST</module>
-	</modules>
-
 	<dependencies>
+		<!-- https://mvnrepository.com/artifact/postgresql/postgresql -->
 		<dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
@@ -100,6 +96,7 @@
 			<artifactId>postgresql</artifactId>
 			<version>9.1-901-1.jdbc4</version>
 		</dependency>
+
 	</dependencies>
 	
 
