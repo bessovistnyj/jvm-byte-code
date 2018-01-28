@@ -39,18 +39,13 @@ public class WorkWithXMLFile {
     /**
      *
      */
-    private final ClassLoader loader;
-
-    /**
-     *
-     */
     private Path xmlDirectory;
 
     /**
      *
      */
     public WorkWithXMLFile() {
-        this.loader = Settings.class.getClassLoader();
+        ClassLoader loader = Settings.class.getClassLoader();
         InputStream io = loader.getResourceAsStream("app.properties");
         this.settings.load(io);
         this.xmlDirectory = Paths.get(getXMLDirectory());
@@ -62,7 +57,8 @@ public class WorkWithXMLFile {
      * @return root directory.
      */
     private String getXMLDirectory() {
-        File fileProperties = new File(this.loader.getResource("app.properties").getFile());
+        ClassLoader loader = Settings.class.getClassLoader();
+        File fileProperties = new File(loader.getResource("app.properties").getFile());
         return fileProperties.getParent();
     }
 
@@ -124,7 +120,8 @@ public class WorkWithXMLFile {
      */
     public File createXmlFile(String fileName) {
         File file = null;
-        File fileProperties = new File(this.loader.getResource("app.properties").getFile());
+        ClassLoader loader = Settings.class.getClassLoader();
+        File fileProperties = new File(loader.getResource("app.properties").getFile());
         try {
             Path path = Paths.get(fileProperties.getParent() + fileName);
             if (Files.deleteIfExists(path)) {

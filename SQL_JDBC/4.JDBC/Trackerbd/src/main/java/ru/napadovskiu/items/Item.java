@@ -155,8 +155,6 @@ public class Item {
             pst.setString(1, comment.getComment());
             pst.setString(2, this.getId());
             pst.executeUpdate();
-            pst.close();
-            connection.close();
         } catch (SQLException e) {
             LOG.error(e.getMessage(), e);
         }
@@ -175,7 +173,6 @@ public class Item {
             ResultSet resultQuery =  pst.executeQuery();
             ResultsFromQuery resultsFromQuery = new ResultsFromQuery();
             resultArray = resultsFromQuery.getCommentsFromResultQuery(resultQuery);
-            pst.close();
             connection.close();
         } catch (SQLException e) {
             LOG.error(e.getMessage(), e);

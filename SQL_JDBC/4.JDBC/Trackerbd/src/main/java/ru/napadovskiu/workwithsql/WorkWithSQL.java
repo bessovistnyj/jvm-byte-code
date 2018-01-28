@@ -66,7 +66,6 @@ public class WorkWithSQL {
                 }
             }
             st.executeBatch();
-            st.close();
             connection.close();
             randomAccessFile.close();
         } catch (IOException | SQLException e) {

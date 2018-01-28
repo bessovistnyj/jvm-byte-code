@@ -14,8 +14,7 @@ public class MainClass {
 
         long start = System.currentTimeMillis();
 
-        WorkWithSQL workWithSQL = new WorkWithSQL();
-        workWithSQL.setCount(1000000);
+        WorkWithSQL workWithSQL = new WorkWithSQL(1000000);
         workWithSQL.createTable();
 
         WorkWithXMLFile workWithXMLFile = new WorkWithXMLFile();

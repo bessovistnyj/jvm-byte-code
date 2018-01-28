@@ -32,11 +32,6 @@ public class WorkWithSQL {
     /**
      *
      */
-    private final ClassLoader loader;
-
-    /**
-     *
-     */
     private Connection connection = null;
 
     /**
@@ -44,15 +39,7 @@ public class WorkWithSQL {
      */
     private int countOfValues;
 
-    /**
-     * Method set count of values.
-     * @param count
-     */
-    public void setCount(int count) {
-        this.countOfValues = count;
-    }
-
-    /**
+       /**
      *
      */
     private final InputStream io;
@@ -60,9 +47,10 @@ public class WorkWithSQL {
     /**
      * Constructor for class.
      */
-    public WorkWithSQL() {
-        this.loader = Settings.class.getClassLoader();
+    public WorkWithSQL(int count) {
+        ClassLoader loader = Settings.class.getClassLoader();
         this.io = loader.getResourceAsStream("app.properties");
+        this.countOfValues = count;
         this.settings.load(io);
 
     }
@@ -86,7 +74,6 @@ public class WorkWithSQL {
         try (Statement st = this.connection.createStatement()) {
             st.execute("CREATE TABLE IF NOT EXISTS field (id INTEGER PRIMARY KEY, value INTEGER NOT NULL )");
             st.executeBatch();
-            st.close();
 
             deleteValuesFromTable();
 
@@ -106,7 +93,6 @@ public class WorkWithSQL {
     private void deleteValuesFromTable() {
         try (PreparedStatement st = this.connection.prepareStatement("DELETE FROM field;")) {
             st.execute();
-            st.close();
         } catch (SQLException e) {
             LOG.error(e.getMessage(), e);
         }
@@ -129,7 +115,6 @@ public class WorkWithSQL {
                 i++;
             }
             st.executeBatch();
-            st.close();
             this.connection.setAutoCommit(true);
         } catch (SQLException e) {
             LOG.error(e.getMessage(), e);
@@ -164,8 +149,6 @@ public class WorkWithSQL {
             writer.writeEndDocument();
             // Закрываем XML-документ
             writer.flush();
-
-            pst.close();
         } catch (SQLException | XMLStreamException | IOException  e) {
             LOG.error(e.getMessage(), e);
         }

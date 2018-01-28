@@ -86,7 +86,6 @@ import java.util.Random;
             pst.setTimestamp(3, new java.sql.Timestamp(item.getCreateDate()));
             pst.setString(4, item.getDescription());
             pst.executeUpdate();
-            pst.close();
         } catch (SQLException e) {
             LOG.error(e.getMessage(), e);
         }
@@ -104,8 +103,6 @@ import java.util.Random;
             pst.setString(1, item.getId());
             pst.executeUpdate();
             result = true;
-            pst.close();
-//            connection.close();
         } catch (SQLException e) {
             LOG.error(e.getMessage(), e);
         }
@@ -125,7 +122,6 @@ import java.util.Random;
             ResultSet resultQuery =  pst.executeQuery();
             ResultsFromQuery resultsFromQuery = new ResultsFromQuery();
             result = resultsFromQuery.getItemFromResultQuery(resultQuery);
-            pst.close();
 
         } catch (SQLException e) {
             LOG.error(e.getMessage(), e);
@@ -145,7 +141,6 @@ import java.util.Random;
              ResultSet resultQuery =  pst.executeQuery();
              ResultsFromQuery resultsFromQuery = new ResultsFromQuery();
              resultArray = resultsFromQuery.getItemsFromResultQuery(resultQuery);
-             pst.close();
          } catch (SQLException e) {
              LOG.error(e.getMessage(), e);
          }
@@ -163,7 +158,6 @@ import java.util.Random;
             ResultSet resultQuery =  pst.executeQuery();
             ResultsFromQuery resultsFromQuery = new ResultsFromQuery();
             resultArray = resultsFromQuery.getItemsFromResultQuery(resultQuery);
-            pst.close();
         } catch (SQLException e) {
             LOG.error(e.getMessage(), e);
         }
@@ -180,7 +174,6 @@ import java.util.Random;
             pst.setTimestamp(2, new java.sql.Timestamp(editItem.getCreateDate()));
             pst.setString(3, editItem.getId());
             pst.executeUpdate();
-            pst.close();
         } catch (SQLException e) {
             LOG.error(e.getMessage(), e);
         }
@@ -196,7 +189,6 @@ import java.util.Random;
             ResultSet resultQuery =  pst.executeQuery();
             ResultsFromQuery resultsFromQuery = new ResultsFromQuery();
             resultArray = resultsFromQuery.getItemsFromResultQuery(resultQuery);
-            pst.close();
         } catch (SQLException e) {
             LOG.error(e.getMessage(), e);
         }
