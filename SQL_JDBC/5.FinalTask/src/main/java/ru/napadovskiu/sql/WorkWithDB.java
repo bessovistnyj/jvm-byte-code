@@ -34,17 +34,6 @@ public class WorkWithDB {
     /**
      *
      */
-    private String createTableQuery;
-
-
-    /**
-     *
-     */
-    private String insertTableQuery;
-
-    /**
-     *
-     */
     private static final Logger LOG = LoggerFactory.getLogger(WorkWithDB.class);
 
     /**
@@ -62,12 +51,12 @@ public class WorkWithDB {
         this.url = this.settings.getValue("url");
         this.user = this.settings.getValue("userName");
         this.password = this.settings.getValue("password");
-        this.createTableQuery = this.settings.getValue("createTable");
-        this.insertTableQuery = this.settings.getValue("insertValue");
-
     }
 
-
+    /**
+     *
+     * @return
+     */
     public boolean itIsFirstLaunch() {
         boolean result = false;
 
@@ -104,7 +93,7 @@ public class WorkWithDB {
 
         try (Connection connection = DriverManager.getConnection(this.url,this.user,this.password);
              Statement statement = connection.createStatement();)  {
-            statement.addBatch(this.createTableQuery);
+            statement.addBatch(this.settings.getValue("createTable"));
             statement.executeBatch();
         } catch (SQLException e) {
             LOG.error(e.getMessage(), e);
