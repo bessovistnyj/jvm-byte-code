@@ -196,7 +196,7 @@ import java.util.Random;
     }
 
     /**
-     *
+     * Method close connection with db.
      */
     public void closeConnection() {
         try {

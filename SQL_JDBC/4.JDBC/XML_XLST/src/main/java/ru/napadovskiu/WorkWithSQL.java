@@ -30,16 +30,16 @@ public class WorkWithSQL {
     private final Settings settings = new Settings();
 
     /**
-     *
+     * Connection for DB.
      */
     private Connection connection = null;
 
     /**
-     *
+     * count of values.
      */
     private int countOfValues;
 
-       /**
+    /**
      *
      */
     private final InputStream io;

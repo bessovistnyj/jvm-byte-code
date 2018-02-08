@@ -26,7 +26,7 @@ import java.io.File;
 public class WorkWithXMLFile {
 
     /**
-     *
+     * Setting for properties.
      */
     private static Settings settings = new Settings();
 
@@ -37,12 +37,12 @@ public class WorkWithXMLFile {
     private static final Logger LOG = LoggerFactory.getLogger(WorkWithXMLFile.class);
 
     /**
-     *
+     * Path for directory with xml file.
      */
     private Path xmlDirectory;
 
     /**
-     *
+     * Constructor for class.
      */
     public WorkWithXMLFile() {
         ClassLoader loader = Settings.class.getClassLoader();
