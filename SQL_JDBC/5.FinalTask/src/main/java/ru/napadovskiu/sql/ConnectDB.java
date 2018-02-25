@@ -2,7 +2,7 @@ package ru.napadovskiu.sql;
 
 import  org.slf4j.Logger;
 import  org.slf4j.LoggerFactory;
-import ru.napadovskiu.Vacancy;
+import ru.napadovskiu.vacancy.Vacancy;
 import ru.napadovskiu.settings.Settings;
 
 import java.io.InputStream;
@@ -13,7 +13,7 @@ import java.sql.*;
 /**
  *
  */
-public class WorkWithDB {
+public class ConnectDB {
 
     /**
      * URL to DB.
@@ -34,7 +34,7 @@ public class WorkWithDB {
     /**
      *
      */
-    private static final Logger LOG = LoggerFactory.getLogger(WorkWithDB.class);
+    private static final Logger LOG = LoggerFactory.getLogger(ConnectDB.class);
 
     /**
      *
@@ -44,7 +44,7 @@ public class WorkWithDB {
     /**
      *
      */
-    public WorkWithDB() {
+    public ConnectDB() {
         ClassLoader loader = Settings.class.getClassLoader();
         InputStream io = loader.getResourceAsStream("app.properties");
         this.settings.load(io);
@@ -58,32 +58,78 @@ public class WorkWithDB {
      * @return
      */
     public boolean itIsFirstLaunch() {
-        boolean result = false;
+        boolean result = true;
 
         try (Connection connection = DriverManager.getConnection(this.url,this.user,this.password);
-             PreparedStatement pst = connection.prepareStatement("SELECT * FROM table_vacancy");) {
+            PreparedStatement pst = connection.prepareStatement("SELECT * FROM table_vacancy");) {
             ResultSet resultQuery =  pst.executeQuery();
-            result = resultQuery.next();
+            if (resultQuery.next()) {
+                result = false;
+            }
+
         } catch (SQLException e) {
             LOG.error(e.getMessage(), e);
         }
         return result;
     }
 
-
-
+    /**
+     *
+     * @param vacancy
+     */
     public void addVacancy(Vacancy vacancy) {
         try (Connection connection = DriverManager.getConnection(this.url,this.user,this.password);
              PreparedStatement pst = connection.prepareStatement(this.settings.getValue("insertValue"));)  {
-            pst.setDate(1, (Date) vacancy.getVac_Date());
+            pst.setTimestamp(1, vacancy.getVac_Date());
             pst.setString(2, vacancy.getVac_Link());
             pst.setString(3, vacancy.getVac_author());
             pst.setString(4, vacancy.getVac_Description());
-            pst.setString(5, vacancy.getVac_Title());
             pst.executeUpdate();
         } catch (SQLException e) {
             LOG.error(e.getMessage(), e);
         }
+    }
+
+
+    /**
+     *
+     * @param vacancy
+     * @return
+     */
+    public boolean vacancyExist(Vacancy vacancy) {
+        boolean result = false;
+        try (Connection connection = DriverManager.getConnection(this.url,this.user,this.password);
+            PreparedStatement pst = connection.prepareStatement(this.settings.getValue("selectVacancy"))) {
+            pst.setString(1, vacancy.getVac_Description());
+            pst.setString(2, vacancy.getVac_author());
+            ResultSet resultQuery =  pst.executeQuery();
+            result = resultQuery.next();
+        } catch (SQLException e) {
+            LOG.error(e.getMessage(), e);
+        }
+
+        return result;
+    }
+
+
+
+
+    /**
+     *
+     * @return
+     */
+    public Timestamp getDateLastVacancy() {
+        Timestamp date = null;
+        try (Connection connection = DriverManager.getConnection(this.url,this.user,this.password);
+             PreparedStatement pst = connection.prepareStatement("SELECT vacancy_date FROM table_vacancy ORDER BY vacancy_date DESC LIMIT 1")) {
+            ResultSet resultQuery =  pst.executeQuery();
+            if (resultQuery.next()) {
+                date = resultQuery.getTimestamp("vacancy_date");
+            }
+        } catch (SQLException e) {
+            LOG.error(e.getMessage(), e);
+        }
+        return date;
     }
 
     /**

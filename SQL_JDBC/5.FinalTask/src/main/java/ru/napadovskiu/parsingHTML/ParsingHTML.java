@@ -3,47 +3,81 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import ru.napadovskiu.Vacancy;
-import ru.napadovskiu.paseDate.ParseDate;
+import ru.napadovskiu.sql.ConnectDB;
+import ru.napadovskiu.vacancy.Vacancy;
+import ru.napadovskiu.parseDate.ParseDate;
 
 import java.io.IOException;
+import java.sql.Timestamp;
 import java.text.ParseException;
 import java.util.Date;
+import java.util.TimerTask;
 
 
-public class ParsingHTML {
+public class ParsingHTML  extends TimerTask {
 
-    public void parseHTML() {
-      //  Document doc = null;
-     //   Elements topics = null;
-        ParseDate parseDate = new ParseDate();
-        String currentPage = String.format("%s/%d", "http://www.sql.ru/forum/job-offers", 1);
+    private final ParseDate parseDate = new ParseDate();
 
-        try {
-            Document doc = Jsoup.connect(currentPage).get();
-            Elements topics = doc.select("tr:has(.postslisttopic)");
-            for (Element topic : topics) {
-                if (topic.text().toLowerCase().contains("java") && !topic.text().toLowerCase().contains("script")) {
-                    Elements link = topic.select("td.postslisttopic > a[href]");
-                    Elements data = topic.select("td");
-                    String author = topic.select("td.altCol > a[href]").get(0).text();
-                    String linkVacancy = link.attr("href");
-                    String description = link.get(0).text();
-                    String dateForParse = topic.select("td.altCol").get(1).childNode(0).toString();
-                    parseDate.getDateFromString(dateForParse);
+    private final ConnectDB dbConnection = new ConnectDB();
 
-                    int a=1;
-                }
-            }
+    private Vacancy parseLink(Element topic) throws ParseException {
 
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ParseException e) {
-            e.printStackTrace();
+        Vacancy vac =null;
+        if (topic.text().toLowerCase().contains("java") && !topic.text().toLowerCase().contains("script")) {
+            Elements link = topic.select("td.postslisttopic > a[href]");
+            String author = topic.select("td.altCol > a[href]").get(0).text();
+            String linkVacancy = link.attr("href");
+            String description = link.get(0).text();
+            String dateForParse = topic.select("td.altCol").get(1).childNode(0).toString();
+            Timestamp vacDate = this.parseDate.getDateFromString(dateForParse);
+            vac = new Vacancy(vacDate, linkVacancy, author, description);
+
         }
+       return vac;
     }
 
 
+
+    public void parseHTML() {
+        int numberPage =1;
+
+        boolean stopParse =false;
+
+        this.dbConnection.createDateBase();
+
+        Timestamp dateForCheck = null;
+
+        if (this.dbConnection.itIsFirstLaunch()) {
+            dateForCheck = this.parseDate.getDateToBeginningYear();
+        } else {
+            dateForCheck = this.dbConnection.getDateLastVacancy();
+        }
+        while (!stopParse) {
+            String currentPage = String.format("%s/%d", "http://www.sql.ru/forum/job-offers", numberPage);
+            try {
+                Document doc = Jsoup.connect(currentPage).get();
+                Elements topics = doc.select("tr:has(.postslisttopic)");
+                for (Element topic : topics) {
+                    Vacancy vacancy = parseLink(topic);
+                    if (vacancy != null || vacancy.getVac_Date().before(dateForCheck)) {
+                        if (!this.dbConnection.vacancyExist(vacancy)) {
+                            this.dbConnection.addVacancy(vacancy);
+                        }
+                    }
+                    if (!vacancy.getVac_Date().before(dateForCheck)) {
+                        stopParse = true;
+                    }
+                }
+            } catch (IOException | ParseException e) {
+                stopParse = true;
+                numberPage++;
+                e.printStackTrace();
+            }
+        }
+    }
+
+    @Override
+    public void run() {
+        parseHTML();
+    }
 }

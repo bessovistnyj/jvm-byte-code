@@ -1,19 +1,27 @@
 package ru.napadovskiu.parseDate;
 
+import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.Duration;
 import java.time.Instant;
 
+import java.time.LocalDate;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
 public class ParseDate {
 
+    /**
+     *
+     */
     private Map<String, String> mapMounts = new HashMap<>();
 
-
+    /**
+     *
+     */
     public ParseDate() {
         this.mapMounts.put("янв","01");
         this.mapMounts.put("фев","02");
@@ -30,28 +38,46 @@ public class ParseDate {
 
     }
 
-    public Date getDateFromString(String stringDate) throws ParseException {
-        Date result = null;
+    /**
+     *
+     * @param stringDate
+     * @return
+     * @throws ParseException
+     */
+    public Timestamp getDateFromString(String stringDate) throws ParseException {
+        long date = 0;
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         if(stringDate.contains("вчера")) {
-            result = sdf.parse(sdf.format(new Date()));
+            date = sdf.parse(sdf.format(new Date())).getTime();
         } else if(stringDate.contains("сегодня")) {
             Instant now = Instant.now(); //current date
             Instant before = now.minus(Duration.ofDays(1));
 
             Date dateBefore = Date.from(before);
-            result = sdf.parse(sdf.format(dateBefore));
+            date = sdf.parse(sdf.format(dateBefore)).getTime();
         } else {
 
             String sDay = stringDate.substring(0,2);
             String strMounth = stringDate.substring(sDay.length(),sDay.length()+4);
             String sMounth = this.mapMounts.get(strMounth.replaceAll(" ",""));
-            String sYear = stringDate.substring(sDay.length()+strMounth.length(),sDay.length()+strMounth.length()+2);
-            String strDate = new String(sYear+"-"+sMounth+"-"+sDay);//+" "+sHour+":"+sMin);
-            result = sdf.parse(strDate);
+            String sYear = stringDate.substring(sDay.length()+strMounth.length(),sDay.length()+strMounth.length()+3);
+            sYear = "20"+sYear.trim();
+            String strDate = new String(sYear+"-"+sMounth+"-"+sDay);
+            date = sdf.parse(strDate).getTime();
         }
-
+        Timestamp result = new Timestamp(date);
         return result;
+    }
+
+
+    /**
+     *
+     * @return
+     */
+    public Timestamp getDateToBeginningYear() {
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(LocalDate.now().getYear(), 0, 1, 0, 0, 0);
+        return new Timestamp(calendar.getTimeInMillis());
     }
 
 

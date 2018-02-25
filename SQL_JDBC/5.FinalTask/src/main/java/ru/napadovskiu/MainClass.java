@@ -1,30 +1,26 @@
 package ru.napadovskiu;
 
 import ru.napadovskiu.parsingHTML.ParsingHTML;
+import ru.napadovskiu.settings.Settings;
+import java.io.InputStream;
+import java.util.Timer;
 
 public class MainClass {
 
 
-
     public static void main (String[] args) {
-        ParsingHTML parsingHTML = new ParsingHTML();
-        parsingHTML.parseHTML();
-        //Init init = new Init();
-//        final ParsingHTML parser = new ParsingHTML();
-//        final long periodicity = 1000 * 60 * 60 * 24 * init.getPeriodicity();
+        ClassLoader loader = Settings.class.getClassLoader();
+        InputStream io = loader.getResourceAsStream("app.properties");
+        Settings settings = new Settings();
+        settings.load(io);
+        int count = Integer.parseInt(settings.getValue("countLaunch"));
 
-//        new Thread(new Runnable() {
-//            public void run() {
-//                while (true) {
-//                    try {
-//                        parser.parseHTML();
-//                        Thread.sleep(periodicity);
-//                    } catch (InterruptedException e) {
-//                        e.printStackTrace();
-//                    }
-//                }
-//            }
-//        }).start();
+        Timer timer = new Timer();
+        ParsingHTML parsingHTML = new ParsingHTML();
+       // parsingHTML.run();
+
+        timer.scheduleAtFixedRate(parsingHTML,0, 60 * 60 * 24 * 1000 / 5);
+
 
     }
 
