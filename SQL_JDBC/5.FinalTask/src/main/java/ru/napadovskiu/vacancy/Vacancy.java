@@ -1,20 +1,35 @@
 package ru.napadovskiu.vacancy;
 
 import java.sql.Timestamp;
-import java.util.Date;
+
 
 /**
- *
+ * Package of final task SQL_JDBC.
+ * Class vacancy
+ * @author Napadovskiy Bohdan
+ * @version 1.0
+ * @since 28.02.2018
  */
 public class Vacancy {
 
-
+    /**
+     *  date vacancy.
+     */
     private Timestamp vac_Date;
 
+    /**
+     * link vacancy.
+     */
     private String vac_Link;
 
+    /**
+     * vacancy author.
+     */
     private String vac_author;
 
+    /**
+     * description vacancy.
+     */
     private String vac_Description;
 
      /**

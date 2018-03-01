@@ -3,6 +3,8 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import ru.napadovskiu.sql.ConnectDB;
 import ru.napadovskiu.vacancy.Vacancy;
 import ru.napadovskiu.parseDate.ParseDate;
@@ -10,16 +12,39 @@ import ru.napadovskiu.parseDate.ParseDate;
 import java.io.IOException;
 import java.sql.Timestamp;
 import java.text.ParseException;
-import java.util.Date;
 import java.util.TimerTask;
 
 
+/**
+ * Package of final task SQL_JDBC.
+ * Class pars html.
+ * @author Napadovskiy Bohdan
+ * @version 1.0
+ * @since 28.02.2018
+ */
 public class ParsingHTML  extends TimerTask {
 
+     /**
+     * logger.
+     */
+    private static final Logger LOG = LoggerFactory.getLogger(ConnectDB.class);
+
+    /**
+     * class for convert date.
+     */
     private final ParseDate parseDate = new ParseDate();
 
+    /**
+     * class for connection to SQL db.
+     */
     private final ConnectDB dbConnection = new ConnectDB();
 
+    /**
+     * Method return vacancy from link.
+     * @param topic link with vacancy.
+     * @return vacancy.
+     * @throws ParseException exception
+     */
     private Vacancy parseLink(Element topic) throws ParseException {
 
         Vacancy vac =null;
@@ -37,7 +62,9 @@ public class ParsingHTML  extends TimerTask {
     }
 
 
-
+    /**
+     * Method parsing html.
+     */
     public void parseHTML() {
         int numberPage =1;
 
@@ -59,23 +86,29 @@ public class ParsingHTML  extends TimerTask {
                 Elements topics = doc.select("tr:has(.postslisttopic)");
                 for (Element topic : topics) {
                     Vacancy vacancy = parseLink(topic);
-                    if (vacancy != null || vacancy.getVac_Date().before(dateForCheck)) {
-                        if (!this.dbConnection.vacancyExist(vacancy)) {
-                            this.dbConnection.addVacancy(vacancy);
+                    if (vacancy != null) {
+                        if (dateForCheck.before(vacancy.getVac_Date())) {
+                            if (!this.dbConnection.vacancyExist(vacancy)) {
+                                this.dbConnection.addVacancy(vacancy);
+                            }
+                        } else {
+                            stopParse = true;
+                            break;
                         }
-                    }
-                    if (!vacancy.getVac_Date().before(dateForCheck)) {
-                        stopParse = true;
                     }
                 }
             } catch (IOException | ParseException e) {
                 stopParse = true;
-                numberPage++;
-                e.printStackTrace();
+                LOG.error(e.getMessage(), e);
             }
+            numberPage++;
         }
     }
 
+
+    /**
+     * Override method run.
+     */
     @Override
     public void run() {
         parseHTML();

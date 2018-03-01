@@ -1,5 +1,9 @@
 package ru.napadovskiu.settings;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import ru.napadovskiu.sql.ConnectDB;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
@@ -8,6 +12,11 @@ import java.util.Properties;
  * Created by program on 31.01.2017.
  */
 public class Settings {
+
+    /**
+     * logger.
+     */
+    private static final Logger LOG = LoggerFactory.getLogger(ConnectDB.class);
 
     /**
      * properties.
@@ -22,7 +31,7 @@ public class Settings {
         try {
             this.prs.load(io);
         } catch (IOException e) {
-            e.printStackTrace();
+            LOG.error(e.getMessage(), e);
         }
     }
 

@@ -12,15 +12,23 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+
+/**
+ * Package of final task SQL_JDBC.
+ * Class parse date.
+ * @author Napadovskiy Bohdan
+ * @version 1.0
+ * @since 28.02.2018
+ */
 public class ParseDate {
 
     /**
-     *
+     * Map for mounts.
      */
     private Map<String, String> mapMounts = new HashMap<>();
 
     /**
-     *
+     * Constructor for class.
      */
     public ParseDate() {
         this.mapMounts.put("янв","01");
@@ -39,10 +47,10 @@ public class ParseDate {
     }
 
     /**
-     *
-     * @param stringDate
-     * @return
-     * @throws ParseException
+     * Metho convert string with date to Date.
+     * @param stringDate string date
+     * @return Date
+     * @throws ParseException exception
      */
     public Timestamp getDateFromString(String stringDate) throws ParseException {
         long date = 0;
@@ -71,7 +79,7 @@ public class ParseDate {
 
 
     /**
-     *
+     * Method return date of beginning of year.
      * @return
      */
     public Timestamp getDateToBeginningYear() {

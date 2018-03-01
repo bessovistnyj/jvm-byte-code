@@ -6,12 +6,21 @@ import ru.napadovskiu.vacancy.Vacancy;
 import ru.napadovskiu.settings.Settings;
 
 import java.io.InputStream;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.sql.Timestamp;
 
-
-import java.sql.*;
 
 /**
- *
+ * Package of final task SQL_JDBC.
+ * Class for connection to sql db .
+ * @author Napadovskiy Bohdan
+ * @version 1.0
+ * @since 28.02.2018
  */
 public class ConnectDB {
 
@@ -32,17 +41,17 @@ public class ConnectDB {
 
 
     /**
-     *
+     * logger.
      */
     private static final Logger LOG = LoggerFactory.getLogger(ConnectDB.class);
 
     /**
-     *
+     * settings.
      */
     private final Settings settings = new Settings();
 
     /**
-     *
+     * Constructor for class.
      */
     public ConnectDB() {
         ClassLoader loader = Settings.class.getClassLoader();
@@ -54,7 +63,7 @@ public class ConnectDB {
     }
 
     /**
-     *
+     *Method check first launch.
      * @return
      */
     public boolean itIsFirstLaunch() {
@@ -74,7 +83,7 @@ public class ConnectDB {
     }
 
     /**
-     *
+     * Method add vacancy in db.
      * @param vacancy
      */
     public void addVacancy(Vacancy vacancy) {
@@ -92,9 +101,9 @@ public class ConnectDB {
 
 
     /**
-     *
-     * @param vacancy
-     * @return
+     * Method check exist vacancy in db.
+     * @param vacancy vacancy for check
+     * @return result.
      */
     public boolean vacancyExist(Vacancy vacancy) {
         boolean result = false;
@@ -115,8 +124,8 @@ public class ConnectDB {
 
 
     /**
-     *
-     * @return
+     * Method return last date vacancy.
+     * @return date.
      */
     public Timestamp getDateLastVacancy() {
         Timestamp date = null;
@@ -133,7 +142,7 @@ public class ConnectDB {
     }
 
     /**
-     *
+     * Method create data base.
      */
     public void createDateBase() {
 
@@ -145,9 +154,5 @@ public class ConnectDB {
             LOG.error(e.getMessage(), e);
         }
     }
-
-
-
-
 
 }
