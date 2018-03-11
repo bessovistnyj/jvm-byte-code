@@ -1,15 +1,13 @@
 <project>
 	<modelVersion>4.0.0</modelVersion>
-	<artifactId>ServletJSP</artifactId>
-	<version>1.0</version>
-	<packaging>pom</packaging>
+	<artifactId>2.CrudServlet</artifactId>
+	<packaging>war</packaging>
 
 	<parent>
 		<groupId>ru.napadovskiu</groupId>
-		<artifactId>Java_Junior</artifactId>
+		<artifactId>ServletJSP</artifactId>
 		<version>1.0</version>
 	</parent>
-
 
 	<build>
 		<plugins>
@@ -58,14 +56,6 @@
 		<maven.compiler.target>1.8</maven.compiler.target>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
-
-	<modules>
-		<module>1.WebProject</module>
-		<module>2.CrudServlet</module>
-		<!--<module>3.Outer_join</module>-->
-		<!--<module>4.JDBC</module>-->
-		<!--<module>5.FinalTask</module>-->
-	</modules>
 
 	<dependencies>
 		<dependency>
