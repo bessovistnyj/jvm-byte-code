@@ -1,15 +1,13 @@
 <project>
 	<modelVersion>4.0.0</modelVersion>
-	<artifactId>ServletJSP</artifactId>
-	<version>1.0</version>
-	<packaging>pom</packaging>
+	<artifactId>3.Servlet</artifactId>
+	<packaging>war</packaging>
 
 	<parent>
 		<groupId>ru.napadovskiu</groupId>
-		<artifactId>Java_Junior</artifactId>
+		<artifactId>ServletJSP</artifactId>
 		<version>1.0</version>
 	</parent>
-
 
 	<build>
 		<plugins>
@@ -59,15 +57,6 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 
-	<modules>
-		<module>1.WebProject</module>
-		<module>2.CrudServlet</module>
-		<module>3.Servlet</module>
-		<!--<module>3.Outer_join</module>-->
-		<!--<module>4.JDBC</module>-->
-		<!--<module>5.FinalTask</module>-->
-	</modules>
-
 	<dependencies>
 		<dependency>
 			<groupId>org.hamcrest</groupId>
@@ -85,6 +74,19 @@
 			<artifactId>postgresql</artifactId>
 			<version>9.1-901-1.jdbc4</version>
 		</dependency>
+		<dependency>
+			<groupId>commons-dbcp</groupId>
+			<artifactId>commons-dbcp</artifactId>
+			<version>1.2.2</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-pool2</artifactId>
+			<version>2.4.2</version>
+		</dependency>
+
+
+
 	</dependencies>
 
 
