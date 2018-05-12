@@ -28,11 +28,7 @@ public class UserServlet extends HttpServlet {
      */
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String roleName = req.getParameter("userRole");
         req.setAttribute("users", UserStore.getInstance().selectAllUser());
-        req.setAttribute("userRole", roleName);
-//        HttpSession session = req.getSession();
-//        session.setAttribute("userRole", roleName);
         req.getRequestDispatcher("/WEB-INF/views/users.jsp").forward(req,resp);
     }
 

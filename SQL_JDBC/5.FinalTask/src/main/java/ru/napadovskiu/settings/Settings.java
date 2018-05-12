@@ -2,7 +2,6 @@ package ru.napadovskiu.settings;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import ru.napadovskiu.sql.ConnectDB;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -16,7 +15,7 @@ public class Settings {
     /**
      * logger.
      */
-    private static final Logger LOG = LoggerFactory.getLogger(ConnectDB.class);
+    private static final Logger LOG = LoggerFactory.getLogger(Settings.class);
 
     /**
      * properties.

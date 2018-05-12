@@ -46,10 +46,10 @@ public class AuthController extends HttpServlet {
             HttpSession session = req.getSession();
             synchronized (session) {
                 session.setAttribute("login",login);
+                User user = UserStore.getInstance().selectUser(login, password);
+                req.setAttribute("users", UserStore.getInstance().selectAllUser());
+                req.setAttribute("userRole", user.getRole().getRoleName());
             }
-            User user = UserStore.getInstance().selectUser(login, password);
-            req.setAttribute("users", UserStore.getInstance().selectAllUser());
-            req.setAttribute("userRole", user.getRole().getRoleName());
             req.getRequestDispatcher("/WEB-INF/views/users.jsp").forward(req,resp);
         } else {
             req.setAttribute("error", "Credentials invalid ");

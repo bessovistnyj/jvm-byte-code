@@ -28,8 +28,6 @@ public class EditRoleServlets extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.setContentType("text/html");
-
-        req.setAttribute("userRole", req.getParameter("userRole"));
         RequestDispatcher rd = req.getRequestDispatcher("/WEB-INF/views/editRole.jsp");
         rd.forward(req, resp);
     }
@@ -52,8 +50,6 @@ public class EditRoleServlets extends HttpServlet {
 
         boolean result = this.usersStore.updateRole(user.getId(),roleName);
         if (result) {
-            req.setAttribute("users", UserStore.getInstance().selectAllUser());
-            req.setAttribute("userRole", req.getParameter("userRole"));
             req.getRequestDispatcher("/WEB-INF/views/users.jsp").forward(req,resp);
         }
     }

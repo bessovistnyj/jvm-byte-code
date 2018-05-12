@@ -30,9 +30,9 @@ public class UserServlet  extends HttpServlet {
         CopyOnWriteArrayList<User> arrayList  = usersStore.selectAllUser();
         resp.setContentType("text/html");
         PrintWriter printWriter = new PrintWriter(resp.getOutputStream());
-        for (User user: arrayList) {
-            printWriter.append("user name :" + user.getName() + " user login: " + user.getLogin() + " user email: " + user.getEmail() + "\n");
-        }
+//        for (User user: arrayList) {
+//            printWriter.append("user name :" + user.getName() + " user login: " + user.getLogin() + " user email: " + user.getEmail() + "\n");
+//        }
 
         printWriter.flush();
 
