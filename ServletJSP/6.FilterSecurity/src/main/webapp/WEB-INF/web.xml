@@ -11,11 +11,11 @@
     </filter-mapping>
 
     <servlet>
-        <servlet-name>AuthServlet</servlet-name>
+        <servlet-name>AuthController</servlet-name>
         <servlet-class>ru.napadovskiu.servlets.AuthController</servlet-class>
     </servlet>
     <servlet-mapping>
-        <servlet-name>AuthServlet</servlet-name>
+        <servlet-name>AuthController</servlet-name>
         <url-pattern>/login</url-pattern>
     </servlet-mapping>
 

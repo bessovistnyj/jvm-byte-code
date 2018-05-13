@@ -48,9 +48,9 @@ public class EditRoleServlets extends HttpServlet {
         String roleName = req.getParameter("role");
 
 
-        boolean result = this.usersStore.updateRole(user.getId(),roleName);
+        boolean result = this.usersStore.updateRole(user.getId(), roleName);
         if (result) {
-            req.getRequestDispatcher("/WEB-INF/views/users.jsp").forward(req,resp);
+            resp.sendRedirect(String.format("%s/", req.getContextPath()));
         }
     }
 

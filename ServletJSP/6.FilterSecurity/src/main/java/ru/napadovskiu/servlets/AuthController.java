@@ -26,7 +26,7 @@ public class AuthController extends HttpServlet {
      */
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.getRequestDispatcher("/WEB-INF/views/loginView.jsp").forward(req,resp);
+        req.getRequestDispatcher("/WEB-INF/views/loginView.jsp").forward(req, resp);
 
     }
 
@@ -45,15 +45,13 @@ public class AuthController extends HttpServlet {
         if (UserStore.getInstance().isCredentials(login, password)) {
             HttpSession session = req.getSession();
             synchronized (session) {
-                session.setAttribute("login",login);
-                User user = UserStore.getInstance().selectUser(login, password);
-                req.setAttribute("users", UserStore.getInstance().selectAllUser());
-                req.setAttribute("userRole", user.getRole().getRoleName());
+                session.setAttribute("login", login);
+                session.setAttribute("password", password);
             }
-            req.getRequestDispatcher("/WEB-INF/views/users.jsp").forward(req,resp);
+            resp.sendRedirect(String.format("%s/", req.getContextPath()));
         } else {
             req.setAttribute("error", "Credentials invalid ");
-            doGet(req,resp);
+            doGet(req, resp);
         }
 
 

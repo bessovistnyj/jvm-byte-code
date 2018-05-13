@@ -10,7 +10,7 @@ public class UserRole {
     /**
      *
      */
-    private int user_Id;
+    private int userId;
 
     /**
      *

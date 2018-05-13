@@ -35,17 +35,17 @@ public class AuthFilter implements Filter {
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
-        HttpSession session = request.getSession();
+
         if (request.getRequestURI().contains("/login")) {
             filterChain.doFilter(servletRequest, servletResponse);
         } else {
+            HttpSession session = request.getSession();
             synchronized (session) {
                 if (session.getAttribute("login") == null) {
                     ((HttpServletResponse) servletResponse).sendRedirect(String.format("%s/login", request.getContextPath()));
                     return;
                 }
             }
-            request.setAttribute("userRole", request.getParameter("userRole"));
             filterChain.doFilter(servletRequest, servletResponse);
         }
     }

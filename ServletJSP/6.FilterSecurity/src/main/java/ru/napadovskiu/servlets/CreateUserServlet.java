@@ -31,8 +31,8 @@ public class CreateUserServlet extends HttpServlet {
      */
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
-        RequestDispatcher rd = req.getRequestDispatcher("/WEB-INF/views/createUser.jsp");
+        resp.setContentType("text/html");
+        RequestDispatcher rd = req.getRequestDispatcher("/WEB-INF/views/editRole.jsp");
         rd.forward(req, resp);
     }
 
@@ -50,10 +50,11 @@ public class CreateUserServlet extends HttpServlet {
         User user = new User(req.getParameter("name"), req.getParameter("login"), req.getParameter("email"), dateOfCreate, req.getParameter("password"));
         boolean result = this.usersStore.addUser(user);
         if (result) {
-            result = this.usersStore.addRole(user.getEmail(),req.getParameter("role"));
+            result = this.usersStore.addRole(user.getEmail(), req.getParameter("role"));
         }
         if (result) {
-            req.getRequestDispatcher("/WEB-INF/views/users.jsp").forward(req,resp);
+            req.setAttribute("users", UserStore.getInstance().selectAllUser());
+            req.getRequestDispatcher("/WEB-INF/views/users.jsp").forward(req, resp);
         }
     }
 

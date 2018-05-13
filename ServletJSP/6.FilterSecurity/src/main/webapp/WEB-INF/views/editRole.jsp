@@ -16,7 +16,7 @@
         <div>Name: <input type="text" value="<%=request.getParameter("name")%>"name="name"></div>
         <div>Login: <input type="text" value="<%=request.getParameter("login")%>"name="login"></div>
         <div><input type="hidden" value="<%=request.getParameter("email")%>"name="email"></div>
-        <%--<div> <input type="hidden" value="<%=request.getParameter("login")%>"name="login"></div>--%>
+        <input type="hidden" name="userRole" value="${userRole}">
         <br>Role: <select name ="role">
         <option value = "admin">Admin</option>
         <option value = "superAdmin">S. Admin</option>

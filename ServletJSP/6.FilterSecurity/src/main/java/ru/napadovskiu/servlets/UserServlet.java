@@ -1,6 +1,7 @@
 package ru.napadovskiu.servlets;
 
 import ru.napadovskiu.store.UserStore;
+import ru.napadovskiu.users.User;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -28,8 +29,19 @@ public class UserServlet extends HttpServlet {
      */
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.setAttribute("users", UserStore.getInstance().selectAllUser());
-        req.getRequestDispatcher("/WEB-INF/views/users.jsp").forward(req,resp);
+        HttpSession session = req.getSession();
+        if (session.getAttribute("login") != null) {
+            String login = (String) session.getAttribute("login");
+            String password = (String) session.getAttribute("password");
+            User userAdmin = UserStore.getInstance().selectUser(login, password);
+            if (userAdmin.getRole().getRoleName().equals("superAdmin")) {
+                req.setAttribute("userRole", "superAdmin");
+            }
+            req.setAttribute("users", UserStore.getInstance().selectAllUser());
+            req.getRequestDispatcher("/WEB-INF/views/users.jsp").forward(req, resp);
+        } else {
+            req.getRequestDispatcher("WEB-INF/views/loginView.jsp").forward(req, resp);
+        }
     }
 
 }

@@ -22,14 +22,14 @@
                     <td>E-mail: <input type="text" name="email"/></td>
                     <td>Password: <input type="text" name="password"/></td>
                     <td>Role: <input type="text" name="role"/></td>
-                    <input type="hidden" name="userRole" value="${userRole}">
+                    <%--<input type="hidden" name="userRole" value="${userRole}">--%>
                     <td><input type="submit" value="add"></td>
                 </tr>
             </table>
         </form>
     <br><form Name ="back" action="${pageContext.servletContext.contextPath}/" method="get">
         <input type="submit" value="back">
-        <input type="hidden" name="userRole" value="${userRole}">
+        <%--<input type="hidden" name="userRole" value="${userRole}">--%>
         </form>
 
 </body>

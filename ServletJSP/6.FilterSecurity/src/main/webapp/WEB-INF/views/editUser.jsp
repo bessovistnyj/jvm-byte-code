@@ -24,7 +24,7 @@
                     <input type="hidden" name="oldLogin" value="<%=request.getParameter("login")%>">
                     <input type="hidden" name="oldEmail" value="<%=request.getParameter("email")%>">
                     <input type="hidden" name="oldPassword" value="<%=request.getParameter("password")%>">
-                    <input type="hidden" name="userRole" value="${userRole}">
+                    <%--<input type="hidden" name="userRole" value="${userRole}">--%>
                     <td><input type="submit" value="edit"></td>
                 </tr>
             </table>
@@ -32,7 +32,7 @@
         <br>
         <form action="${pageContext.servletContext.contextPath}/" method="get">
             <input type="submit" value="back">
-            <input type="hidden" name="userRole" value="${userRole}">
+            <%--<input type="hidden" name="userRole" value="${userRole}">--%>
         </form>
 
 </body>

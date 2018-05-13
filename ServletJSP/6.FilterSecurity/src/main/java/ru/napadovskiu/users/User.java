@@ -69,7 +69,7 @@ public class User {
      * @param createDate
      * @param password
      */
-    public User(int id,String name, String login, String email, Timestamp createDate, String password) {
+    public User(int id, String name, String login, String email, Timestamp createDate, String password) {
         this.id = id;
         this.name = name;
         this.login = login;

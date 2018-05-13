@@ -64,7 +64,7 @@ public class UserStore {
 
         this.ds.setDriverClassName("org.postgresql.Driver");
         this.ds.setUrl(this.url);
-        this.ds.setUsername(this.user );
+        this.ds.setUsername(this.user);
         this.ds.setPassword(this.password);
         this.ds.setMaxIdle(1000);
         this.ds.setMinIdle(100);
@@ -153,7 +153,9 @@ public class UserStore {
         try (Connection connection = this.ds.getConnection();
              PreparedStatement pst = connection.prepareStatement(this.settings.getValue("deleteUser"));)  {
             pst.setInt(1, user.getId());
-            result = pst.executeUpdate() != 0 ? true : false;
+            if (result = pst.executeUpdate() !=0) {
+                result = true;
+            }
         } catch (SQLException e) {
             result = false;
             LOG.error(e.getMessage(), e);
@@ -297,18 +299,20 @@ public class UserStore {
     /**
      *
      * @param userEmail
-     * @param role_Name
+     * @param roleName
      * @return
      */
-    public boolean addRole(String userEmail, String role_Name) {
+    public boolean addRole(String userEmail, String roleName) {
         boolean result = false;
         User searchUser = selectUser(userEmail);
 
         try (Connection connection = this.ds.getConnection();
              PreparedStatement pst = connection.prepareStatement(this.settings.getValue("addUserRole"));)  {
             pst.setInt(1, searchUser.getId());
-            pst.setString(2, role_Name);
-            result = pst.executeUpdate() != 0 ? true : false;
+            pst.setString(2, roleName);
+            if (result = pst.executeUpdate() !=0) {
+                result = true;
+            }
         } catch (SQLException e) {
             result = false;
             LOG.error(e.getMessage(), e);
@@ -319,17 +323,19 @@ public class UserStore {
 
     /**
      *
-     * @param user_id
-     * @param role_Name
+     * @param userId
+     * @param roleName
      * @return
      */
-    public boolean updateRole(int user_id, String role_Name) {
+    public boolean updateRole(int userId, String roleName) {
         boolean result = false;
         try (Connection connection = this.ds.getConnection();
              PreparedStatement pst = connection.prepareStatement(this.settings.getValue("updateUserRole"));)  {
-            pst.setInt(1,user_id);
-            pst.setString(1,role_Name);
-            result = pst.executeUpdate() != 0 ? true : false;
+            pst.setString(1, roleName);
+            pst.setInt(2, userId);
+            if (result = pst.executeUpdate() !=0) {
+                result = true;
+            }
         } catch (SQLException e) {
             result = false;
             LOG.error(e.getMessage(), e);
@@ -373,7 +379,9 @@ public class UserStore {
         try (Connection connection = this.ds.getConnection();
              PreparedStatement pst = connection.prepareStatement(this.settings.getValue("deleteUserRole"));)  {
             pst.setInt(1, user.getId());
-            result = pst.executeUpdate() != 0 ? true : false;
+            if (result = pst.executeUpdate() !=0) {
+                result = true;
+            }
         } catch (SQLException e) {
             result = false;
             LOG.error(e.getMessage(), e);

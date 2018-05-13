@@ -33,7 +33,6 @@
             <td><c:out value="${user.role.roleName}"></c:out></td>
             <td><form action="${pageContext.servletContext.contextPath}/create" method="get">
                 <input type="submit" value="Add new user">
-                <input type="hidden" name="userRole" value="${userRole}">
                 </form></td>
                 <td><form action="${pageContext.servletContext.contextPath}/edit" method="get">
                     <input type="submit" value="edit">
@@ -41,16 +40,14 @@
                     <input type="hidden" name="login" value="${user.login}">
                     <input type="hidden" name="email" value="${user.email}">
                     <input type="hidden" name="password" value="${user.password}">
-                    <input type="hidden" name="userRole" value="${userRole}">
                 </form>
                 </td>
-            <td> <c:if test="${userRole== 'superAdmin'}">
+            <td> <c:if test="${userRole == 'superAdmin'}">
                 <form action="${pageContext.servletContext.contextPath}/editRole" method="get">
                     <input type="submit" value="edit role">
                     <input type="hidden" name="name" value= "<c:out value="${user.name}"></c:out>">
                     <input type="hidden" name="login" value="<c:out value="${user.login}"></c:out>">
                     <input type="hidden" name="email" value="<c:out value="${user.email}"></c:out>">
-                    <input type="hidden" name="userRole" value="<c:out value="${userRole}"></c:out>">
                     <input type="hidden" name="role" value="<c:out value="${user.role.roleName}"></c:out>">
                 </form>
             </c:if>
