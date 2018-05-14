@@ -135,7 +135,7 @@ public class UserStore {
             pst.setString(3, user.getEmail());
             pst.setTimestamp(4, user.getCreateDate());
             pst.setString(5, user.getPassword());
-            result = pst.executeUpdate() != 0 ? true : false;
+            result = pst.executeUpdate() != 0;
         } catch (SQLException e) {
             result = false;
             LOG.error(e.getMessage(), e);
@@ -153,9 +153,7 @@ public class UserStore {
         try (Connection connection = this.ds.getConnection();
              PreparedStatement pst = connection.prepareStatement(this.settings.getValue("deleteUser"));)  {
             pst.setInt(1, user.getId());
-            if (result = pst.executeUpdate() !=0) {
-                result = true;
-            }
+            result = pst.executeUpdate() != 0;
         } catch (SQLException e) {
             result = false;
             LOG.error(e.getMessage(), e);
@@ -185,7 +183,7 @@ public class UserStore {
             pst.setString(7, oldEmail);
 
 
-            result = pst.executeUpdate() != 0 ? true : false;
+            result = pst.executeUpdate() != 0;
 
         } catch (SQLException e) {
             result = false;
@@ -310,9 +308,7 @@ public class UserStore {
              PreparedStatement pst = connection.prepareStatement(this.settings.getValue("addUserRole"));)  {
             pst.setInt(1, searchUser.getId());
             pst.setString(2, roleName);
-            if (result = pst.executeUpdate() !=0) {
-                result = true;
-            }
+            result = pst.executeUpdate() != 0;
         } catch (SQLException e) {
             result = false;
             LOG.error(e.getMessage(), e);
@@ -333,9 +329,7 @@ public class UserStore {
              PreparedStatement pst = connection.prepareStatement(this.settings.getValue("updateUserRole"));)  {
             pst.setString(1, roleName);
             pst.setInt(2, userId);
-            if (result = pst.executeUpdate() !=0) {
-                result = true;
-            }
+            result = pst.executeUpdate() != 0;
         } catch (SQLException e) {
             result = false;
             LOG.error(e.getMessage(), e);
@@ -379,9 +373,7 @@ public class UserStore {
         try (Connection connection = this.ds.getConnection();
              PreparedStatement pst = connection.prepareStatement(this.settings.getValue("deleteUserRole"));)  {
             pst.setInt(1, user.getId());
-            if (result = pst.executeUpdate() !=0) {
-                result = true;
-            }
+            result = pst.executeUpdate() != 0;
         } catch (SQLException e) {
             result = false;
             LOG.error(e.getMessage(), e);
