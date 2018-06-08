@@ -32,8 +32,7 @@
             <td><c:out value="${user.createDate}"></c:out></td>
             <td><c:out value="${user.role.roleName}"></c:out></td>
             <td><form action="${pageContext.servletContext.contextPath}/create" method="get">
-                <input type="submit" value="Add new user">
-                </form></td>
+                <input type="submit" value="Add new user"></form></td>
                 <td><form action="${pageContext.servletContext.contextPath}/edit" method="get">
                     <input type="submit" value="edit">
                     <input type="hidden" name="name" value="${user.name}">
@@ -48,7 +47,6 @@
                     <input type="hidden" name="name" value= "<c:out value="${user.name}"></c:out>">
                     <input type="hidden" name="login" value="<c:out value="${user.login}"></c:out>">
                     <input type="hidden" name="email" value="<c:out value="${user.email}"></c:out>">
-                    <input type="hidden" name="role" value="<c:out value="${user.role.roleName}"></c:out>">
                 </form>
             </c:if>
             </td>

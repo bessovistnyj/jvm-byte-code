@@ -35,7 +35,7 @@ public class UserServlet extends HttpServlet {
             String password = (String) session.getAttribute("password");
             User userAdmin = UserStore.getInstance().selectUser(login, password);
             if (userAdmin.getRole().getRoleName().equals("superAdmin")) {
-                req.setAttribute("userRole", "superAdmin");
+                session.setAttribute("userRole", "superAdmin");
             }
             req.setAttribute("users", UserStore.getInstance().selectAllUser());
             req.getRequestDispatcher("/WEB-INF/views/users.jsp").forward(req, resp);

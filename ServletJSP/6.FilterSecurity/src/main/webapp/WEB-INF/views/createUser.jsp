@@ -11,26 +11,114 @@
 <html>
 <head>
     <title>Title</title>
+    <style>
+        .create {
+            background-color: #F0FFFF;
+            float:left;
+            /*position: absolute;*/
+        }
+        .name-field{
+            clear:both;
+            text-align:right;
+        }
+        .login-field {
+            clear:both;
+            text-align:right;
+        }
+        .email-field {
+            clear:both;
+            text-align:right;
+        }
+        .role-field {
+            clear:both;
+            text-align:right;
+        }
+        .password-field {
+            clear:both;
+            text-align:right;
+        }
+        .check-password {
+            clear:both;
+            text-align:right;
+        }
+        label {
+            float:left;
+        }
+        .button-back {
+            clear: left;
+        }
+
+    </style>
+
+    <script>
+        function validate(f) {
+            var dis = true;
+            if (f.name.value == "") {
+                f.name.style.backgroundColor ="#8B0000";
+                dis = false;
+            }
+            if (f.login.value == "") {
+                f.name.style.backgroundColor ="#8B0000";
+                dis = false;
+            }
+            if (f.email.value == "") {
+                f.name.style.backgroundColor ="#8B0000";
+                dis = false;
+            }
+
+            if (f.password.value != "" && f.passwordCheck.value != "") {
+                if (f.password.value != f.passwordCheck.value) {
+                    f.name.style.backgroundColor ="#8B0000";
+                    dis = false;
+                }
+            } else {
+                dis = false;
+            }
+            if (!dis) {
+                alert("Заполните все поля");
+            }
+            return dis;
+        }
+    </script>
+
 </head>
 </body>
-    <br>
-        <form action="${pageContext.servletContext.contextPath}/create" method="post">
-            <table>
-                <tr>
-                    <td>Name: <input type="text" name="name"/></td>
-                    <td>Login: <input type="text" name="login"/></td>
-                    <td>E-mail: <input type="text" name="email"/></td>
-                    <td>Password: <input type="text" name="password"/></td>
-                    <td>Role: <input type="text" name="role"/></td>
-                    <%--<input type="hidden" name="userRole" value="${userRole}">--%>
-                    <td><input type="submit" value="add"></td>
-                </tr>
-            </table>
-        </form>
-    <br><form Name ="back" action="${pageContext.servletContext.contextPath}/" method="get">
-        <input type="submit" value="back">
-        <%--<input type="hidden" name="userRole" value="${userRole}">--%>
-        </form>
 
-</body>
+<div>
+<form action="${pageContext.servletContext.contextPath}/create" method="post">
+    <div class = "create">
+    <div class = "name-field">
+        <label> Имя: </label>
+        <input type="text" name ="name"/> </div>
+    <div class = "login-field">
+        <label> Логин: </label>
+        <input type="text" name="login"/></div>
+    <div class = "email-field">
+        <label> E-mail: </label>
+        <input type="text" name="email"/> </div>
+    <div class = "role-field">
+        <label> Роль: </label>
+        <select name="role">
+            <option value="user">User</option>
+            <option value="Admin">Admin</option>
+        </select>
+    </div>
+    <div class="password-field">
+        <label> Password:</label>
+         <input type="password" name="password"/></div>
+    <div class="check-password">
+        <label> Password again:</label>
+        <input type="password" name="passwordCheck"/> </div>
+        <div class="button-create">
+            <input name="createButton"  type="submit" value="create user" onclick="return validate(this.form)"/>
+        </div>
+    </div>
+    </form>
+    <div class="button-back">
+        <form Name ="back" action="${pageContext.servletContext.contextPath}/" method="get">
+            <input type="submit" value="<-back"></form> </div>
+
+</div>
+
+ </body>
 </html>

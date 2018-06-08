@@ -32,7 +32,7 @@ public class CreateUserServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.setContentType("text/html");
-        RequestDispatcher rd = req.getRequestDispatcher("/WEB-INF/views/editRole.jsp");
+        RequestDispatcher rd = req.getRequestDispatcher("/WEB-INF/views/createUser.jsp");
         rd.forward(req, resp);
     }
 

@@ -31,7 +31,6 @@ public class EditUserServlets extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.setContentType("text/html");
-        req.setAttribute("userRole", req.getParameter("userRole"));
         RequestDispatcher rd = req.getRequestDispatcher("/WEB-INF/views/editUser.jsp");
         rd.forward(req, resp);
     }
@@ -56,14 +55,9 @@ public class EditUserServlets extends HttpServlet {
         String login = req.getParameter("login");
         String password = req.getParameter("password");
 
-        req.setAttribute("userRole", req.getParameter("userRole"));
-
         boolean result = this.usersStore.updateUser(oldName, oldLogin, oldEmail, name, login, email, password);
         if (result) {
-            User user = UserStore.getInstance().selectUser(login, password);
-            req.setAttribute("users", UserStore.getInstance().selectAllUser());
-            req.setAttribute("userRole", req.getParameter("userRole"));
-            req.getRequestDispatcher("/WEB-INF/views/users.jsp").forward(req,resp);
+            resp.sendRedirect(String.format("%s/", req.getContextPath()));
         } else {
             resp.sendError(404);
         }
