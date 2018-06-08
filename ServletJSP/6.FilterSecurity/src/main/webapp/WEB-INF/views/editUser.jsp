@@ -10,30 +10,105 @@
 <html>
 <head>
     <title>Title</title>
+    <style>
+        .edit {
+            background-color: #F0FFFF;
+            float:left;
+        }
+        .name-field{
+            clear:both;
+            text-align:right;
+        }
+        .login-field {
+            clear:both;
+            text-align:right;
+        }
+        .email-field {
+            clear:both;
+            text-align:right;
+        }
+        .role-field {
+            clear:both;
+            text-align:right;
+        }
+        .password-field {
+            clear:both;
+            text-align:right;
+        }
+
+        label {
+            float:left;
+        }
+        .button-back {
+            clear: left;
+        }
+
+    </style>
+
+    <script>
+        function validate(f) {
+            var dis = true;
+            if (f.name.value == "") {
+                f.name.style.backgroundColor ="#8B0000";
+                dis = false;
+            }
+            if (f.login.value == "") {
+                f.name.style.backgroundColor ="#8B0000";
+                dis = false;
+            }
+            if (f.email.value == "") {
+                f.name.style.backgroundColor ="#8B0000";
+                dis = false;
+            }
+
+            if (f.password.value == "") {
+                dis = false;
+            }
+
+            if (!dis) {
+                alert("Заполните все поля");
+            }
+            return dis;
+        }
+    </script>
+
 </head>
 <body>
-    <br>
-        <form action="${pageContext.servletContext.contextPath}/edit"  method="post">
-            <table>
-                <tr>
-                    <td>Name: <input type="text" value="<%=request.getParameter("name")%>"name="name"></td>
-                    <td>Login: <input type="text" value="<%=request.getParameter("login")%>"name="login"></td>
-                    <td>E-mail: <input type="text" value="<%=request.getParameter("email")%>" name="email"></td>
-                    <td>Password: <input type="text" value="<%=request.getParameter("password")%>" name="password"></td>
-                    <input type="hidden" name="oldName" value= "<%=request.getParameter("name")%>">
-                    <input type="hidden" name="oldLogin" value="<%=request.getParameter("login")%>">
-                    <input type="hidden" name="oldEmail" value="<%=request.getParameter("email")%>">
-                    <input type="hidden" name="oldPassword" value="<%=request.getParameter("password")%>">
-                    <%--<input type="hidden" name="userRole" value="${userRole}">--%>
-                    <td><input type="submit" value="edit"></td>
-                </tr>
-            </table>
-        </form>
-        <br>
+<form action="${pageContext.servletContext.contextPath}/edit"  method="post">
+    <div class = "edit">
+        <div class = "name-field">
+            <label> Имя: </label>
+            <input type="text" value="${editUser.name}" name ="name"/> </div>
+        <div class = "login-field">
+            <label> Логин: </label>
+            <input type="text" value="${editUser.login}" name="login"/></div>
+        <div class = "email-field">
+            <label> E-mail: </label>
+            <input type="text" value="${editUser.email}" name="email"/> </div>
+        <div class = "role-field">
+            <label> Роль: </label>
+            <select name="role">
+                <option value="user">User</option>
+                <option value="Admin">Admin</option>
+            </select>
+        </div>
+        <div class="password-field">
+            <label> New password:</label>
+            <input type="password" name="password"/></div>
+        <div class="button-edit">
+            <input name="editButton"  type="submit" value="edit user" onclick="return validate(this.form)"/>
+        </div>
+    </div>
+        <input type="hidden" name="oldName" value="${editUser.name}">
+        <input type="hidden" name="oldLogin" value="${editUser.login}">
+        <input type="hidden" name="oldEmail" value="${editUser.email}">
+        <input type="hidden" name="oldPassword" value="${editUser.password}">
+
+    </form>
+    <div class="button-back">
         <form action="${pageContext.servletContext.contextPath}/" method="get">
             <input type="submit" value="back">
-            <%--<input type="hidden" name="userRole" value="${userRole}">--%>
         </form>
-
+    </div>
 </body>
 </html>

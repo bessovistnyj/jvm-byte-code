@@ -31,6 +31,9 @@ public class EditUserServlets extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.setContentType("text/html");
+        int userId = Integer.parseInt(req.getParameter("userId"));
+        User editUser = usersStore.selectUser(userId);
+        req.setAttribute("editUser", editUser);
         RequestDispatcher rd = req.getRequestDispatcher("/WEB-INF/views/editUser.jsp");
         rd.forward(req, resp);
     }
@@ -53,7 +56,7 @@ public class EditUserServlets extends HttpServlet {
         String email = req.getParameter("email");
         String name = req.getParameter("name");
         String login = req.getParameter("login");
-        String password = req.getParameter("password");
+        String password = req.getParameter("newPassword");
 
         boolean result = this.usersStore.updateUser(oldName, oldLogin, oldEmail, name, login, email, password);
         if (result) {

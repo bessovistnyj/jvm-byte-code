@@ -35,10 +35,11 @@
                 <input type="submit" value="Add new user"></form></td>
                 <td><form action="${pageContext.servletContext.contextPath}/edit" method="get">
                     <input type="submit" value="edit">
-                    <input type="hidden" name="name" value="${user.name}">
-                    <input type="hidden" name="login" value="${user.login}">
-                    <input type="hidden" name="email" value="${user.email}">
-                    <input type="hidden" name="password" value="${user.password}">
+                    <input type="hidden" name = "userId" value="${user.id}">
+                    <%--<input type="hidden" name="name" value="${user.name}">--%>
+                    <%--<input type="hidden" name="login" value="${user.login}">--%>
+                    <%--<input type="hidden" name="email" value="${user.email}">--%>
+                    <%--<input type="hidden" name="password" value="${user.password}">--%>
                 </form>
                 </td>
             <td> <c:if test="${userRole == 'superAdmin'}">
