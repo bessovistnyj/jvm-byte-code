@@ -30,24 +30,23 @@
             <td><c:out value="${user.login}"></c:out></td>
             <td><c:out value="${user.email}"></c:out></td>
             <td><c:out value="${user.createDate}"></c:out></td>
+            <td><c:out value="${user.country}"></c:out></td>
+            <td><c:out value="${user.city}"></c:out></td>
             <td><c:out value="${user.role.roleName}"></c:out></td>
             <td><form action="${pageContext.servletContext.contextPath}/create" method="get">
                 <input type="submit" value="Add new user"></form></td>
                 <td><form action="${pageContext.servletContext.contextPath}/edit" method="get">
                     <input type="submit" value="edit">
                     <input type="hidden" name = "userId" value="${user.id}">
-                    <%--<input type="hidden" name="name" value="${user.name}">--%>
-                    <%--<input type="hidden" name="login" value="${user.login}">--%>
-                    <%--<input type="hidden" name="email" value="${user.email}">--%>
-                    <%--<input type="hidden" name="password" value="${user.password}">--%>
                 </form>
                 </td>
             <td> <c:if test="${userRole == 'superAdmin'}">
                 <form action="${pageContext.servletContext.contextPath}/editRole" method="get">
                     <input type="submit" value="edit role">
-                    <input type="hidden" name="name" value= "<c:out value="${user.name}"></c:out>">
-                    <input type="hidden" name="login" value="<c:out value="${user.login}"></c:out>">
-                    <input type="hidden" name="email" value="<c:out value="${user.email}"></c:out>">
+                    <input type="hidden" name = "userId" value="${user.id}">
+                    <%--<input type="hidden" name="name" value= "<c:out value="${user.name}"></c:out>">--%>
+                    <%--<input type="hidden" name="login" value="<c:out value="${user.login}"></c:out>">--%>
+                    <%--<input type="hidden" name="email" value="<c:out value="${user.email}"></c:out>">--%>
                 </form>
             </c:if>
             </td>

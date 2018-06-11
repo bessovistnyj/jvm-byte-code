@@ -9,7 +9,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.Timestamp;
 
 /**
@@ -47,7 +46,8 @@ public class CreateUserServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         Timestamp dateOfCreate = new Timestamp(System.currentTimeMillis());
 
-        User user = new User(req.getParameter("name"), req.getParameter("login"), req.getParameter("email"), dateOfCreate, req.getParameter("password"));
+        User user = new User(req.getParameter("name"), req.getParameter("login"), req.getParameter("email"),
+                             dateOfCreate, req.getParameter("password"), req.getParameter("country"), req.getParameter("city"));
         boolean result = this.usersStore.addUser(user);
         if (result) {
             result = this.usersStore.addRole(user.getEmail(), req.getParameter("role"));

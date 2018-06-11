@@ -42,11 +42,10 @@ public class EditUserServlets extends HttpServlet {
      *
      * @param req
      * @param resp
-     * @throws ServletException
      * @throws IOException
      */
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         resp.setContentType("text/html");
 
         String oldEmail = req.getParameter("oldEmail");
@@ -57,8 +56,10 @@ public class EditUserServlets extends HttpServlet {
         String name = req.getParameter("name");
         String login = req.getParameter("login");
         String password = req.getParameter("newPassword");
+        String country = req.getParameter("country");
+        String city = req.getParameter("city");
 
-        boolean result = this.usersStore.updateUser(oldName, oldLogin, oldEmail, name, login, email, password);
+        boolean result = this.usersStore.updateUser(oldName, oldLogin, oldEmail, name, login, email, password, country, city);
         if (result) {
             resp.sendRedirect(String.format("%s/", req.getContextPath()));
         } else {

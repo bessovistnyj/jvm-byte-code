@@ -28,6 +28,9 @@ public class EditRoleServlets extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.setContentType("text/html");
+        int userId = Integer.parseInt(req.getParameter("userId"));
+        User editUser = usersStore.selectUser(userId);
+        req.setAttribute("editUser", editUser);
         RequestDispatcher rd = req.getRequestDispatcher("/WEB-INF/views/editRole.jsp");
         rd.forward(req, resp);
     }

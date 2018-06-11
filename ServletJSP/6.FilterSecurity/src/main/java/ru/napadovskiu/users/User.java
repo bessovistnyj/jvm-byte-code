@@ -43,6 +43,16 @@ public class User {
      */
     private UserRole role;
 
+    /**
+     *
+     */
+    private String country;
+
+    /**
+     *
+     */
+    private String city;
+
 
     /**
      * Constructor for class.
@@ -51,12 +61,14 @@ public class User {
      * @param email email user.
      * @param createDate date of crate user.
      */
-    public User(String name, String login, String email, Timestamp createDate, String password) {
+    public User(String name, String login, String email, Timestamp createDate, String password, String country, String city) {
         this.name = name;
         this.login = login;
         this.email = email;
         this.createDate = createDate;
         this.password = password;
+        this.country = country;
+        this.city = city;
     }
 
 
@@ -69,13 +81,16 @@ public class User {
      * @param createDate
      * @param password
      */
-    public User(int id, String name, String login, String email, Timestamp createDate, String password) {
+    public User(int id, String name, String login, String email, Timestamp createDate, String password, String country, String city) {
         this.id = id;
         this.name = name;
         this.login = login;
         this.email = email;
         this.createDate = createDate;
         this.password = password;
+        this.country = country;
+        this.city = city;
+
     }
 
     /**
@@ -88,7 +103,7 @@ public class User {
      * @param password
      * @param role
      */
-    public User(int id, String name, String login, String email, Timestamp createDate, String password, UserRole role) {
+    public User(int id, String name, String login, String email, Timestamp createDate, String password, UserRole role, String country, String city) {
         this.id = id;
         this.role = role;
         this.name = name;
@@ -96,6 +111,9 @@ public class User {
         this.email = email;
         this.createDate = createDate;
         this.password = password;
+        this.country = country;
+        this.city = city;
+
     }
 
     /**
@@ -152,15 +170,48 @@ public class User {
      * @return
      */
     public UserRole getRole() {
-        return role;
+        return this.role;
     }
 
-     /**
+    /**
+     *
+     * @return
+     */
+    public String getCountry() {
+        return this.country;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public String getCity() {
+        return this.city;
+    }
+
+
+    /**
      *
      * @param role
      */
     public void setRole(UserRole role) {
         this.role = role;
+    }
+
+    /**
+     *
+     * @param country
+     */
+    public void setCountry(String country) {
+        this.country = country;
+    }
+
+    /**
+     *
+     * @param city
+     */
+    public void setCity(String city) {
+        this.city = city;
     }
 
 }

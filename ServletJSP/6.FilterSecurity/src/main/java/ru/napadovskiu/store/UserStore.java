@@ -110,9 +110,11 @@ public class UserStore {
         String userLogin = resultQuery.getString("user_login");
         String userEmail = resultQuery.getString("user_email");
         String userPassword = resultQuery.getString("user_password");
+        String user_country = resultQuery.getString("user_country");
+        String user_city = resultQuery.getString("user_city");
         Timestamp userCreateDate = resultQuery.getTimestamp("user_createDate");
 
-        User newUser = new User(userId, userName, userLogin, userEmail, userCreateDate, userPassword);
+        User newUser = new User(userId, userName, userLogin, userEmail, userCreateDate, userPassword, user_country, user_city);
 
         UserRole role = selectUserRole(newUser);
 
@@ -129,12 +131,14 @@ public class UserStore {
     public boolean addUser(User user) {
         boolean result = false;
         try (Connection connection = this.ds.getConnection();
-             PreparedStatement pst = connection.prepareStatement(this.settings.getValue("insertUser"));)  {
+             PreparedStatement pst = connection.prepareStatement(this.settings.getValue("insertUser")))  {
             pst.setString(1, user.getName());
             pst.setString(2, user.getLogin());
             pst.setString(3, user.getEmail());
             pst.setTimestamp(4, user.getCreateDate());
             pst.setString(5, user.getPassword());
+            pst.setString(6, user.getCountry());
+            pst.setString(7, user.getCity());
             result = pst.executeUpdate() != 0;
         } catch (SQLException e) {
             result = false;
@@ -169,7 +173,7 @@ public class UserStore {
      * @param email for find users in db.
      * @return result true or false.
      */
-    public boolean updateUser(String oldName, String oldLogin, String oldEmail,  String name, String login, String email, String password) {
+    public boolean updateUser(String oldName, String oldLogin, String oldEmail,  String name, String login, String email, String password, String country, String city) {
         boolean result = false;
         try (Connection connection = this.ds.getConnection();
              PreparedStatement pst = connection.prepareStatement(this.settings.getValue("updateUser"));)  {
@@ -177,10 +181,13 @@ public class UserStore {
             pst.setString(2, name);
             pst.setString(3, email);
             pst.setString(4, password);
+            pst.setString(5, country);
+            pst.setString(6, city);
 
-            pst.setString(5, oldLogin);
-            pst.setString(6, oldName);
-            pst.setString(7, oldEmail);
+
+            pst.setString(7, oldLogin);
+            pst.setString(8, oldName);
+            pst.setString(9, oldEmail);
 
 
             result = pst.executeUpdate() != 0;
@@ -197,7 +204,7 @@ public class UserStore {
      * @return array with users.
      */
     public CopyOnWriteArrayList<User> selectAllUser() {
-        CopyOnWriteArrayList<User> result = new CopyOnWriteArrayList<User>();
+        CopyOnWriteArrayList<User> result = new CopyOnWriteArrayList<>();
         try (Connection connection = this.ds.getConnection();
              PreparedStatement pst = connection.prepareStatement(this.settings.getValue("selectAllUser"));)  {
             ResultSet resultQuery =  pst.executeQuery();
@@ -220,7 +227,7 @@ public class UserStore {
     public User selectUser(int userId) {
         User user = null;
         try (Connection connection = this.ds.getConnection();
-             PreparedStatement pst = connection.prepareStatement(this.settings.getValue("selectUser"));)  {
+             PreparedStatement pst = connection.prepareStatement(this.settings.getValue("selectUser")))  {
             pst.setInt(1, userId);
             ResultSet resultQuery =  pst.executeQuery();
             while (resultQuery.next()) {
@@ -240,7 +247,7 @@ public class UserStore {
     public User selectUser(String email) {
         User user = null;
         try (Connection connection = this.ds.getConnection();
-             PreparedStatement pst = connection.prepareStatement(this.settings.getValue("selectUserByEmail"));)  {
+             PreparedStatement pst = connection.prepareStatement(this.settings.getValue("selectUserByEmail")))  {
              pst.setString(1, email);
             ResultSet resultQuery =  pst.executeQuery();
             while (resultQuery.next()) {
@@ -256,7 +263,7 @@ public class UserStore {
     public User selectUser(String login, String password) {
         User user = null;
         try (Connection connection = this.ds.getConnection();
-             PreparedStatement pst = connection.prepareStatement(this.settings.getValue("checkUser"));)  {
+             PreparedStatement pst = connection.prepareStatement(this.settings.getValue("checkUser")))  {
             pst.setString(1, login);
             pst.setString(2, password);
             ResultSet resultQuery =  pst.executeQuery();
@@ -278,7 +285,7 @@ public class UserStore {
     public boolean isCredentials(String login, String password) {
         boolean result = false;
         try (Connection connection = this.ds.getConnection();
-             PreparedStatement pst = connection.prepareStatement(this.settings.getValue("checkUser"));)  {
+             PreparedStatement pst = connection.prepareStatement(this.settings.getValue("checkUser")))  {
             pst.setString(1, login);
             pst.setString(2, password);
             ResultSet resultQuery =  pst.executeQuery();
@@ -305,7 +312,7 @@ public class UserStore {
         User searchUser = selectUser(userEmail);
 
         try (Connection connection = this.ds.getConnection();
-             PreparedStatement pst = connection.prepareStatement(this.settings.getValue("addUserRole"));)  {
+             PreparedStatement pst = connection.prepareStatement(this.settings.getValue("addUserRole")))  {
             pst.setInt(1, searchUser.getId());
             pst.setString(2, roleName);
             result = pst.executeUpdate() != 0;
@@ -326,7 +333,7 @@ public class UserStore {
     public boolean updateRole(int userId, String roleName) {
         boolean result = false;
         try (Connection connection = this.ds.getConnection();
-             PreparedStatement pst = connection.prepareStatement(this.settings.getValue("updateUserRole"));)  {
+             PreparedStatement pst = connection.prepareStatement(this.settings.getValue("updateUserRole")))  {
             pst.setString(1, roleName);
             pst.setInt(2, userId);
             result = pst.executeUpdate() != 0;
@@ -346,7 +353,7 @@ public class UserStore {
     public UserRole selectUserRole(User user) {
         UserRole userRole = null;
         try (Connection connection = this.ds.getConnection();
-             PreparedStatement pst = connection.prepareStatement(this.settings.getValue("selectUserRole"));)  {
+             PreparedStatement pst = connection.prepareStatement(this.settings.getValue("selectUserRole")))  {
             pst.setInt(1, user.getId());
             ResultSet resultQuery =  pst.executeQuery();
             while (resultQuery.next()) {
@@ -369,9 +376,9 @@ public class UserStore {
      * @return
      */
     public boolean deleteUserRole(User user) {
-        boolean result = false;
+        boolean result;
         try (Connection connection = this.ds.getConnection();
-             PreparedStatement pst = connection.prepareStatement(this.settings.getValue("deleteUserRole"));)  {
+             PreparedStatement pst = connection.prepareStatement(this.settings.getValue("deleteUserRole")))  {
             pst.setInt(1, user.getId());
             result = pst.executeUpdate() != 0;
         } catch (SQLException e) {
