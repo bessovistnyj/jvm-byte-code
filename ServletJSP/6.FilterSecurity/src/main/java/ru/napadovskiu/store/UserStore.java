@@ -11,6 +11,7 @@ import java.io.InputStream;
 import java.sql.*;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.concurrent.CopyOnWriteArraySet;
 
 
 public class UserStore {
@@ -259,7 +260,12 @@ public class UserStore {
         return user;
     }
 
-
+    /**
+     *
+     * @param login
+     * @param password
+     * @return
+     */
     public User selectUser(String login, String password) {
         User user = null;
         try (Connection connection = this.ds.getConnection();
@@ -347,6 +353,46 @@ public class UserStore {
 
     /**
      *
+     * @return
+     */
+    public CopyOnWriteArraySet selectCities() {
+        CopyOnWriteArraySet<String> result = new CopyOnWriteArraySet<>();
+        try (Connection connection = this.ds.getConnection();
+             PreparedStatement pst = connection.prepareStatement(this.settings.getValue("selectAllUser")))  {
+            ResultSet resultQuery =  pst.executeQuery();
+            while (resultQuery.next()) {
+                result.add(resultQuery.getString("user_city"));
+            }
+
+        } catch (SQLException e) {
+            LOG.error(e.getMessage(), e);
+        }
+        return result;
+    }
+
+
+    /**
+     *
+     * @return
+     */
+    public CopyOnWriteArraySet selectCountries() {
+        CopyOnWriteArraySet<String> result = new CopyOnWriteArraySet<>();
+        try (Connection connection = this.ds.getConnection();
+             PreparedStatement pst = connection.prepareStatement(this.settings.getValue("selectAllUser")))  {
+            ResultSet resultQuery =  pst.executeQuery();
+            while (resultQuery.next()) {
+                result.add(resultQuery.getString("user_country"));
+            }
+
+        } catch (SQLException e) {
+            LOG.error(e.getMessage(), e);
+        }
+        return result;
+    }
+
+
+    /**
+     *
      * @param user
      * @return
      */
@@ -366,7 +412,6 @@ public class UserStore {
         return userRole;
 
     }
-
 
 
 

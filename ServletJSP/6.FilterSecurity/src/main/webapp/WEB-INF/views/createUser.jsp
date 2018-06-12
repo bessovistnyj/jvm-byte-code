@@ -47,78 +47,52 @@
         .button-back {
             clear: left;
         }
-
     </style>
-
-    <script>
-        function validate(f) {
-            var dis = true;
-            if (f.name.value == "") {
-                f.name.style.backgroundColor ="#8B0000";
-                dis = false;
-            }
-            if (f.login.value == "") {
-                f.name.style.backgroundColor ="#8B0000";
-                dis = false;
-            }
-            if (f.email.value == "") {
-                f.name.style.backgroundColor ="#8B0000";
-                dis = false;
-            }
-
-            if (f.password.value != "" && f.passwordCheck.value != "") {
-                if (f.password.value != f.passwordCheck.value) {
-                    f.name.style.backgroundColor ="#8B0000";
-                    dis = false;
-                }
-            } else {
-                dis = false;
-            }
-            if (!dis) {
-                alert("Заполните все поля");
-            }
-            return dis;
-        }
-    </script>
-
+    <script src="<c:url value="/js/validate.js"/>"> </script>
+    <script>  </script>
 </head>
 </body>
-
 <div>
-<form action="${pageContext.servletContext.contextPath}/create" method="post">
-    <div class = "create">
-    <div class = "name-field">
-        <label> Имя: </label>
-        <input type="text" name ="name"/> </div>
-    <div class = "login-field">
-        <label> Логин: </label>
-        <input type="text" name="login"/></div>
-    <div class = "email-field">
-        <label> E-mail: </label>
-        <input type="text" name="email"/> </div>
-    <div class = "role-field">
-        <label> Роль: </label>
-        <select name="role">
-            <option value="user">User</option>
-            <option value="Admin">Admin</option>
-        </select>
-    </div>
-    <div class="password-field">
-        <label> Password:</label>
-         <input type="password" name="password"/></div>
-    <div class="check-password">
-        <label> Password again:</label>
-        <input type="password" name="passwordCheck"/> </div>
-        <div class="button-create">
-            <input name="createButton"  type="submit" value="create user" onclick="return validate(this.form)"/>
+    <form action="${pageContext.servletContext.contextPath}/create" method="post">
+        <div class = "create">
+            <div class = "name-field">
+                <label> Имя: </label>
+                <input type="text" name ="name"/>
+            </div>
+            <div class = "login-field">
+                <label> Логин: </label>
+                <input type="text" name="login"/>
+            </div>
+            <div class = "email-field">
+                <label> E-mail: </label>
+                <input type="text" name="email"/>
+            </div>
+            <div class = "role-field">
+                <label> Роль: </label>
+                <select name="role">
+                    <option value="user">User</option>
+                    <option value="Admin">Admin</option>
+                </select>
+            </div>
+
+            <div class="password-field">
+                <label> Password:</label>
+                <input type="password" name="password"/>
+            </div>
+            <div class="check-password">
+                <label> Password again:</label>
+                <input type="password" name="passwordCheck"/>
+            </div>
+            <div class="button-create">
+                <input name="createButton"  type="submit" value="create user" onclick="return validate(this.form)"/>
+            </div>
         </div>
-    </div>
     </form>
     <div class="button-back">
         <form Name ="back" action="${pageContext.servletContext.contextPath}/" method="get">
-            <input type="submit" value="<-back"></form> </div>
-
+            <input type="submit" value="<-back">
+        </form>
+    </div>
 </div>
-
- </body>
+</body>
 </html>

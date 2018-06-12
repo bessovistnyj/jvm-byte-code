@@ -9,82 +9,30 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html>
 <head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+    <script>  <%@include file="/js/validate.js"%> </script>
+    <style> <%@include file="/css/style.css"%> </style>
     <title>Title</title>
-    <style>
-        .edit {
-            background-color: #F0FFFF;
-            float:left;
-        }
-        .name-field{
-            clear:both;
-            text-align:right;
-        }
-        .login-field {
-            clear:both;
-            text-align:right;
-        }
-        .email-field {
-            clear:both;
-            text-align:right;
-        }
-        .role-field {
-            clear:both;
-            text-align:right;
-        }
-        .password-field {
-            clear:both;
-            text-align:right;
-        }
-
-        label {
-            float:left;
-        }
-        .button-back {
-            clear: left;
-        }
-
-    </style>
-
-    <script>
-        function validate(f) {
-            var dis = true;
-            if (f.name.value == "") {
-                f.name.style.backgroundColor ="#8B0000";
-                dis = false;
-            }
-            if (f.login.value == "") {
-                f.name.style.backgroundColor ="#8B0000";
-                dis = false;
-            }
-            if (f.email.value == "") {
-                f.name.style.backgroundColor ="#8B0000";
-                dis = false;
-            }
-
-            if (f.password.value == "") {
-                dis = false;
-            }
-
-            if (!dis) {
-                alert("Заполните все поля");
-            }
-            return dis;
-        }
-    </script>
-
 </head>
 <body>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
+
 <form action="${pageContext.servletContext.contextPath}/edit"  method="post">
     <div class = "edit">
         <div class = "name-field">
             <label> Имя: </label>
-            <input type="text" value="${editUser.name}" name ="name"/> </div>
+            <input type="text" value="${editUser.name}" name ="name"/>
+        </div>
         <div class = "login-field">
             <label> Логин: </label>
-            <input type="text" value="${editUser.login}" name="login"/></div>
+            <input type="text" value="${editUser.login}" name="login"/>
+        </div>
         <div class = "email-field">
             <label> E-mail: </label>
-            <input type="text" value="${editUser.email}" name="email"/> </div>
+            <input type="text" value="${editUser.email}" name="email"/>
+        </div>
         <div class = "role-field">
             <label> Роль: </label>
             <select name="role">

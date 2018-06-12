@@ -1,0 +1,41 @@
+.create {
+    background-color: #F0FFFF;
+    float:left;
+    /*position: absolute;*/
+}
+.edit {
+    background-color: #F0FFFF;
+    float:left;
+    /*position: absolute;*/
+}
+
+.name-field{
+    clear:both;
+    text-align:right;
+}
+.login-field {
+    clear:both;
+    text-align:right;
+}
+.email-field {
+    clear:both;
+    text-align:right;
+}
+.role-field {
+    clear:both;
+    text-align:right;
+}
+.password-field {
+    clear:both;
+    text-align:right;
+}
+.check-password {
+    clear:both;
+    text-align:right;
+}
+label {
+    float:left;
+}
+.button-back {
+    clear: left;
+}
