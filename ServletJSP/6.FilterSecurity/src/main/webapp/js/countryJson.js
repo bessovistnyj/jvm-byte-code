@@ -1,7 +1,26 @@
-function findcountry() {
-    $.ajax(
+function findCountry() {
+    $(document).ready(function () {
+        $(function () {
+            $("#country").autocomplete({
+                source: function (request, response) {
+                    $.ajax({
+                        url: "countryJson",
+                        type: "GET",
+                        data: {
+                            term: request.term
+                        },
+                        dataType: "json",
+                        success: function (data) {
+                            response(data);
+                        }
+                    });
+                }
+            });
+        });
+    });
+}
 
-    )
+
 
     // $.ajax('./countryJson=' + document.getElementsByName("country")[0].value, {
     //     method: 'get',
@@ -29,4 +48,4 @@ function findcountry() {
     //         document.getElementById("countrySelect").innerHTML = result;
     //     }
     // })
-}
+//}
