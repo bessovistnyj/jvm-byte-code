@@ -48,6 +48,25 @@
     </servlet-mapping>
 
     <servlet>
+        <servlet-name>CityController</servlet-name>
+        <servlet-class>ru.napadovskiu.servlets.CityController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>CityController</servlet-name>
+        <url-pattern>/cityJson</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>CountryController</servlet-name>
+        <servlet-class>ru.napadovskiu.servlets.CountryController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>CountryController</servlet-name>
+        <url-pattern>/countryJson</url-pattern>
+    </servlet-mapping>
+
+
+    <servlet>
         <servlet-name>EditRoleServlets</servlet-name>
         <servlet-class>ru.napadovskiu.servlets.EditRoleServlets</servlet-class>
     </servlet>

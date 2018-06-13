@@ -10,46 +10,20 @@
 
 <html>
 <head>
+    <script>
+        <%@include file="/js/validate.js"%>
+        <%@include file="/js/countryJson.js"%>
+        $(document).ready(
+            function () {
+                if (${user != null && user.country != null}) {
+                    findcountry()
+                }
+            }
+        );
+
+    </script>
+    <style> <%@include file="/css/style.css"%> </style>
     <title>Title</title>
-    <style>
-        .create {
-            background-color: #F0FFFF;
-            float:left;
-            /*position: absolute;*/
-        }
-        .name-field{
-            clear:both;
-            text-align:right;
-        }
-        .login-field {
-            clear:both;
-            text-align:right;
-        }
-        .email-field {
-            clear:both;
-            text-align:right;
-        }
-        .role-field {
-            clear:both;
-            text-align:right;
-        }
-        .password-field {
-            clear:both;
-            text-align:right;
-        }
-        .check-password {
-            clear:both;
-            text-align:right;
-        }
-        label {
-            float:left;
-        }
-        .button-back {
-            clear: left;
-        }
-    </style>
-    <script src="<c:url value="/js/validate.js"/>"> </script>
-    <script>  </script>
 </head>
 </body>
 <div>
@@ -83,9 +57,31 @@
                 <label> Password again:</label>
                 <input type="password" name="passwordCheck"/>
             </div>
+            <div id = "countrySelect">
+                <select class="country" name="country" onchange="findcountry()">
+                    <option value="" selected disabled hidden>Choose country</option>
+                    <c:forEach items = "${countries}" var = "count">
+                        <c:if test="${count != \"Other\"}">
+                            <c:if test="${user.country != count}">
+                                <option>${count}</option>
+                            </c:if>
+                            <c:if test="${user.country == count}">
+                                <option value="${count}" selected>${count}</option>
+                            </c:if>
+                        </c:if>
+                    </c:forEach>
+                    <option <c:if test="${user.country == \"Other\"}">value="Other" selected</c:if>>Other</option>
+                </select>
+            </div>
+
+
+
+
             <div class="button-create">
                 <input name="createButton"  type="submit" value="create user" onclick="return validate(this.form)"/>
             </div>
+
+
         </div>
     </form>
     <div class="button-back">

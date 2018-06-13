@@ -9,8 +9,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html>
 <head>
-    <%--<style src="<c:url value="/css/style.css"/>"> </style>--%>
-        <script>  <%@include file="/js/validate.js"%> </script>
+        <script> <%@include file="/js/validate.js"%> </script>
         <style> <%@include file="/css/style.css"%> </style>
         <title>Title</title>
 

@@ -1,25 +1,39 @@
 function validate(f) {
     var dis = true;
-    if (f.name.values[0] == "") {
-        f.name.style.backgroundColor ="#8B0000";
+
+    if (f.name.value == "") {
+        f.name.style.backgroundColor ="#d90000";
         dis = false;
+    } else {
+        f.name.style.backgroundColor ="#fbfbff";
     }
     if (f.login.value == "") {
-        f.name.style.backgroundColor ="#8B0000";
+        f.login.style.backgroundColor ="#d90000";
         dis = false;
+    } else {
+        f.login.style.backgroundColor ="#fbfbff";
     }
     if (f.email.value == "") {
-        f.name.style.backgroundColor ="#8B0000";
+        f.email.style.backgroundColor ="#d90000";
         dis = false;
+    } else {
+        f.email.style.backgroundColor ="#fbfbff";
     }
 
     if (f.password.value != "" && f.passwordCheck.value != "") {
         if (f.password.value != f.passwordCheck.value) {
-            f.name.style.backgroundColor ="#8B0000";
+            f.password.style.backgroundColor ="#d90000";
             dis = false;
         }
-    } else {
+    } else if (f.password.value == "") {
+        f.password.style.backgroundColor ="#d90000";
         dis = false;
+    } else if (f.passwordCheck.value == "") {
+        f.passwordCheck.style.backgroundColor ="#d90000";
+        dis = false;
+    } else {
+        f.password.style.backgroundColor ="#fbfbff";
+        f.passwordCheck.style.backgroundColor ="#fbfbff";
     }
     if (!dis) {
         alert("Error");

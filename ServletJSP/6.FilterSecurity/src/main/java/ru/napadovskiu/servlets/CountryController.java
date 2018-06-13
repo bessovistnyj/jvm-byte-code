@@ -20,12 +20,14 @@ public class CountryController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        resp.setContentType("application/json");
         Gson gson = new Gson();
         CopyOnWriteArraySet<String> roles = usersStore.selectCountries();
         PrintWriter writer = resp.getWriter();
 
         String json = gson.toJson(roles);
-        writer.append(json);
+        resp.setCharacterEncoding("UTF-8");
+        writer.write(json);
         writer.flush();
 
     }
