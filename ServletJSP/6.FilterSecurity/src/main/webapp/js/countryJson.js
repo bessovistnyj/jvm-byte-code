@@ -1,51 +1,16 @@
-function findCountry() {
-    $(document).ready(function () {
-        $(function () {
-            $("#country").autocomplete({
-                source: function (request, response) {
-                    $.ajax({
-                        url: "countryJson",
-                        type: "GET",
-                        data: {
-                            term: request.term
-                        },
-                        dataType: "json",
-                        success: function (data) {
-                            response(data);
-                        }
-                    });
+function selectCountry() {
+    $.ajax({
+            url:'../countryJson',
+            method: "GET",
+            complete: function(data) {
+                var countries = JSON.parse(data.responseText);
+                var previous_value = document.getElementById("select_country").value;
+                $(document.getElementById("select_country")).children().remove();
+                $(document.getElementById("select_country")).append("<option selected></option>");
+                for (var i = 0; i < countries.length; i++) {
+                    $(document.getElementById("select_country")).append("<option>" + countries[i].country + "</option>");
                 }
-            });
-        });
+                document.getElementById("select_country").value = previous_value;
+            }
     });
 }
-
-
-
-    // $.ajax('./countryJson=' + document.getElementsByName("country")[0].value, {
-    //     method: 'get',
-    //     complete: function (data) {
-    //         var result;
-    //         //result = "<td id=\"cityselect\" ><select class=\"form-control\" name=\"city\">";
-    //         result = "<td id=\"cityselect\" ><select class=\"country\" name=\"city\">";
-    //         result += "<option value=\"\" selected disabled hidden>Choose city</option>";
-    //         var countries = JSON.parse(data.responseText);
-    //         for (var i = 0; i != cities.length; ++i) {
-    //             if (countries[i].country != "${user.country}") {
-    //                 result += "<option  value=\"" + cities[i].city + "\" >" + cities[i].city + "</option>";
-    //             }
-    //             // if (cities[i].city == "${user.city}") {
-    //             //     result += "<option value=\"" + cities[i].city + "\" selected>" + cities[i].city + "</option>";
-    //             // }
-    //         }
-    //         result += "<option";
-    //         if ("${user.country}" == "Other") {
-    //             result += " value=\"Other\" selected";
-    //         }
-    //         result += ">Other</option>";
-    //         result += "</select></td>";
-    //         console.log(result);
-    //         document.getElementById("countrySelect").innerHTML = result;
-    //     }
-    // })
-//}
