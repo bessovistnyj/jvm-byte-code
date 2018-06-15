@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Set;
 
 
 public class CountryController extends HttpServlet {
@@ -22,11 +23,14 @@ public class CountryController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.setContentType("text/json");
-        Gson jsonBuilder = new GsonBuilder().create();
-        String json = jsonBuilder.toJson(usersStore.selectAllUser());
-        PrintWriter writer = new PrintWriter(resp.getOutputStream());
-        writer.append(json);
-        writer.flush();
+        String term = req.getParameter("term");
+        Set<String> countries = usersStore.selectCountries();
+        String json = new Gson().toJson(countries);
+
+        resp.setContentType("application/json");
+        resp.setCharacterEncoding("UTF-8");
+        resp.getWriter().write(json);
+
     }
 
 }

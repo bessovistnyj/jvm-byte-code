@@ -1,66 +1,70 @@
-.create {
-    background-color: #F0FFFF;
-    float:left;
-    /*position: absolute;*/
-}
-.edit {
-    background-color: #F0FFFF;
-    float:left;
-    /*position: absolute;*/
+
+*.edit, *.create {
+    box-sizing: border-box;
+    border-radius: 5px;
+    background-color: #f2f2f2;
+    padding: 20px;
+
 }
 
-.name-field{
-    clear:both;
-    text-align:right;
+input[type=text], select,[type=password] {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    resize: vertical;
 }
-.login-field {
-    clear:both;
-    text-align:right;
-}
-.email-field {
-    clear:both;
-    text-align:right;
-}
-.role-field {
-    clear:both;
-    text-align:right;
-}
-.password-field {
-    clear:both;
-    text-align:right;
-}
-.check-password {
-    clear:both;
-    text-align:right;
-}
+
 label {
-    float:left;
-}
-.button-back {
-    clear: left;
+    padding: 12px 12px 12px 0;
+    display: inline-block;
 }
 
- table {
-     font-family: "Lucida Sans Unicode", "Lucida Grande", Sans-Serif;
-     font-size: 14px;
-     background: white;
-     max-width: 70%;
-     width: 70%;
-     border-collapse: collapse;
-     text-align: left;
- }
-th {
-    font-weight: normal;
-    color: #039;
-    border-bottom: 2px solid #6678b1;
-    padding: 10px 8px;
-}
-td {
-    color: #669;
-    padding: 9px 8px;
-    transition: .3s linear;
-}
-tr:hover td {
-    color: #6699ff;
+/*input[type=submit] {*/
+    /*background-color: #4CAF50;*/
+    /*color: white;*/
+    /*padding: 12px 20px;*/
+    /*border: none;*/
+    /*border-radius: 4px;*/
+    /*cursor: pointer;*/
+    /*float: right;*/
+/*}*/
+
+
+/*input[type=submit]:hover {*/
+    /*background-color: #45a049;*/
+/*}*/
+
+.col-25 {
+    float: left;
+    width: 25%;
+    margin-top: 6px;
 }
 
+.col-75 {
+    float: left;
+    width: 75%;
+    margin-top: 6px;
+}
+
+/* Clear floats after the columns */
+.row:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+
+/*.container {*/
+    /*border-radius: 5px;*/
+    /*background-color: #f2f2f2;*/
+    /*padding: 20px;*/
+/*}*/
+
+
+/*!* Clear floats after the columns *!*/
+/*.row:after {*/
+    /*content: "";*/
+    /*display: table;*/
+    /*clear: both;*/
+/*}*/

@@ -10,29 +10,41 @@
 
 <html>
 <head>
-    <style> <%@include file="/css/style.css"%> </style>
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/css/bootstrap-select.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/js/bootstrap-select.min.js"></script>
+    <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+    <script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
 
     <script>
-        function selectCountry() {
-            $.ajax({
-                url:'./countryJson',
-                method: "GET",
-                complete: function(data) {
-                    var users = data.responceJson
-                    var previous_value = document.getElementById("select_country").value;
-                    $(document.getElementById("select_country")).children().remove();
-                    $(document.getElementById("select_country")).append("<option selected></option>");
-                    for (var i = 0; i < data.length; i++) {
-                        $(document.getElementById("select_country")).append("<option>" + data[i].country + "</option>");
-                    }
-                    document.getElementById("select_country").value = previous_value;
-                }
+        $(document).ready(function () {
+            $(function () {
+                $("#country").change( function () {
+
+
+                })
+                // $("#country").autocomplete({
+                //     source:function (request, response) {
+                //         $.ajax({
+                //             url: "countryJson",
+                //             type: "GET",
+                //             data: {
+                //                 term: request.term
+                //             },
+                //             dataType : "json",
+                //             success: function (data) {
+                //                 response(data);
+                //
+                //             }
+                //         });
+                //     }
+                // });
             });
-        }
+
+        });
 
     </script>
     <script> <%@include file="/js/validate.js"%>  </script>
