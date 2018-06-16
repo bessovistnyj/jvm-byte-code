@@ -8,8 +8,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.concurrent.CopyOnWriteArraySet;
+import java.util.Set;
+
 
 public class CityController extends HttpServlet {
 
@@ -18,13 +18,13 @@ public class CityController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        super.doGet(req, resp);        Gson gson = new Gson();
-        CopyOnWriteArraySet<String> roles = usersStore.selectCities();
-        PrintWriter writer = resp.getWriter();
+        resp.setContentType("text/json");
+        Set<String> cities = usersStore.selectCities();
+        String json = new Gson().toJson(cities);
 
-        String json = gson.toJson(roles);
-        writer.append(json);
-        writer.flush();
+        resp.setContentType("application/json");
+        resp.setCharacterEncoding("UTF-8");
+        resp.getWriter().write(json);
 
     }
 }

@@ -19,6 +19,21 @@ function validate(f) {
     } else {
         f.email.style.backgroundColor ="#fbfbff";
     }
+    if (f.country == "") {
+        f.country.style.backgroundColor ="#d90000";
+        dis = false;
+
+    } else {
+        f.country.style.backgroundColor ="#fbfbff";
+    }
+
+    if (f.city == "") {
+        f.city.style.backgroundColor ="#d90000";
+        dis = false;
+    } else {
+        f.city.style.backgroundColor ="#fbfbff";
+    }
+
 
     if (f.password.value != "" && f.passwordCheck.value != "") {
         if (f.password.value != f.passwordCheck.value) {
@@ -35,6 +50,8 @@ function validate(f) {
         f.password.style.backgroundColor ="#fbfbff";
         f.passwordCheck.style.backgroundColor ="#fbfbff";
     }
+
+
     if (!dis) {
         alert("Error");
     }

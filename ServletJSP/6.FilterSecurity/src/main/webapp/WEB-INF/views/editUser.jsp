@@ -22,105 +22,113 @@
     <style> <%@include file="/css/style.css"%> </style>
 
     <script>
-        $(document).ready(function () {
-            $(function () {
-                $("#country").autocomplete({
-                    source:function (request, response) {
-                        $.ajax({
-                            url: "countryJson",
-                            type: "GET",
-                            data: {
-                                term: request.term
-                            },
-                            dataType : "json",
-                            success: function (data) {
-                                response(data);
-
-                            }
-                        });
-                    }
-                });
+        $(document).ready(function (){
+            $("#country").empty();
+            $.ajax ({
+                url: "countryJson",
+                type: "get",
+                success: function (data) {
+                    var country = $("#country");
+                    $.each(data, function (i, value) {
+                        country.append($("<option></option>").val(value).html(value));
+                    });
+                }
             });
-
         });
+    </script>
 
+    <script>
+        $(document).ready(function (){
+            $("#city").empty();
+            $.ajax ({
+                url: "cityJson",
+                type: "get",
+                success: function (data) {
+                    var city = $("#city");
+                    $.each(data, function (i, value) {
+                        city.append($("<option></option>").val(value).html(value));
+                    });
+                }
+            });
+        });
     </script>
 
     <title>EditUser</title>
 </head>
 <body>
 
-<div class = "edit">
+<div>
     <form action="${pageContext.servletContext.contextPath}/edit"  method="post">
-        <div class = "row">
-            <div class="col-25">
-                <label> Имя: </label>
+        <div class = "edit">
+            <div class = "row">
+                <div class="col-25">
+                    <label> Имя: </label>
+                </div>
+                <div class="col-75">
+                    <input type="text" value="${editUser.name}" name ="name"/>
+                </div>
             </div>
-            <div class="col-75">
-                <input type="text" value="${editUser.name}" name ="name"/>
+            <div class = "row">
+                <div class="col-25">
+                    <label> Логин: </label>
+                </div>
+                <div class="col-75">
+                    <input type="text" value="${editUser.login}" name="login"/>
+                </div>
             </div>
+            <div class = "row">
+                <div class="col-25">
+                    <label> E-mail: </label>
+                </div>
+                <div class="col-75">
+                    <input type="text" value="${editUser.email}" name="email"/>
+                </div>
+            </div>
+            <div class = "row">
+                <div class="col-25">
+                    <label> Роль: </label>
+                </div>
+                <div class="col-75">
+                    <select name="role">
+                        <option value="user">User</option>
+                        <option value="Admin">Admin</option>
+                    </select>
+                </div>
+            </div>
+            <div class = "row">
+                <div class="col-25">
+                    <label>Страна</label>
+                </div>
+                <div class="col-75">
+                    <select  id="country" class="select_country" name="country" required></select>
+                </div>
+            </div>
+            <div class = "row">
+                <div class="col-25">
+                    <label>Город</label>
+                </div>
+                <div class="col-75">
+                    <select  id="city" class="select_city" name="city" required></select>
+                </div>
+            </div>
+            <div class = "row">
+                <div class="col-25">
+                    <label> Новый пароль:</label>
+                </div>
+                <div class="col-75">
+                    <input type="password" name="password"/>
+                </div>
+            </div>
+            <div class="button-edit">
+                <input name="editButton"  type="submit" value="edit user" onclick="return validate(this.form)"/>
+            </div>
+            <input type="hidden" name="oldName" value="${editUser.name}">
+            <input type="hidden" name="oldLogin" value="${editUser.login}">
+            <input type="hidden" name="oldEmail" value="${editUser.email}">
+            <input type="hidden" name="oldPassword" value="${editUser.password}">
+            <input type="hidden" name="oldCountry" value="${editUser.country}">
+            <input type="hidden" name="oldCity" value="${editUser.city}">
         </div>
-        <div class = "row">
-            <div class="col-25">
-                <label> Логин: </label>
-            </div>
-            <div class="col-75">
-                <input type="text" value="${editUser.login}" name="login"/>
-            </div>
-        </div>
-        <div class = "row">
-            <div class="col-25">
-                <label> E-mail: </label>
-            </div>
-            <div class="col-75">
-                <input type="text" value="${editUser.email}" name="email"/>
-            </div>
-        </div>
-        <div class = "row">
-            <div class="col-25">
-                <label> Роль: </label>
-            </div>
-            <div class="col-75">
-                <select name="role">
-                    <option value="user">User</option>
-                    <option value="Admin">Admin</option>
-                </select>
-            </div>
-        </div>
-        <div class = "row">
-            <div class="col-25">
-                <label> Country </label>
-            </div>
-            <div class="col-75">
-                <input type="text" value="${editUser.country}" name="country" id ="country"/>
-            </div>
-        </div>
-        <div class = "row">
-            <div class="col-25">
-                <label> City </label>
-            </div>
-             <div class="col-75">
-                 <input type="text" value="${editUser.city}" name="city"/>
-            </div>
-        </div>
-        <div class = "row">
-            <div class="col-25">
-                <label> New password:</label>
-            </div>
-            <div class="col-75">
-                <input type="password" name="password"/>
-            </div>
-        </div>
-        <div class="button-edit">
-            <input name="editButton"  type="submit" value="edit user" onclick="return validate(this.form)"/>
-        </div>
-
-        <input type="hidden" name="oldName" value="${editUser.name}">
-        <input type="hidden" name="oldLogin" value="${editUser.login}">
-        <input type="hidden" name="oldEmail" value="${editUser.email}">
-        <input type="hidden" name="oldPassword" value="${editUser.password}">
-        <input type="hidden" name="oldCountry" value="${editUser.country}">
-        <input type="hidden" name="oldCity" value="${editUser.city}">
     </form>
     <div class="button-back">
         <form action="${pageContext.servletContext.contextPath}/" method="get">
