@@ -66,7 +66,7 @@
 		<module>4.JSP</module>
 		<module>5.JSTL</module>
 		<module>6.FilterSecurity</module>
-		<!--<module>5.FinalTask</module>-->
+		<module>7.MusicBox</module>
 	</modules>
 
 	<dependencies>
