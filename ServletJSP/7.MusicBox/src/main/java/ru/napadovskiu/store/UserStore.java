@@ -3,6 +3,7 @@ package ru.napadovskiu.store;
 import org.apache.commons.dbcp.BasicDataSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import ru.napadovskiu.entities.MusicType;
 import ru.napadovskiu.entities.User;
 import ru.napadovskiu.settings.Settings;
 
@@ -85,21 +86,65 @@ public class UserStore implements AbstractStore<User> {
 
     @Override
     public List<User> getAll() {
-        return null;
+        List<User> result = new CopyOnWriteArrayList<>();
+        try (Connection connection = ConnectionDB.INSTANCE.getConnection();
+             PreparedStatement pst = connection.prepareStatement(this.selectQuery.getValue("selectUser"));)  {
+            ResultSet resultQuery =  pst.executeQuery();
+            while (resultQuery.next()) {
+                result.add(createUserFromQuery(resultQuery));
+            }
+        } catch (SQLException e) {
+            LOG.error(e.getMessage(), e);
+        }
+        return result;
     }
 
     @Override
-    public void create(User entity) {
+    public boolean create(User user) {
+        boolean result;
+        try (Connection connection = ConnectionDB.INSTANCE.getConnection();
+             PreparedStatement pst = connection.prepareStatement(this.insertQuery.getValue("insertUser"))) {
+            pst.setString(1, user.getName());
+            pst.setString(2, user.getLogin());
+            pst.setString(3, user.getPassword());
+
+            result = pst.executeUpdate() != 0;
+        } catch (SQLException e) {
+            result = false;
+            LOG.error(e.getMessage(), e);
+        }
+        return result;
 
     }
 
     @Override
-    public void update(User entity) {
+    public boolean update(User user) {
+        boolean result;
+        try (Connection connection = ConnectionDB.INSTANCE.getConnection();
+             PreparedStatement pst = connection.prepareStatement(this.updateQuery.getValue("updateMusic"))) {
+            pst.setString(1, user.getMusic_name());
+            pst.setInt(2, user.getMusic_id());
+            result = pst.executeUpdate() != 0;
+        } catch (SQLException e) {
+            result = false;
+            LOG.error(e.getMessage(), e);
+        }
+        return result;
 
     }
 
     @Override
-    public void delete(User entity) {
+    public boolean delete(User user) {
+        boolean result = false;
+        try (Connection connection = ConnectionDB.INSTANCE.getConnection();
+             PreparedStatement pst = connection.prepareStatement(this.deleteQuery.getValue("deleteMusic"));)  {
+            pst.setInt(1, user.getMusic_id());
+            result = pst.executeUpdate() != 0;
+        } catch (SQLException e) {
+            result = false;
+            LOG.error(e.getMessage(), e);
+        }
+        return result;
 
     }
 
@@ -113,6 +158,7 @@ public class UserStore implements AbstractStore<User> {
         int userId = resultQuery.getInt("user_id");
         String userName = resultQuery.getString("user_name");
         String userLogin = resultQuery.getString("user_login");
+        String userPassword = resultQuery.getString("user_password");
 //        UserRole role = selectUserRole(newUser);
 //        String userEmail = resultQuery.getString("user_email");
 //        String userPassword = resultQuery.getString("user_password");
@@ -124,7 +170,7 @@ public class UserStore implements AbstractStore<User> {
 
 
 
-        newUser.setRole(role);
+//        newUser.setRole(role);
 
         return newUser;
     }

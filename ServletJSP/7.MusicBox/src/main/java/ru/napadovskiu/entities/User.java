@@ -8,6 +8,8 @@ public class User {
 
     private String  login;
 
+    private String password;
+
     private Address address;
 
     private Role Role;
@@ -25,6 +27,34 @@ public class User {
         this.login = user_login;
     }
 
+    public void setPassword(String user_password) {
+        this.password = user_password;
+    }
+
+    public void setUser_name(String user_name) {
+        this.name = user_name;
+    }
+
+    public void setUser_login(String user_login) {
+        this.login = user_login;
+    }
+
+    public void setAddress(Address address) {
+        this.address = address;
+    }
+
+    public void setRole(Role role) {
+        Role = role;
+    }
+
+    public void setMusicType(MusicType musicType) {
+        this.musicType = musicType;
+    }
+
+    public Role getRole() {
+        return this.Role;
+    }
+
     public int getUser_id() {
         return this.id;
     }
@@ -37,24 +67,16 @@ public class User {
         return this.login;
     }
 
-    public ru.napadovskiu.entities.Address getAddress() {
+    public Address getAddress() {
         return this.address;
     }
 
-    public ru.napadovskiu.entities.Role getRole() {
-        return this.Role;
+    public String getPassword() {
+        return this.password;
     }
 
-    public ru.napadovskiu.entities.MusicType getMusicType() {
+    public MusicType getMusicType() {
         return this.musicType;
-    }
-
-    public void setUser_name(String user_name) {
-        this.name = user_name;
-    }
-
-    public void setUser_login(String user_login) {
-        this.login = user_login;
     }
 
     public int getId() {
@@ -69,15 +91,4 @@ public class User {
         return this.login;
     }
 
-    public void setAddress(Address address) {
-        this.address = address;
-    }
-
-    public void setRole(Role role) {
-        Role = role;
-    }
-
-    public void setMusicType(MusicType musicType) {
-        this.musicType = musicType;
-    }
 }
