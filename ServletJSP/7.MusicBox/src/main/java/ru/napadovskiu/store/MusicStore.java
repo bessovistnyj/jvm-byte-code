@@ -1,11 +1,25 @@
 package ru.napadovskiu.store;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import ru.napadovskiu.entities.Address;
 import ru.napadovskiu.entities.MusicType;
+import ru.napadovskiu.entities.Role;
 import ru.napadovskiu.settings.Settings;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class MusicStore implements AbstractStore<MusicType> {
+
+    /**
+     * logger.
+     */
+    private static final Logger LOG = LoggerFactory.getLogger(AddressStore.class);
 
     /**
      * settings for load.
@@ -29,8 +43,10 @@ public class MusicStore implements AbstractStore<MusicType> {
      */
     private final Settings deleteQuery = new Settings();
 
-
-
+    /**
+     *
+     */
+    private final Settings updateQuery = new Settings();
 
 
     public MusicStore() {
@@ -40,33 +56,94 @@ public class MusicStore implements AbstractStore<MusicType> {
         this.selectQuery.load(loader.getResourceAsStream("select.properties"));
         this.insertQuery.load(loader.getResourceAsStream("insert.properties"));
         this.deleteQuery.load(loader.getResourceAsStream("delete.properties"));
-
+        this.updateQuery.load(loader.getResourceAsStream("update.properties"));
     }
 
 
 
     @Override
     public MusicType getById(int id) {
-        return null;
+        MusicType musicType = null;
+        try (Connection connection = ConnectionDB.INSTANCE.getConnection();
+             PreparedStatement pst = connection.prepareStatement(this.selectQuery.getValue("selectMusic")))  {
+            pst.setInt(1, id);
+            ResultSet resultQuery =  pst.executeQuery();
+            while (resultQuery.next()) {
+                musicType = createMusicTypeFromQuery(resultQuery);
+            }
+        } catch (SQLException e) {
+            LOG.error(e.getMessage(), e);
+        }
+        return musicType;
+
+
     }
 
     @Override
     public List<MusicType> getAll() {
-        return null;
+        List<MusicType> result = new CopyOnWriteArrayList<>();
+        try (Connection connection = ConnectionDB.INSTANCE.getConnection();
+             PreparedStatement pst = connection.prepareStatement(this.selectQuery.getValue("selectAllMusic"));)  {
+            ResultSet resultQuery =  pst.executeQuery();
+            while (resultQuery.next()) {
+                result.add(createMusicTypeFromQuery(resultQuery));
+            }
+        } catch (SQLException e) {
+            LOG.error(e.getMessage(), e);
+        }
+        return result;
+
     }
 
     @Override
-    public void create(MusicType entity) {
+    public boolean create(MusicType music) {
+        boolean result;
+        try (Connection connection = ConnectionDB.INSTANCE.getConnection();
+             PreparedStatement pst = connection.prepareStatement(this.insertQuery.getValue("insertMusic"))) {
+            pst.setString(1, music.getMusic_name());
+            result = pst.executeUpdate() != 0;
+        } catch (SQLException e) {
+            result = false;
+            LOG.error(e.getMessage(), e);
+        }
+        return result;
 
     }
 
     @Override
-    public void update(MusicType entity) {
+    public boolean update(MusicType music) {
+        boolean result;
+        try (Connection connection = ConnectionDB.INSTANCE.getConnection();
+             PreparedStatement pst = connection.prepareStatement(this.updateQuery.getValue("updateMusic"))) {
+            pst.setString(1, music.getMusic_name());
+            pst.setInt(2, music.getMusic_id());
+            result = pst.executeUpdate() != 0;
+        } catch (SQLException e) {
+            result = false;
+            LOG.error(e.getMessage(), e);
+        }
+        return result;
 
     }
 
     @Override
-    public void delete(MusicType entity) {
+    public boolean delete(MusicType music) {
+        boolean result = false;
+        try (Connection connection = ConnectionDB.INSTANCE.getConnection();
+             PreparedStatement pst = connection.prepareStatement(this.deleteQuery.getValue("deleteMusic"));)  {
+            pst.setInt(1, music.getMusic_id());
+            result = pst.executeUpdate() != 0;
+        } catch (SQLException e) {
+            result = false;
+            LOG.error(e.getMessage(), e);
+        }
+        return result;
 
     }
+
+    private MusicType createMusicTypeFromQuery(ResultSet resultQuery) throws SQLException {
+        MusicType musicType = new MusicType(resultQuery.getInt("music_id"), resultQuery.getString("music_name"));
+        return musicType;
+    }
+
 }

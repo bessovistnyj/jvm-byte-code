@@ -93,7 +93,6 @@ public class ConnectionDB {
         }
     }
 
-
     private void createTableRole() {
         try (Connection connection = this.ds.getConnection();
              Statement statement = connection.createStatement();)  {
@@ -104,10 +103,20 @@ public class ConnectionDB {
         }
     }
 
+    private void createTableAddress() {
+        try (Connection connection = ConnectionDB.INSTANCE.getConnection();
+             Statement statement = connection.createStatement();)  {
+            statement.addBatch(this.createQuery.getValue("createTableAddress"));
+            statement.executeBatch();
+        } catch (SQLException e) {
+            LOG.error(e.getMessage(), e);
+        }
+    }
+
     public Connection getConnection() throws SQLException {
-        createTableRole();
         createTableUser();
-//        createTableAddress();
+        createTableRole();
+        createTableAddress();
         createTableMusicType();
         createTableUserToMusic();
 

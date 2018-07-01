@@ -8,11 +8,11 @@ public class User {
 
     private String  login;
 
-    private Address Address;
+    private Address address;
 
     private Role Role;
 
-    private MusicType MusicType;
+    private MusicType musicType;
 
     public User(String user_name, String user_login) {
         this.name = user_name;
@@ -38,7 +38,7 @@ public class User {
     }
 
     public ru.napadovskiu.entities.Address getAddress() {
-        return this.Address;
+        return this.address;
     }
 
     public ru.napadovskiu.entities.Role getRole() {
@@ -46,7 +46,7 @@ public class User {
     }
 
     public ru.napadovskiu.entities.MusicType getMusicType() {
-        return this.MusicType;
+        return this.musicType;
     }
 
     public void setUser_name(String user_name) {
@@ -69,15 +69,15 @@ public class User {
         return this.login;
     }
 
-    public void setAddress(ru.napadovskiu.entities.Address address) {
-        Address = address;
+    public void setAddress(Address address) {
+        this.address = address;
     }
 
-    public void setRole(ru.napadovskiu.entities.Role role) {
+    public void setRole(Role role) {
         Role = role;
     }
 
-    public void setMusicType(ru.napadovskiu.entities.MusicType musicType) {
-        MusicType = musicType;
+    public void setMusicType(MusicType musicType) {
+        this.musicType = musicType;
     }
 }

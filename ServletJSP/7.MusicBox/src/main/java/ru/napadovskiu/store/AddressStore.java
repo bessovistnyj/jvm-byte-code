@@ -48,26 +48,16 @@ public class AddressStore implements AbstractStore<Address> {
     /**
      *
      */
-    private void createTableAddress() {
-        try (Connection connection = ConnectionDB.INSTANCE.getConnection();
-             Statement statement = connection.createStatement();)  {
-            statement.addBatch(this.createQuery.getValue("createTableAddress"));
-            statement.executeBatch();
-        } catch (SQLException e) {
-            LOG.error(e.getMessage(), e);
-        }
-    }
 
 
     public AddressStore() {
 
         ClassLoader loader = Settings.class.getClassLoader();
-        this.createQuery.load(loader.getResourceAsStream("create.properties"));
         this.selectQuery.load(loader.getResourceAsStream("select.properties"));
         this.insertQuery.load(loader.getResourceAsStream("insert.properties"));
         this.deleteQuery.load(loader.getResourceAsStream("delete.properties"));
         this.updateQuery.load(loader.getResourceAsStream("update.properties"));
-        createTableAddress();
+
     }
 
 
@@ -127,15 +117,14 @@ public class AddressStore implements AbstractStore<Address> {
         boolean result;
         try (Connection connection = ConnectionDB.INSTANCE.getConnection();
              PreparedStatement pst = connection.prepareStatement(this.updateQuery.getValue("updateAddress"))) {
-            pst.setInt(1, address.getAddress_id());
+            pst.setString(1, address.getAddress_name());
+            pst.setInt(2, address.getAddress_id());
             result = pst.executeUpdate() != 0;
         } catch (SQLException e) {
             result = false;
             LOG.error(e.getMessage(), e);
         }
         return result;
-
-
     }
 
 
@@ -143,7 +132,7 @@ public class AddressStore implements AbstractStore<Address> {
     public boolean delete(Address address) {
         boolean result = false;
         try (Connection connection = ConnectionDB.INSTANCE.getConnection();
-             PreparedStatement pst = connection.prepareStatement(this.deleteQuery.getValue("deleteUser"));)  {
+             PreparedStatement pst = connection.prepareStatement(this.deleteQuery.getValue("deleteAddress"));)  {
             pst.setInt(1, address.getAddress_id());
             result = pst.executeUpdate() != 0;
         } catch (SQLException e) {

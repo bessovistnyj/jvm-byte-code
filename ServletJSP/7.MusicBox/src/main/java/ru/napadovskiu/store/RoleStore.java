@@ -46,25 +46,12 @@ public class RoleStore implements AbstractStore<Role> {
     private final Settings updateQuery = new Settings();
 
 
-    private void createTableRole() {
-        try (Connection connection = ConnectionDB.INSTANCE.getConnection();
-             Statement statement = connection.createStatement();)  {
-            statement.addBatch(this.createQuery.getValue("createTableRole"));
-            statement.executeBatch();
-        } catch (SQLException e) {
-            LOG.error(e.getMessage(), e);
-        }
-    }
-
-
     public RoleStore() {
         ClassLoader loader = Settings.class.getClassLoader();
-        this.createQuery.load(loader.getResourceAsStream("create.properties"));
         this.selectQuery.load(loader.getResourceAsStream("select.properties"));
         this.insertQuery.load(loader.getResourceAsStream("insert.properties"));
         this.deleteQuery.load(loader.getResourceAsStream("delete.properties"));
         this.updateQuery.load(loader.getResourceAsStream("update.properties"));
-        createTableRole();
     }
 
 
@@ -118,12 +105,33 @@ public class RoleStore implements AbstractStore<Role> {
     }
 
     @Override
-    public boolean update(Role entity) {
+    public boolean update(Role role) {
+        boolean result;
+        try (Connection connection = ConnectionDB.INSTANCE.getConnection();
+             PreparedStatement pst = connection.prepareStatement(this.updateQuery.getValue("updateRole"))) {
+            pst.setString(1, role.getUser_role());
+            pst.setInt(2, role.getRole_id());
+            result = pst.executeUpdate() != 0;
+        } catch (SQLException e) {
+            result = false;
+            LOG.error(e.getMessage(), e);
+        }
+        return result;
 
     }
 
     @Override
-    public boolean delete(Role entity) {
+    public boolean delete(Role role) {
+        boolean result = false;
+        try (Connection connection = ConnectionDB.INSTANCE.getConnection();
+             PreparedStatement pst = connection.prepareStatement(this.deleteQuery.getValue("deleteRole"));)  {
+            pst.setInt(1, role.getRole_id());
+            result = pst.executeUpdate() != 0;
+        } catch (SQLException e) {
+            result = false;
+            LOG.error(e.getMessage(), e);
+        }
+        return result;
 
     }
 

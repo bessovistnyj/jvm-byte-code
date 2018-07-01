@@ -44,6 +44,8 @@ public class UserStore implements AbstractStore<User> {
     private final Settings deleteQuery = new Settings();
 
 
+    private final Settings updateQuery = new Settings();
+
     /**
      * logger.
      */
@@ -54,12 +56,14 @@ public class UserStore implements AbstractStore<User> {
      */
     private BasicDataSource ds;
 
+
+
     public UserStore() {
         ClassLoader loader = Settings.class.getClassLoader();
-        this.createQuery.load(loader.getResourceAsStream("create.properties"));
         this.selectQuery.load(loader.getResourceAsStream("select.properties"));
         this.insertQuery.load(loader.getResourceAsStream("insert.properties"));
         this.deleteQuery.load(loader.getResourceAsStream("delete.properties"));
+        this.updateQuery.load(loader.getResourceAsStream("update.properties"));
     }
 
 
@@ -77,10 +81,6 @@ public class UserStore implements AbstractStore<User> {
             LOG.error(e.getMessage(), e);
         }
         return user;
-
-
-
-
     }
 
     @Override
