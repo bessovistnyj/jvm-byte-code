@@ -1,5 +1,7 @@
 package ru.napadovskiu.servlets;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import ru.napadovskiu.store.UserStore;
 
 import javax.servlet.ServletException;
@@ -11,11 +13,9 @@ import java.io.IOException;
 
 public class AuthController extends HttpServlet {
 
-    /**
-     *
-     */
-    private final UserStore usersStore = UserStore.getInstance();
+    private static final Logger LOG = LoggerFactory.getLogger(UserStore.class);
 
+    private final UserStore userStore = new UserStore();
     /**
      *
      * @param req
@@ -41,7 +41,7 @@ public class AuthController extends HttpServlet {
         String login = req.getParameter("login");
         String password = req.getParameter("password");
 
-        if (UserStore.getInstance().isCredentials(login, password)) {
+        if (userStore.isCredentials(login, password)) {
             HttpSession session = req.getSession();
             synchronized (session) {
                 session.setAttribute("login", login);

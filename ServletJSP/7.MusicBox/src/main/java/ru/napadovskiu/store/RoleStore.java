@@ -45,6 +45,8 @@ public class RoleStore implements AbstractStore<Role> {
      */
     private final Settings updateQuery = new Settings();
 
+    public static final RoleStore INSTANCE = new RoleStore();
+
 
     public RoleStore() {
         ClassLoader loader = Settings.class.getClassLoader();

@@ -49,6 +49,8 @@ public class MusicStore implements AbstractStore<MusicType> {
     private final Settings updateQuery = new Settings();
 
 
+    public static final MusicStore INSTANCE = new MusicStore();
+
     public MusicStore() {
 
         ClassLoader loader = Settings.class.getClassLoader();
@@ -140,6 +142,22 @@ public class MusicStore implements AbstractStore<MusicType> {
         return result;
 
     }
+
+    public List<MusicType> getAllMusicTypeByUser(int user_id) {
+        List<MusicType> result = new CopyOnWriteArrayList<>();
+        try (Connection connection = ConnectionDB.INSTANCE.getConnection();
+             PreparedStatement pst = connection.prepareStatement(this.selectQuery.getValue("selectAllMusicByUser"));)  {
+            pst.setInt(1, user_id);
+            ResultSet resultQuery =  pst.executeQuery();
+            while (resultQuery.next()) {
+                result.add(getById(resultQuery.getInt("music_id")));
+            }
+        } catch (SQLException e) {
+            LOG.error(e.getMessage(), e);
+        }
+        return result;
+    }
+
 
     private MusicType createMusicTypeFromQuery(ResultSet resultQuery) throws SQLException {
         MusicType musicType = new MusicType(resultQuery.getInt("music_id"), resultQuery.getString("music_name"));

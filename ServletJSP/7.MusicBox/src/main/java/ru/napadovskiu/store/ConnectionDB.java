@@ -104,7 +104,7 @@ public class ConnectionDB {
     }
 
     private void createTableAddress() {
-        try (Connection connection = ConnectionDB.INSTANCE.getConnection();
+        try (Connection connection = this.ds.getConnection();
              Statement statement = connection.createStatement();)  {
             statement.addBatch(this.createQuery.getValue("createTableAddress"));
             statement.executeBatch();

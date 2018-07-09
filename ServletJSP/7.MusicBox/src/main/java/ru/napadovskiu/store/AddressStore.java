@@ -44,6 +44,7 @@ public class AddressStore implements AbstractStore<Address> {
 
     private final Settings updateQuery = new Settings();
 
+    public static final AddressStore INSTANCE = new AddressStore();
 
     /**
      *
@@ -79,6 +80,23 @@ public class AddressStore implements AbstractStore<Address> {
         return address;
 
     }
+
+    public Address getByName(String strAddress) {
+        Address address = null;
+        try (Connection connection = ConnectionDB.INSTANCE.getConnection();
+             PreparedStatement pst = connection.prepareStatement(this.selectQuery.getValue("selectAddressByName")))  {
+            pst.setString(1, strAddress);
+            ResultSet resultQuery =  pst.executeQuery();
+            while (resultQuery.next()) {
+                address = createAddressFrommQuery(resultQuery);
+            }
+        } catch (SQLException e) {
+            LOG.error(e.getMessage(), e);
+        }
+        return address;
+
+    }
+
 
     @Override
     public List<Address> getAll() {

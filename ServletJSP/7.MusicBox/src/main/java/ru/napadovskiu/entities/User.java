@@ -1,20 +1,22 @@
 package ru.napadovskiu.entities;
 
+import java.util.List;
+
 public class User {
 
     private int id;
 
     private String name;
 
-    private String  login;
+    private String login;
 
     private String password;
 
     private Address address;
 
-    private Role Role;
+    private Role role;
 
-    private MusicType musicType;
+    private List<MusicType> musicType;
 
     public User(String user_name, String user_login) {
         this.name = user_name;
@@ -31,11 +33,11 @@ public class User {
         this.password = user_password;
     }
 
-    public void setUser_name(String user_name) {
+    public void setName(String user_name) {
         this.name = user_name;
     }
 
-    public void setUser_login(String user_login) {
+    public void setLogin(String user_login) {
         this.login = user_login;
     }
 
@@ -44,27 +46,16 @@ public class User {
     }
 
     public void setRole(Role role) {
-        Role = role;
+        this.role = role;
     }
 
-    public void setMusicType(MusicType musicType) {
+    public void setMusicType(List<MusicType> musicType) {
+
         this.musicType = musicType;
     }
 
     public Role getRole() {
-        return this.Role;
-    }
-
-    public int getUser_id() {
-        return this.id;
-    }
-
-    public String getUser_name() {
-        return this.name;
-    }
-
-    public String getUser_login() {
-        return this.login;
+        return this.role;
     }
 
     public Address getAddress() {
@@ -75,7 +66,7 @@ public class User {
         return this.password;
     }
 
-    public MusicType getMusicType() {
+    public List<MusicType > getMusicType() {
         return this.musicType;
     }
 

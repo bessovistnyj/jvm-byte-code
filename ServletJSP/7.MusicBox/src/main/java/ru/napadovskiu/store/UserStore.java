@@ -3,7 +3,9 @@ package ru.napadovskiu.store;
 import org.apache.commons.dbcp.BasicDataSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import ru.napadovskiu.entities.Address;
 import ru.napadovskiu.entities.MusicType;
+import ru.napadovskiu.entities.Role;
 import ru.napadovskiu.entities.User;
 import ru.napadovskiu.settings.Settings;
 
@@ -15,17 +17,6 @@ import java.util.concurrent.CopyOnWriteArraySet;
 
 
 public class UserStore implements AbstractStore<User> {
-
-    /**
-     * settings for load.
-     */
-    private final Settings connectToDB = new Settings();
-
-
-    /**
-     * settings for load.
-     */
-    private final Settings createQuery = new Settings();
 
 
     /**
@@ -44,13 +35,18 @@ public class UserStore implements AbstractStore<User> {
      */
     private final Settings deleteQuery = new Settings();
 
-
+    /**
+     *
+     */
     private final Settings updateQuery = new Settings();
 
     /**
      * logger.
      */
     private static final Logger LOG = LoggerFactory.getLogger(UserStore.class);
+
+
+    public static final UserStore INSTANCE = new UserStore();
 
     /**
      *
@@ -84,11 +80,30 @@ public class UserStore implements AbstractStore<User> {
         return user;
     }
 
+    public User selectUser(String login, String password) {
+        User user = null;
+        try (Connection connection = ConnectionDB.INSTANCE.getConnection();
+             PreparedStatement pst = connection.prepareStatement(this.selectQuery.getValue("selectUserByLoginAndPassword")))  {
+            pst.setString(1, login);
+            pst.setString(2, password);
+
+            ResultSet resultQuery =  pst.executeQuery();
+            while (resultQuery.next()) {
+                user = createUserFromQuery(resultQuery);
+            }
+        } catch (SQLException e) {
+            LOG.error(e.getMessage(), e);
+        }
+        return user;
+    }
+
+
+
     @Override
     public List<User> getAll() {
         List<User> result = new CopyOnWriteArrayList<>();
         try (Connection connection = ConnectionDB.INSTANCE.getConnection();
-             PreparedStatement pst = connection.prepareStatement(this.selectQuery.getValue("selectUser"));)  {
+             PreparedStatement pst = connection.prepareStatement(this.selectQuery.getValue("selectAllUser"));)  {
             ResultSet resultQuery =  pst.executeQuery();
             while (resultQuery.next()) {
                 result.add(createUserFromQuery(resultQuery));
@@ -121,9 +136,11 @@ public class UserStore implements AbstractStore<User> {
     public boolean update(User user) {
         boolean result;
         try (Connection connection = ConnectionDB.INSTANCE.getConnection();
-             PreparedStatement pst = connection.prepareStatement(this.updateQuery.getValue("updateMusic"))) {
-            pst.setString(1, user.getMusic_name());
-            pst.setInt(2, user.getMusic_id());
+             PreparedStatement pst = connection.prepareStatement(this.updateQuery.getValue("updateUser"))) {
+            pst.setString(1, user.getLogin());
+            pst.setString(2, user.getName());
+            pst.setString(3, user.getPassword());
+            pst.setInt(4, user.getId());
             result = pst.executeUpdate() != 0;
         } catch (SQLException e) {
             result = false;
@@ -137,8 +154,8 @@ public class UserStore implements AbstractStore<User> {
     public boolean delete(User user) {
         boolean result = false;
         try (Connection connection = ConnectionDB.INSTANCE.getConnection();
-             PreparedStatement pst = connection.prepareStatement(this.deleteQuery.getValue("deleteMusic"));)  {
-            pst.setInt(1, user.getMusic_id());
+             PreparedStatement pst = connection.prepareStatement(this.deleteQuery.getValue("deleteUser"));)  {
+            pst.setInt(1, user.getId());
             result = pst.executeUpdate() != 0;
         } catch (SQLException e) {
             result = false;
@@ -148,6 +165,86 @@ public class UserStore implements AbstractStore<User> {
 
     }
 
+    public boolean updateAddressInUser(User user, Address address) {
+        boolean result;
+        try (Connection connection = ConnectionDB.INSTANCE.getConnection();
+             PreparedStatement pst = connection.prepareStatement(this.updateQuery.getValue("updateAddressInUser"))) {
+            pst.setInt(1, address.getAddress_id());
+            pst.setInt(2, user.getId());
+            result = pst.executeUpdate() != 0;
+        } catch (SQLException e) {
+            result = false;
+            LOG.error(e.getMessage(), e);
+        }
+        return result;
+
+    }
+
+    public boolean updateRoleInUser(User user, Role role) {
+        boolean result;
+        try (Connection connection = ConnectionDB.INSTANCE.getConnection();
+             PreparedStatement pst = connection.prepareStatement(this.updateQuery.getValue("updateRoleInUser"))) {
+            pst.setInt(1, role.getRole_id());
+            pst.setInt(2, user.getId());
+            result = pst.executeUpdate() != 0;
+        } catch (SQLException e) {
+            result = false;
+            LOG.error(e.getMessage(), e);
+        }
+        return result;
+
+    }
+
+    public boolean InsertMusicToUser(User user, MusicType musicType) {
+        boolean result;
+        try (Connection connection = ConnectionDB.INSTANCE.getConnection();
+             PreparedStatement pst = connection.prepareStatement(this.updateQuery.getValue("updateRoleInUser"))) {
+            pst.setInt(1, user.getId());
+            pst.setInt(2, musicType.getMusic_id());
+            result = pst.executeUpdate() != 0;
+        } catch (SQLException e) {
+            result = false;
+            LOG.error(e.getMessage(), e);
+        }
+        return result;
+
+    }
+
+    public boolean DeleteMusicFromUser(User user, MusicType musicType) {
+        boolean result;
+        try (Connection connection = ConnectionDB.INSTANCE.getConnection();
+             PreparedStatement pst = connection.prepareStatement(this.deleteQuery.getValue("deleteMusicFromUser"))) {
+            pst.setInt(1, musicType.getMusic_id());
+            pst.setInt(2, user.getId());
+            result = pst.executeUpdate() != 0;
+        } catch (SQLException e) {
+            result = false;
+            LOG.error(e.getMessage(), e);
+        }
+        return result;
+    }
+
+
+
+    public boolean isCredentials(String login, String password) {
+        boolean result = false;
+        try (Connection connection = ConnectionDB.INSTANCE.getConnection();
+             PreparedStatement pst = connection.prepareStatement(this.selectQuery.getValue("checkUser"))) {
+            pst.setString(1, login);
+            pst.setString(2, password);
+            ResultSet resultQuery =  pst.executeQuery();
+            while (resultQuery.next()) {
+                result = true;
+            }
+        } catch (SQLException e) {
+            LOG.error(e.getMessage(), e);
+        }
+        return result;
+    }
+
+
+
+
     /**
      *
      * @param resultQuery
@@ -155,22 +252,30 @@ public class UserStore implements AbstractStore<User> {
      * @throws SQLException
      */
     private User createUserFromQuery(ResultSet resultQuery) throws SQLException {
+        RoleStore roleStore = new RoleStore();
+        AddressStore addressStore = new AddressStore();
+        MusicStore musicStore = new MusicStore();
         int userId = resultQuery.getInt("user_id");
+
         String userName = resultQuery.getString("user_name");
         String userLogin = resultQuery.getString("user_login");
+
+        User newUser = new User(userId, userName, userLogin);
+
         String userPassword = resultQuery.getString("user_password");
-//        UserRole role = selectUserRole(newUser);
-//        String userEmail = resultQuery.getString("user_email");
-//        String userPassword = resultQuery.getString("user_password");
-//        String user_country = resultQuery.getString("user_country");
-//        String user_city = resultQuery.getString("user_city");
-//        Timestamp userCreateDate = resultQuery.getTimestamp("user_createDate");
 
-        User newUser = new User(userId, userName, userLogin, userEmail, userCreateDate, userPassword, user_country, user_city);
+        newUser.setPassword(userPassword);
 
+        int address_id = resultQuery.getInt("address_id");
+        int role_id = resultQuery.getInt("role_id");
 
+        Address address = addressStore.getById(address_id);
+        Role role = roleStore.getById(role_id);
 
-//        newUser.setRole(role);
+        newUser.setRole(role);
+        newUser.setAddress(address);
+
+        newUser.setMusicType(musicStore.getAllMusicTypeByUser(userId));
 
         return newUser;
     }
