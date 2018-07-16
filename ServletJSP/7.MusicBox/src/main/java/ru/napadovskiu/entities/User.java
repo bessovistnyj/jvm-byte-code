@@ -1,5 +1,11 @@
 package ru.napadovskiu.entities;
 
+import ru.napadovskiu.store.AddressStore;
+import ru.napadovskiu.store.MusicStore;
+import ru.napadovskiu.store.RoleStore;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.List;
 
 public class User {
@@ -21,6 +27,35 @@ public class User {
     public User(String user_name, String user_login) {
         this.name = user_name;
         this.login = user_login;
+    }
+
+    public User (ResultSet resultQuery) throws SQLException {
+        RoleStore roleStore = new RoleStore();
+        AddressStore addressStore = new AddressStore();
+        MusicStore musicStore = new MusicStore();
+        int userId = resultQuery.getInt("user_id");
+
+        String userName = resultQuery.getString("user_name");
+        String userLogin = resultQuery.getString("user_login");
+
+        this.id = userId;
+        this.name = userName;
+        this.login = userLogin;
+
+        String userPassword = resultQuery.getString("user_password");
+
+        this.setPassword(userPassword);
+
+        int address_id = resultQuery.getInt("address_id");
+        int role_id = resultQuery.getInt("role_id");
+
+        Address address = addressStore.getById(address_id);
+        Role role = roleStore.getById(role_id);
+
+        this.setRole(role);
+        this.setAddress(address);
+
+        this.setMusicType(musicStore.getAllMusicTypeByUser(userId));
     }
 
     public User(int user_id, String user_name, String user_login) {
@@ -81,5 +116,7 @@ public class User {
     public String getLogin() {
         return this.login;
     }
+
+
 
 }

@@ -61,9 +61,6 @@ public class AddressStore implements AbstractStore<Address> {
 
     }
 
-
-
-
     @Override
     public Address getById(int id) {
         Address address = null;
@@ -72,7 +69,7 @@ public class AddressStore implements AbstractStore<Address> {
             pst.setInt(1, id);
             ResultSet resultQuery =  pst.executeQuery();
             while (resultQuery.next()) {
-                address = createAddressFrommQuery(resultQuery);
+                address = new Address(resultQuery);
             }
         } catch (SQLException e) {
             LOG.error(e.getMessage(), e);
@@ -81,6 +78,7 @@ public class AddressStore implements AbstractStore<Address> {
 
     }
 
+    @Override
     public Address getByName(String strAddress) {
         Address address = null;
         try (Connection connection = ConnectionDB.INSTANCE.getConnection();
@@ -88,7 +86,7 @@ public class AddressStore implements AbstractStore<Address> {
             pst.setString(1, strAddress);
             ResultSet resultQuery =  pst.executeQuery();
             while (resultQuery.next()) {
-                address = createAddressFrommQuery(resultQuery);
+                address = new Address(resultQuery);
             }
         } catch (SQLException e) {
             LOG.error(e.getMessage(), e);
@@ -105,7 +103,7 @@ public class AddressStore implements AbstractStore<Address> {
              PreparedStatement pst = connection.prepareStatement(this.selectQuery.getValue("selectAllAddress"));)  {
             ResultSet resultQuery =  pst.executeQuery();
             while (resultQuery.next()) {
-                Address address = createAddressFrommQuery(resultQuery);
+                Address address = new Address(resultQuery);
                 result.add(address);
             }
         } catch (SQLException e) {
@@ -116,14 +114,15 @@ public class AddressStore implements AbstractStore<Address> {
     }
 
     @Override
-    public boolean create(Address address) {
-        boolean result;
+    public Address create(Address address) {
+        Address result = null;
         try (Connection connection = ConnectionDB.INSTANCE.getConnection();
              PreparedStatement pst = connection.prepareStatement(this.insertQuery.getValue("insertAddress"))) {
             pst.setString(1, address.getAddress_name());
-            result = pst.executeUpdate() != 0;
+            if (pst.executeUpdate() != 0) {
+                result = this.getByName(address.getAddress_name());
+            }
         } catch (SQLException e) {
-            result = false;
             LOG.error(e.getMessage(), e);
         }
         return result;
@@ -159,14 +158,6 @@ public class AddressStore implements AbstractStore<Address> {
         }
         return result;
 
-    }
-
-    private Address createAddressFrommQuery(ResultSet resultQuery) throws SQLException {
-        int addressId = resultQuery.getInt("address_id");
-        String addressName = resultQuery.getString("address_name");
-        Address newAddress = new Address(addressId, addressName);
-
-        return newAddress;
     }
 
 }

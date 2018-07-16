@@ -49,7 +49,7 @@
 
     <servlet>
         <servlet-name>MusicController</servlet-name>
-        <servlet-class>ru.napadovskiu.servlets.MusicController</servlet-class>
+        <servlet-class>ru.napadovskiu.servlets.MusicJson</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>MusicController</servlet-name>
@@ -64,5 +64,15 @@
         <servlet-name>UserController</servlet-name>
         <url-pattern>/userJson</url-pattern>
     </servlet-mapping>
+
+    <servlet>
+        <servlet-name>RoleJson</servlet-name>
+        <servlet-class>ru.napadovskiu.servlets.RoleJson</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>RoleJson</servlet-name>
+        <url-pattern>/roleJson</url-pattern>
+    </servlet-mapping>
+
 
 </web-app>

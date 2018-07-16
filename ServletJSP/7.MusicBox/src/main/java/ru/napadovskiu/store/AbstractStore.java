@@ -6,9 +6,11 @@ public interface AbstractStore<T> {
 
     T getById(int id);
 
+    T getByName(String name);
+
     List<T> getAll();
 
-    boolean create(T entity);
+    T create(T entity);
 
     boolean update(T entity);
 

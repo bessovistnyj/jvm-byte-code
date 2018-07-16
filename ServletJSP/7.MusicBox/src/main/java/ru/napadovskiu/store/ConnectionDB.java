@@ -114,10 +114,10 @@ public class ConnectionDB {
     }
 
     public Connection getConnection() throws SQLException {
-        createTableUser();
         createTableRole();
         createTableAddress();
         createTableMusicType();
+        createTableUser();
         createTableUserToMusic();
 
         return this.ds.getConnection();

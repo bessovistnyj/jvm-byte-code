@@ -4,6 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ru.napadovskiu.entities.Address;
 import ru.napadovskiu.entities.Role;
+import ru.napadovskiu.entities.User;
 import ru.napadovskiu.settings.Settings;
 
 import java.sql.*;
@@ -47,7 +48,6 @@ public class RoleStore implements AbstractStore<Role> {
 
     public static final RoleStore INSTANCE = new RoleStore();
 
-
     public RoleStore() {
         ClassLoader loader = Settings.class.getClassLoader();
         this.selectQuery.load(loader.getResourceAsStream("select.properties"));
@@ -65,7 +65,7 @@ public class RoleStore implements AbstractStore<Role> {
             pst.setInt(1, id);
             ResultSet resultQuery =  pst.executeQuery();
             while (resultQuery.next()) {
-                role = createRoleFrommQuery(resultQuery);
+                role = new Role(resultQuery);
             }
         } catch (SQLException e) {
             LOG.error(e.getMessage(), e);
@@ -75,14 +75,31 @@ public class RoleStore implements AbstractStore<Role> {
     }
 
     @Override
+    public Role getByName(String name) {
+        Role role = null;
+        try (Connection connection = ConnectionDB.INSTANCE.getConnection();
+             PreparedStatement pst = connection.prepareStatement(this.selectQuery.getValue("selectRoleByName")))  {
+            pst.setString(1, name);
+            ResultSet resultQuery =  pst.executeQuery();
+            while (resultQuery.next()) {
+                role = new Role(resultQuery);
+            }
+        } catch (SQLException e) {
+            LOG.error(e.getMessage(), e);
+        }
+        return role;
+
+    }
+
+
+    @Override
     public List<Role> getAll() {
         List<Role> result = new CopyOnWriteArrayList<>();
         try (Connection connection = ConnectionDB.INSTANCE.getConnection();
              PreparedStatement pst = connection.prepareStatement(this.selectQuery.getValue("selectAllRoles"));)  {
             ResultSet resultQuery =  pst.executeQuery();
             while (resultQuery.next()) {
-                Role Role = createRoleFrommQuery(resultQuery);
-                result.add(Role);
+                result.add(new Role(resultQuery));
             }
         } catch (SQLException e) {
             LOG.error(e.getMessage(), e);
@@ -92,14 +109,15 @@ public class RoleStore implements AbstractStore<Role> {
     }
 
     @Override
-    public boolean create(Role role) {
-        boolean result;
+    public Role create(Role role) {
+        Role result = null;
         try (Connection connection = ConnectionDB.INSTANCE.getConnection();
              PreparedStatement pst = connection.prepareStatement(this.insertQuery.getValue("insertRole"))) {
             pst.setString(1, role.getUser_role());
-            result = pst.executeUpdate() != 0;
+            if (pst.executeUpdate() != 0) {
+                result = this.getByName(role.getUser_role());
+            }
         } catch (SQLException e) {
-            result = false;
             LOG.error(e.getMessage(), e);
         }
         return result;
@@ -137,12 +155,20 @@ public class RoleStore implements AbstractStore<Role> {
 
     }
 
-    private Role createRoleFrommQuery(ResultSet resultQuery) throws SQLException {
-        int addressId = resultQuery.getInt("role_id");
-        String addressName = resultQuery.getString("user_role");
-        Role newRole = new Role(addressId, addressName);
+//    public List<User> getAllUserByRole(Role role) {
+//        List<User> result = new CopyOnWriteArrayList<>();
+//        try (Connection connection = ConnectionDB.INSTANCE.getConnection();
+//             PreparedStatement pst = connection.prepareStatement(this.selectQuery.getValue("selectAllRoles"));)  {
+//            ResultSet resultQuery =  pst.executeQuery();
+//            while (resultQuery.next()) {
+//                result.add(Role);
+//            }
+//        } catch (SQLException e) {
+//            LOG.error(e.getMessage(), e);
+//        }
+//        return result;
+//
+//    }
 
-        return newRole;
-    }
 
 }

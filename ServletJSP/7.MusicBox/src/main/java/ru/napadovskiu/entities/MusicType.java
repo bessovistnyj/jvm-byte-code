@@ -1,5 +1,8 @@
 package ru.napadovskiu.entities;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 public class MusicType {
 
     /**
@@ -29,6 +32,12 @@ public class MusicType {
     public MusicType(String music_name) {
         this.music_name = music_name;
     }
+
+    public MusicType (ResultSet resultQuery) throws SQLException {
+        this.music_id = resultQuery.getInt("music_id");
+        this.music_name = resultQuery.getString("music_name");
+    }
+
 
     /**
      *

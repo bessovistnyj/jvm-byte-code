@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.Set;
 
 
-public class MusicController extends HttpServlet {
+public class MusicJson extends HttpServlet {
 
     /**
      *
@@ -33,4 +33,17 @@ public class MusicController extends HttpServlet {
         resp.getWriter().write(json);
     }
 
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        resp.setContentType("text/json");
+        int userId = Integer.parseInt(req.getParameter("userId"));
+
+        List<MusicType> listMusicType = musicStore.getAllMusicTypeByUser(userId);
+        String json = new Gson().toJson(listMusicType);
+
+        resp.setContentType("application/json");
+        resp.setCharacterEncoding("UTF-8");
+        resp.getWriter().write(json);
+
+    }
 }

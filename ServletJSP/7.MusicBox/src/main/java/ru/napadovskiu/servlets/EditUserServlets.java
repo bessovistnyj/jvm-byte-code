@@ -1,12 +1,23 @@
 package ru.napadovskiu.servlets;
 
 
+import ru.napadovskiu.entities.Address;
+import ru.napadovskiu.entities.MusicType;
+import ru.napadovskiu.entities.Role;
+import ru.napadovskiu.entities.User;
+import ru.napadovskiu.store.AddressStore;
+import ru.napadovskiu.store.MusicStore;
+import ru.napadovskiu.store.RoleStore;
+import ru.napadovskiu.store.UserStore;
+
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  *
@@ -16,8 +27,33 @@ public class EditUserServlets extends HttpServlet {
     /**
      *
      */
-//    private final UserStore usersStore = UserStore.getInstance();
+    private final UserStore usersStore = UserStore.INSTANCE;
 
+    private final AddressStore addressStore = AddressStore.INSTANCE;
+
+    private final RoleStore roleStore = RoleStore.INSTANCE;
+
+    private final MusicStore musicStore = MusicStore.INSTANCE;
+
+
+
+    private List<MusicType> takeListMusicType(String[] arrayTypeMusic) {
+        List<MusicType> musicTypeList = new CopyOnWriteArrayList<>();
+        for (String typeMusic: arrayTypeMusic) {
+            MusicType musicType = musicStore.getByName(typeMusic);
+            musicTypeList.add(musicType);
+        }
+
+        return musicTypeList;
+    }
+
+    private void addMusicTypeListToUser(User user, List<MusicType> list) {
+        for (MusicType musicType: list) {
+            if (!usersStore.isUserHaveMusicType(user, musicType)) {
+                musicStore.addMusicToUser(user, musicType);
+            }
+        }
+    }
     /**
      *
      * @param req
@@ -27,13 +63,17 @@ public class EditUserServlets extends HttpServlet {
      */
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-//        resp.setContentType("text/html");
-//        int userId = Integer.parseInt(req.getParameter("userId"));
-//        User editUser = usersStore.selectUser(userId);
-//        req.setAttribute("editUser", editUser);
-//        RequestDispatcher rd = req.getRequestDispatcher("/WEB-INF/views/editUser.jsp");
-//        rd.forward(req, resp);
+        resp.setContentType("text/html");
+        int userId = Integer.parseInt(req.getParameter("userId"));
+        int roleId = Integer.parseInt(req.getParameter("roleId"));
+        User editUser = usersStore.getById(userId);
+        Role role = roleStore.getById(roleId);
+        req.setAttribute("editUser", editUser);
+        req.setAttribute("role", role.getUser_role());
+        RequestDispatcher rd = req.getRequestDispatcher("/WEB-INF/views/edit.jsp");
+        rd.forward(req, resp);
     }
+
 
     /**
      *
@@ -43,27 +83,26 @@ public class EditUserServlets extends HttpServlet {
      */
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        int a=1;
-//        resp.setContentType("text/html");
-//
-//        String oldEmail = req.getParameter("oldEmail");
-//        String oldName = req.getParameter("oldName");
-//        String oldLogin = req.getParameter("oldLogin");
-//
-//        String email = req.getParameter("email");
-//        String name = req.getParameter("name");
-//        String login = req.getParameter("login");
-//        String password = req.getParameter("newPassword");
-//        String country = req.getParameter("country");
-//        String city = req.getParameter("city");
-//
-//        boolean result = this.usersStore.updateUser(oldName, oldLogin, oldEmail, name, login, email, password, country, city);
-//        if (result) {
-//            resp.sendRedirect(String.format("%s/", req.getContextPath()));
-//        } else {
-//            resp.sendError(404);
-//        }
 
+        resp.setContentType("text/html");
+        int userId = Integer.parseInt(req.getParameter("userId"));
+        User editUser = usersStore.getById(userId);
+
+        editUser.setName(req.getParameter("name"));
+        editUser.setPassword(req.getParameter("password"));
+        editUser.setLogin(req.getParameter("login"));
+
+        Role role = roleStore.getByName(req.getParameter("role"));
+        editUser.setRole(role);
+        usersStore.updateRoleInUser(editUser, role);
+
+        Address address = addressStore.create(new Address(req.getParameter("address")));
+        editUser.setAddress(address);
+        usersStore.updateAddressInUser(editUser, address);
+
+
+
+//        usersStore.InsertMusicToUser()
 
     }
 

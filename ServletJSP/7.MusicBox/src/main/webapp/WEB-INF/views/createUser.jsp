@@ -42,6 +42,12 @@
 </head>
 </body>
 
+<form Name ="back" action="${pageContext.servletContext.contextPath}/" method="get">
+    <div class="button-back">
+        <input type="submit" value="<-back" name="backButton">
+    </div>
+</form>
+
 <div>
     <form action="${pageContext.servletContext.contextPath}/create" method="post">
         <div class = "create">
@@ -83,8 +89,9 @@
                 </div>
                 <div class="col-75">
                     <select name="role" required>
-                        <option value="Admin">Admin</option>
-                        <option value="user">User</option>
+                        <option value="ADMIN">ADMIN</option>
+                        <option value="USER">USER</option>
+                        <option value="MANDATOR">MANDATOR</option>
                     </select>
                 </div>
             </div>
@@ -109,17 +116,12 @@
                     <label>Тип музыки</label>
                 </div>
                 <div class="col-75">
-                    <select multiple="multiple" id="musicType" class="select_music" name="music"></select>
+                    <select multiple="true" id="musicType" class="select_music" name="music"></select>
                 </div>
             </div>
             <div class="button-create">
                 <input name="createButton"  type="submit" value="create user" onclick="return validate(this.form)"/>
             </div>
-        </div>
-    </form>
-    <form Name ="back" action="${pageContext.servletContext.contextPath}/" method="get">
-        <div class="button-back">
-            <input type="submit" value="<-back" name="backButton">
         </div>
     </form>
 

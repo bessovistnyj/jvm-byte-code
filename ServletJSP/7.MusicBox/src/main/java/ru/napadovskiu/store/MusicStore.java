@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 import ru.napadovskiu.entities.Address;
 import ru.napadovskiu.entities.MusicType;
 import ru.napadovskiu.entities.Role;
+import ru.napadovskiu.entities.User;
 import ru.napadovskiu.settings.Settings;
 
 import java.sql.Connection;
@@ -71,7 +72,7 @@ public class MusicStore implements AbstractStore<MusicType> {
             pst.setInt(1, id);
             ResultSet resultQuery =  pst.executeQuery();
             while (resultQuery.next()) {
-                musicType = createMusicTypeFromQuery(resultQuery);
+                musicType = new MusicType(resultQuery);
             }
         } catch (SQLException e) {
             LOG.error(e.getMessage(), e);
@@ -88,7 +89,7 @@ public class MusicStore implements AbstractStore<MusicType> {
              PreparedStatement pst = connection.prepareStatement(this.selectQuery.getValue("selectAllMusic"));)  {
             ResultSet resultQuery =  pst.executeQuery();
             while (resultQuery.next()) {
-                result.add(createMusicTypeFromQuery(resultQuery));
+                result.add(new MusicType(resultQuery));
             }
         } catch (SQLException e) {
             LOG.error(e.getMessage(), e);
@@ -98,14 +99,31 @@ public class MusicStore implements AbstractStore<MusicType> {
     }
 
     @Override
-    public boolean create(MusicType music) {
-        boolean result;
+    public MusicType getByName(String name) {
+        MusicType musicType = null;
+        try (Connection connection = ConnectionDB.INSTANCE.getConnection();
+             PreparedStatement pst = connection.prepareStatement(this.selectQuery.getValue("selectMusicByName")))  {
+            pst.setString(1, name);
+            ResultSet resultQuery =  pst.executeQuery();
+            while (resultQuery.next()) {
+                musicType = new MusicType(resultQuery);
+            }
+        } catch (SQLException e) {
+            LOG.error(e.getMessage(), e);
+        }
+        return musicType;
+    }
+
+    @Override
+    public MusicType create(MusicType music) {
+        MusicType result = null;
         try (Connection connection = ConnectionDB.INSTANCE.getConnection();
              PreparedStatement pst = connection.prepareStatement(this.insertQuery.getValue("insertMusic"))) {
             pst.setString(1, music.getMusic_name());
-            result = pst.executeUpdate() != 0;
+            if(pst.executeUpdate() != 0) {
+                result = this.getByName(music.getMusic_name());
+            }
         } catch (SQLException e) {
-            result = false;
             LOG.error(e.getMessage(), e);
         }
         return result;
@@ -143,6 +161,21 @@ public class MusicStore implements AbstractStore<MusicType> {
 
     }
 
+    public boolean addMusicToUser(User user, MusicType musicType) {
+        boolean result;
+        try (Connection connection = ConnectionDB.INSTANCE.getConnection();
+             PreparedStatement pst = connection.prepareStatement(this.insertQuery.getValue("insertUserToMusic"))) {
+            pst.setInt(1, user.getId());
+            pst.setInt(2, musicType.getMusic_id());
+            result = pst.executeUpdate() != 0;
+        } catch (SQLException e) {
+            result = false;
+            LOG.error(e.getMessage(), e);
+        }
+        return result;
+
+    }
+
     public List<MusicType> getAllMusicTypeByUser(int user_id) {
         List<MusicType> result = new CopyOnWriteArrayList<>();
         try (Connection connection = ConnectionDB.INSTANCE.getConnection();
@@ -157,11 +190,4 @@ public class MusicStore implements AbstractStore<MusicType> {
         }
         return result;
     }
-
-
-    private MusicType createMusicTypeFromQuery(ResultSet resultQuery) throws SQLException {
-        MusicType musicType = new MusicType(resultQuery.getInt("music_id"), resultQuery.getString("music_name"));
-        return musicType;
-    }
-
 }

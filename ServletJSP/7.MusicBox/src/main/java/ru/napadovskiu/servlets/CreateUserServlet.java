@@ -16,8 +16,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.sql.Timestamp;
+
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  *
@@ -50,6 +51,25 @@ public class CreateUserServlet extends HttpServlet {
         rd.forward(req, resp);
     }
 
+
+    private void addMusicTypeListToUser(User user, List<MusicType> list) {
+        for (MusicType musicType: list) {
+            if (!usersStore.isUserHaveMusicType(user, musicType)) {
+                musicStore.addMusicToUser(user, musicType);
+            }
+        }
+    }
+
+    private List<MusicType> takeListMusicType(String[] arrayTypeMusic) {
+        List<MusicType> musicTypeList = new CopyOnWriteArrayList<>();
+        for (String typeMusic: arrayTypeMusic) {
+            MusicType musicType = musicStore.getByName(typeMusic);
+            musicTypeList.add(musicType);
+        }
+
+        return musicTypeList;
+    }
+
     /**
      *
      * @param req
@@ -59,29 +79,44 @@ public class CreateUserServlet extends HttpServlet {
      */
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        Boolean result = true;
         String name = req.getParameter("name");
         String login = req.getParameter("login");
         String password = req.getParameter("password");
-        Address address = addressStore.getByName( req.getParameter("address"));
-        Role role = roleStore.getByName(req.getParameter("role"));
-        List<MusicType> musicTypeList = musicStore.getById(req.getParameter("muic"));
 
-        User user = new User(name, login);
-        user.setPassword(password);
-        user.setAddress(address);
-        user.setRole(role);
-        user.setMusicType(musicTypeList);
 
-        //,password,address,role,musicTypeList);
-//        boolean result = this.usersStore.addUser(user);
-//        if (result) {
-//            result = this.usersStore.addRole(user.getEmail(), req.getParameter("role"));
-//        }
-//        if (result) {
-//            req.setAttribute("users", UserStore.getInstance().selectAllUser());
-//            req.getRequestDispatcher("/WEB-INF/views/users.jsp").forward(req, resp);
-//        }
+        if (usersStore.selectUser(login,name) != null) {
+            result=false;
+        } else {
+            User user = new User(name, login);
+            user.setPassword(password);
+            User createUser = usersStore.create(user);
+            int a=1;
+
+
+            if (createUser != null) {
+                Address address = addressStore.create(new Address(req.getParameter("address")));
+
+                Role role = roleStore.getByName(req.getParameter("role"));
+                if(role == null) {
+                    role = roleStore.create(new Role(req.getParameter("role")));
+                }
+                List<MusicType> musicTypes =  takeListMusicType(req.getParameterValues("music"));
+
+                usersStore.updateRoleInUser(createUser,roleStore.getByName(role.getUser_role()));
+                createUser.setRole(role);
+
+                usersStore.updateAddressInUser(createUser,addressStore.getByName(address.getAddress_name()));
+                createUser.setAddress(address);
+
+                addMusicTypeListToUser(createUser,musicTypes);
+            }
+        }
+
+        if (result) {
+            req.getRequestDispatcher("/WEB-INF/views/usersView.jsp").forward(req, resp);
+        } else {
+
+        }
    }
-
-
 }

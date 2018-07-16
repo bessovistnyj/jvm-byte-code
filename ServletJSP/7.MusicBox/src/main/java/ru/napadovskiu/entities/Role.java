@@ -1,5 +1,8 @@
 package ru.napadovskiu.entities;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 public class Role {
 
     private  int role_id;
@@ -15,6 +18,14 @@ public class Role {
     public Role(int role_id, String user_role) {
         this.role_id = role_id;
         this.user_role = user_role;
+    }
+
+    public Role (ResultSet resultQuery) throws SQLException {
+        int role_id = resultQuery.getInt("role_id");
+        String user_role = resultQuery.getString("user_role");
+        this.role_id = role_id;
+        this.user_role = user_role;
+
     }
 
     public int getRole_id() {

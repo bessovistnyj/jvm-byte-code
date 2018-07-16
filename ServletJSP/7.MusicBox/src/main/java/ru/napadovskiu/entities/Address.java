@@ -1,5 +1,8 @@
 package ru.napadovskiu.entities;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 public class Address {
     private int address_id;
 
@@ -9,6 +12,15 @@ public class Address {
         this.address_id = address_id;
         this.address_name = address_name;
     }
+
+
+    public Address (ResultSet resultQuery) throws SQLException {
+        int addressId = resultQuery.getInt("address_id");
+        String addressName = resultQuery.getString("address_name");
+        this.address_id = addressId;
+        this.address_name = addressName;
+    }
+
 
     public Address(String address_name) {
         this.address_name = address_name;

@@ -72,7 +72,7 @@ public class UserStore implements AbstractStore<User> {
             pst.setInt(1, userId);
             ResultSet resultQuery =  pst.executeQuery();
             while (resultQuery.next()) {
-                user = createUserFromQuery(resultQuery);
+                user = new User(resultQuery);
             }
         } catch (SQLException e) {
             LOG.error(e.getMessage(), e);
@@ -80,16 +80,32 @@ public class UserStore implements AbstractStore<User> {
         return user;
     }
 
-    public User selectUser(String login, String password) {
+    @Override
+    public User getByName(String name) {
         User user = null;
         try (Connection connection = ConnectionDB.INSTANCE.getConnection();
-             PreparedStatement pst = connection.prepareStatement(this.selectQuery.getValue("selectUserByLoginAndPassword")))  {
+             PreparedStatement pst = connection.prepareStatement(this.selectQuery.getValue("selectUserByName")))  {
+            pst.setString(1, name);
+            ResultSet resultQuery =  pst.executeQuery();
+            while (resultQuery.next()) {
+                user = new User(resultQuery);
+            }
+        } catch (SQLException e) {
+            LOG.error(e.getMessage(), e);
+        }
+        return user;
+    }
+
+    public User selectUser(String login, String name) {
+        User user = null;
+        try (Connection connection = ConnectionDB.INSTANCE.getConnection();
+             PreparedStatement pst = connection.prepareStatement(this.selectQuery.getValue("selectUserByLoginAndName")))  {
             pst.setString(1, login);
-            pst.setString(2, password);
+            pst.setString(2, name);
 
             ResultSet resultQuery =  pst.executeQuery();
             while (resultQuery.next()) {
-                user = createUserFromQuery(resultQuery);
+                user = new User(resultQuery);
             }
         } catch (SQLException e) {
             LOG.error(e.getMessage(), e);
@@ -106,7 +122,7 @@ public class UserStore implements AbstractStore<User> {
              PreparedStatement pst = connection.prepareStatement(this.selectQuery.getValue("selectAllUser"));)  {
             ResultSet resultQuery =  pst.executeQuery();
             while (resultQuery.next()) {
-                result.add(createUserFromQuery(resultQuery));
+                result.add(new User(resultQuery));
             }
         } catch (SQLException e) {
             LOG.error(e.getMessage(), e);
@@ -115,17 +131,17 @@ public class UserStore implements AbstractStore<User> {
     }
 
     @Override
-    public boolean create(User user) {
-        boolean result;
+    public User create(User user) {
+        User result = null;
         try (Connection connection = ConnectionDB.INSTANCE.getConnection();
              PreparedStatement pst = connection.prepareStatement(this.insertQuery.getValue("insertUser"))) {
             pst.setString(1, user.getName());
             pst.setString(2, user.getLogin());
             pst.setString(3, user.getPassword());
-
-            result = pst.executeUpdate() != 0;
+            if (pst.executeUpdate() != 0) {
+                result = this.selectUser(user.getName(), user.getLogin());
+            }
         } catch (SQLException e) {
-            result = false;
             LOG.error(e.getMessage(), e);
         }
         return result;
@@ -242,44 +258,23 @@ public class UserStore implements AbstractStore<User> {
         return result;
     }
 
+    public boolean isUserHaveMusicType(User user, MusicType musicType) {
+        boolean result = false;
+        try (Connection connection = ConnectionDB.INSTANCE.getConnection();
+             PreparedStatement pst = connection.prepareStatement(this.selectQuery.getValue("selectMusicByUser"))) {
+            pst.setInt(1, user.getId());
+            pst.setInt(2, musicType.getMusic_id());
+            ResultSet resultQuery =  pst.executeQuery();
+            while (resultQuery.next()) {
+                result = true;
+            }
+        } catch (SQLException e) {
+            LOG.error(e.getMessage(), e);
+        }
 
 
-
-    /**
-     *
-     * @param resultQuery
-     * @return
-     * @throws SQLException
-     */
-    private User createUserFromQuery(ResultSet resultQuery) throws SQLException {
-        RoleStore roleStore = new RoleStore();
-        AddressStore addressStore = new AddressStore();
-        MusicStore musicStore = new MusicStore();
-        int userId = resultQuery.getInt("user_id");
-
-        String userName = resultQuery.getString("user_name");
-        String userLogin = resultQuery.getString("user_login");
-
-        User newUser = new User(userId, userName, userLogin);
-
-        String userPassword = resultQuery.getString("user_password");
-
-        newUser.setPassword(userPassword);
-
-        int address_id = resultQuery.getInt("address_id");
-        int role_id = resultQuery.getInt("role_id");
-
-        Address address = addressStore.getById(address_id);
-        Role role = roleStore.getById(role_id);
-
-        newUser.setRole(role);
-        newUser.setAddress(address);
-
-        newUser.setMusicType(musicStore.getAllMusicTypeByUser(userId));
-
-        return newUser;
+        return result;
     }
-
 
 }
 
