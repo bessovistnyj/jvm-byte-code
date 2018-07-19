@@ -90,24 +90,23 @@ public class CreateUserServlet extends HttpServlet {
         } else {
             User user = new User(name, login);
             user.setPassword(password);
-            User createUser = usersStore.create(user);
-            int a=1;
 
 
-            if (createUser != null) {
-                Address address = addressStore.create(new Address(req.getParameter("address")));
+            if (usersStore.create(user)) {
+                User createUser = usersStore.selectUser(user.getLogin(), user.getName());
+                Address createAddress = new Address(req.getParameter("address"));
+                if (addressStore.create(createAddress)) {
+                    usersStore.updateAddressInUser(createUser,addressStore.getByName(createAddress.getAddress_name()));
+                    createUser.setAddress(createAddress);
+                }
 
                 Role role = roleStore.getByName(req.getParameter("role"));
-                if(role == null) {
-                    role = roleStore.create(new Role(req.getParameter("role")));
-                }
+                usersStore.updateRoleInUser(createUser,roleStore.getByName(role.getUser_role()));
+
                 List<MusicType> musicTypes =  takeListMusicType(req.getParameterValues("music"));
 
-                usersStore.updateRoleInUser(createUser,roleStore.getByName(role.getUser_role()));
-                createUser.setRole(role);
 
-                usersStore.updateAddressInUser(createUser,addressStore.getByName(address.getAddress_name()));
-                createUser.setAddress(address);
+                createUser.setRole(role);
 
                 addMusicTypeListToUser(createUser,musicTypes);
             }

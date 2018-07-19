@@ -131,16 +131,14 @@ public class UserStore implements AbstractStore<User> {
     }
 
     @Override
-    public User create(User user) {
-        User result = null;
+    public boolean create(User user) {
+        boolean result = false;
         try (Connection connection = ConnectionDB.INSTANCE.getConnection();
              PreparedStatement pst = connection.prepareStatement(this.insertQuery.getValue("insertUser"))) {
             pst.setString(1, user.getName());
             pst.setString(2, user.getLogin());
             pst.setString(3, user.getPassword());
-            if (pst.executeUpdate() != 0) {
-                result = this.selectUser(user.getName(), user.getLogin());
-            }
+            result = pst.executeUpdate() != 0;
         } catch (SQLException e) {
             LOG.error(e.getMessage(), e);
         }

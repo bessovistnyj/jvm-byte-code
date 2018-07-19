@@ -115,14 +115,12 @@ public class MusicStore implements AbstractStore<MusicType> {
     }
 
     @Override
-    public MusicType create(MusicType music) {
-        MusicType result = null;
+    public boolean create(MusicType music) {
+        boolean result = false;
         try (Connection connection = ConnectionDB.INSTANCE.getConnection();
              PreparedStatement pst = connection.prepareStatement(this.insertQuery.getValue("insertMusic"))) {
             pst.setString(1, music.getMusic_name());
-            if(pst.executeUpdate() != 0) {
-                result = this.getByName(music.getMusic_name());
-            }
+            result =pst.executeUpdate() != 0;
         } catch (SQLException e) {
             LOG.error(e.getMessage(), e);
         }

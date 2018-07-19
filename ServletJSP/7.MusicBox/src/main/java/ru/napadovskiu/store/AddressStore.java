@@ -114,14 +114,12 @@ public class AddressStore implements AbstractStore<Address> {
     }
 
     @Override
-    public Address create(Address address) {
-        Address result = null;
+    public boolean create(Address address) {
+        boolean result = false;
         try (Connection connection = ConnectionDB.INSTANCE.getConnection();
              PreparedStatement pst = connection.prepareStatement(this.insertQuery.getValue("insertAddress"))) {
             pst.setString(1, address.getAddress_name());
-            if (pst.executeUpdate() != 0) {
-                result = this.getByName(address.getAddress_name());
-            }
+            result = pst.executeUpdate() != 0;
         } catch (SQLException e) {
             LOG.error(e.getMessage(), e);
         }

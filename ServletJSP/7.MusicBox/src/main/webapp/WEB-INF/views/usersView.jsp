@@ -49,7 +49,6 @@
             });
         });
     </script>
-
     <script>
         function getMusictype(user) {
             $.ajax ({

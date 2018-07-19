@@ -39,9 +39,11 @@ public class EditUserServlets extends HttpServlet {
 
     private List<MusicType> takeListMusicType(String[] arrayTypeMusic) {
         List<MusicType> musicTypeList = new CopyOnWriteArrayList<>();
-        for (String typeMusic: arrayTypeMusic) {
-            MusicType musicType = musicStore.getByName(typeMusic);
-            musicTypeList.add(musicType);
+        if (arrayTypeMusic !=null && arrayTypeMusic.length !=0) {
+            for (String typeMusic: arrayTypeMusic) {
+                MusicType musicType = musicStore.getByName(typeMusic);
+                musicTypeList.add(musicType);
+            }
         }
 
         return musicTypeList;
@@ -82,7 +84,7 @@ public class EditUserServlets extends HttpServlet {
      * @throws IOException
      */
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
 
         resp.setContentType("text/html");
         int userId = Integer.parseInt(req.getParameter("userId"));
@@ -96,14 +98,23 @@ public class EditUserServlets extends HttpServlet {
         editUser.setRole(role);
         usersStore.updateRoleInUser(editUser, role);
 
-        Address address = addressStore.create(new Address(req.getParameter("address")));
-        editUser.setAddress(address);
-        usersStore.updateAddressInUser(editUser, address);
+        Address editAddress = addressStore.getByName(req.getParameter("address"));
+        if (editAddress == null) {
+            editAddress = new Address(req.getParameter("address"));
+            if (addressStore.create(editAddress)) {
+                editAddress = addressStore.getByName(editAddress.getAddress_name());
+            }
+        }
+        usersStore.updateAddressInUser(editUser,editAddress);
+        editUser.setAddress(editAddress);
 
 
+        List<MusicType> musicTypes =  takeListMusicType(req.getParameterValues("music"));
+        if (musicTypes.size() != 0 ) {
+            addMusicTypeListToUser(editUser,musicTypes);
+        }
 
-//        usersStore.InsertMusicToUser()
-
+        req.getRequestDispatcher("/WEB-INF/views/usersView.jsp").forward(req, resp);
     }
 
 }

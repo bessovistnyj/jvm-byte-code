@@ -109,14 +109,12 @@ public class RoleStore implements AbstractStore<Role> {
     }
 
     @Override
-    public Role create(Role role) {
-        Role result = null;
+    public boolean create(Role role) {
+        boolean result = false;
         try (Connection connection = ConnectionDB.INSTANCE.getConnection();
              PreparedStatement pst = connection.prepareStatement(this.insertQuery.getValue("insertRole"))) {
             pst.setString(1, role.getUser_role());
-            if (pst.executeUpdate() != 0) {
-                result = this.getByName(role.getUser_role());
-            }
+            result = pst.executeUpdate() != 0;
         } catch (SQLException e) {
             LOG.error(e.getMessage(), e);
         }
@@ -154,21 +152,5 @@ public class RoleStore implements AbstractStore<Role> {
         return result;
 
     }
-
-//    public List<User> getAllUserByRole(Role role) {
-//        List<User> result = new CopyOnWriteArrayList<>();
-//        try (Connection connection = ConnectionDB.INSTANCE.getConnection();
-//             PreparedStatement pst = connection.prepareStatement(this.selectQuery.getValue("selectAllRoles"));)  {
-//            ResultSet resultQuery =  pst.executeQuery();
-//            while (resultQuery.next()) {
-//                result.add(Role);
-//            }
-//        } catch (SQLException e) {
-//            LOG.error(e.getMessage(), e);
-//        }
-//        return result;
-//
-//    }
-
 
 }

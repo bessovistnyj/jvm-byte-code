@@ -10,7 +10,7 @@ public interface AbstractStore<T> {
 
     List<T> getAll();
 
-    T create(T entity);
+    boolean create(T entity);
 
     boolean update(T entity);
 
