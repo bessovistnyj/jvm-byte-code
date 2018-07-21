@@ -74,5 +74,4 @@
         <url-pattern>/roleJson</url-pattern>
     </servlet-mapping>
 
-
 </web-app>

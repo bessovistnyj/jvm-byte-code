@@ -41,10 +41,9 @@
                             getMusictype(value);
                         newRows += button+
                             "</tr>";
-                            $("#bodyTable").append(newRows);
-                            newRows = "";
+                        $("#bodyTable").append(newRows);
+                        newRows = "";
                     });
-                   // $("#first").after(newRows);
                 }
             });
         });
