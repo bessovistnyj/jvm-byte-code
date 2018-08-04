@@ -43,10 +43,8 @@ public class AuthController extends HttpServlet {
 
         if (userStore.isCredentials(login, password)) {
             HttpSession session = req.getSession();
-            synchronized (session) {
-                session.setAttribute("login", login);
-                session.setAttribute("password", password);
-            }
+            session.setAttribute("login", login);
+            session.setAttribute("password", password);
             resp.sendRedirect(String.format("%s/", req.getContextPath()));
         } else {
             req.setAttribute("error", "Credentials invalid ");

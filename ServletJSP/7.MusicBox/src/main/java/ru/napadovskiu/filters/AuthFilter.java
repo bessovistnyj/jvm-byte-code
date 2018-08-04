@@ -7,6 +7,8 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 public class AuthFilter implements Filter {
+
+
     /**
      *
      * @param filterConfig
@@ -33,14 +35,11 @@ public class AuthFilter implements Filter {
             filterChain.doFilter(servletRequest, servletResponse);
         } else {
             HttpSession session = request.getSession();
-            synchronized (session) {
-                if (session.getAttribute("login") == null) {
-                    ((HttpServletResponse) servletResponse).sendRedirect(String.format("%s/login", request.getContextPath()));
-                    return;
-                }
+            if (session.getAttribute("login") == null) {
+                ((HttpServletResponse) servletResponse).sendRedirect(String.format("%s/login", request.getContextPath()));
+                return;
             }
             filterChain.doFilter(servletRequest, servletResponse);
         }
     }
-
 }
