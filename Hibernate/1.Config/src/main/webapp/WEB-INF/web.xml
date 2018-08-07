@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app>
+
+    <filter>
+        <filter-name>ItemsServlets</filter-name>
+        <filter-class>ru.napadovskiu.servlets.ItemsServlets</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>ItemsServlets</filter-name>
+        <url-pattern>*</url-pattern>
+    </filter-mapping>
+
+    <servlet>
+        <servlet-name>JsonServlets</servlet-name>
+        <servlet-class>ru.napadovskiu.servlets.JsonServlets</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>JsonServlets</servlet-name>
+        <url-pattern>/itemsJson</url-pattern>
+    </servlet-mapping>
+
+</web-app>
