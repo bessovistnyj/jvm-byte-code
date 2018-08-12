@@ -3,26 +3,45 @@ package ru.napadovskiu.storage;
 
 import org.hibernate.Session;
 import org.hibernate.Transaction;
-import org.hibernate.cfg.Configuration;
-import org.hibernate.SessionFactory;
 import ru.napadovskiu.models.Items;
 
-import java.util.Collection;
 import java.util.List;
 
-public class HBStorage implements Storage {
+/**
+ *
+ */
+public class HBStorage implements Storage<Items> {
 
-    private final SessionFactory factory;
+    /**
+     *
+     */
+    private static final HBStorage INSTANCE = new HBStorage();
 
 
+    /**
+     *
+     */
     public HBStorage() {
-        this.factory = new Configuration().configure().buildSessionFactory();
     }
 
+    /**
+     *
+     * @return
+     */
+    public static HBStorage getInstance() {
+        return INSTANCE;
+    }
+
+
+    /**
+     *
+     * @param items
+     * @return
+     */
     @Override
     public boolean update(Items items) {
-        boolean result =false;
-        final Session session = this.factory.openSession();
+        boolean result = false;
+        final Session session = HibernateFactory.getInstance().openSession();
         Transaction tr = session.beginTransaction();
         try {
             session.save(items);
@@ -34,10 +53,15 @@ public class HBStorage implements Storage {
         return result;
     }
 
+    /**
+     *
+     * @param items
+     * @return
+     */
     @Override
     public boolean delete(Items items) {
-        boolean result =false;
-        final Session session = this.factory.openSession();
+        boolean result = false;
+        final Session session = HibernateFactory.getInstance().openSession();
         Transaction tr = session.beginTransaction();
         try {
             session.delete(items);
@@ -49,9 +73,14 @@ public class HBStorage implements Storage {
         return result;
     }
 
+    /**
+     *
+     * @param items
+     * @return
+     */
     @Override
     public int add(Items items) {
-        final Session session = this.factory.openSession();
+        final Session session = HibernateFactory.getInstance().openSession();
         Transaction tr = session.beginTransaction();
         try {
             session.save(items);
@@ -62,9 +91,14 @@ public class HBStorage implements Storage {
         }
     }
 
+    /**
+     *
+     * @param id
+     * @return
+     */
     @Override
     public Items get(int id) {
-        final Session session = this.factory.openSession();
+        final Session session = HibernateFactory.getInstance().openSession();
         Transaction tr = session.beginTransaction();
         try {
             return (Items) session.get(Items.class, id);
@@ -75,10 +109,14 @@ public class HBStorage implements Storage {
 
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
-    public Collection<Items> getAll() {
-        List<Items> items;
-        final Session session = this.factory.openSession();
+    public List<Items> getAll() {
+        List items;
+        final Session session = HibernateFactory.getInstance().openSession();
         Transaction tr = session.beginTransaction();
         try {
             items =  session.createQuery("from ru.napadovskiu.models.Items").list();
@@ -89,14 +127,12 @@ public class HBStorage implements Storage {
         return items;
     }
 
-    @Override
-    public Items findByDesc(String desc) {
-        return null;
-    }
-
+    /**
+     *
+     */
     @Override
     public void close() {
-        this.factory.close();
+        HibernateFactory.getInstance().close();
     }
 
 

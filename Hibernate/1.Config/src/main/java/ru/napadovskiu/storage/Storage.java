@@ -1,22 +1,50 @@
 package ru.napadovskiu.storage;
 
-import ru.napadovskiu.models.Items;
 
-import java.util.Collection;
+import java.util.List;
 
-public interface Storage {
+/**
+ *
+ * @param <T>
+ */
+public interface Storage<T> {
 
-    public boolean update(final Items items);
+    /**
+     *
+     * @param t
+     * @return
+     */
+    boolean update(final T t);
 
-    public boolean delete(final Items items);
+    /**
+     *
+     * @param t
+     * @return
+     */
+    boolean delete(final T t);
 
-    public Items get(final int id);
+    /**
+     *
+     * @param id
+     * @return
+     */
+    T get(final int id);
 
-    public Collection<Items> getAll();
+    /**
+     *
+     * @return
+     */
+    List<T> getAll();
 
-    public Items findByDesc(final String desc);
+    /**
+     *
+     * @param t
+     * @return
+     */
+    int add(T t);
 
-    public int add(Items items);
-
-    public void close();
+    /**
+     *
+     */
+    void close();
 }

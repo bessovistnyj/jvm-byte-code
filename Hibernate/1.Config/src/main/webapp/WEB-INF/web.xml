@@ -1,15 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app>
 
-    <filter>
-        <filter-name>ItemsServlets</filter-name>
-        <filter-class>ru.napadovskiu.servlets.ItemsServlets</filter-class>
-    </filter>
-    <filter-mapping>
-        <filter-name>ItemsServlets</filter-name>
-        <url-pattern>*</url-pattern>
-    </filter-mapping>
+    <servlet>
+        <servlet-name>ItemsServlets</servlet-name>
+        <servlet-class>ru.napadovskiu.servlets.ItemsServlets</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ItemsServlets</servlet-name>
+        <url-pattern>/items</url-pattern>
+    </servlet-mapping>
 
+    <servlet>
+        <servlet-name>CreateItemServlets</servlet-name>
+        <servlet-class>ru.napadovskiu.servlets.CreateItemServlets</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>CreateItemServlets</servlet-name>
+        <url-pattern>/create</url-pattern>
+    </servlet-mapping>
     <servlet>
         <servlet-name>JsonServlets</servlet-name>
         <servlet-class>ru.napadovskiu.servlets.JsonServlets</servlet-class>
