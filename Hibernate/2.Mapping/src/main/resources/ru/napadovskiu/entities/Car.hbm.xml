@@ -17,6 +17,11 @@
                      column="tr_id"
                      class="ru.napadovskiu.entities.Transmission"/>
 
+        <many-to-one name="images"
+                     column="image_id"
+                     class="ru.napadovskiu.entities.Images"/>
+
+
     </class>
 
 

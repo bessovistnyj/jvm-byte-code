@@ -49,6 +49,8 @@
 		<module>Multithreading</module>
 		<module>ServletJSP</module>
 		<module>SQL_JDBC</module>
+		<module>Hibernate</module>
+		<module>ExtraTasks</module>
 
 	</modules>
 	

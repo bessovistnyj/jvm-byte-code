@@ -1,15 +1,23 @@
 package ru.napadovskiu.entities;
 
+import javax.persistence.*;
+
+@Entity
+@Table(name = "gearbox")
 public class GearBox {
 
     /**
      *
      */
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @Column (name = "gear_id")
     private int gearBoxId;
 
     /**
      *
      */
+    @Column (name = "gear_name")
     private String gearBoxName;
 
     /**
