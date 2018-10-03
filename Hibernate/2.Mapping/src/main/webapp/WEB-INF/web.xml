@@ -29,12 +29,41 @@
     </servlet-mapping>
 
     <servlet>
-        <servlet-name>ItemsJson</servlet-name>
-        <servlet-class>ru.napadovskiu.servlets.ItemsJson</servlet-class>
+        <servlet-name>JsonServlet</servlet-name>
+        <servlet-class>ru.napadovskiu.servlets.JsonServlet</servlet-class>
     </servlet>
     <servlet-mapping>
-        <servlet-name>ItemsJson</servlet-name>
-        <url-pattern>/ItemsJson</url-pattern>
+        <servlet-name>JsonServlet</servlet-name>
+        <url-pattern>/jsonServlet</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>EditItem</servlet-name>
+        <servlet-class>ru.napadovskiu.servlets.EditItemServlets</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>EditItem</servlet-name>
+        <url-pattern>/editItem</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>CreateItem</servlet-name>
+        <servlet-class>ru.napadovskiu.servlets.CreateItemServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>CreateItem</servlet-name>
+        <url-pattern>/createItem</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <display-name>FileUploadServlet</display-name>
+        <servlet-name>FileUploadServlet</servlet-name>
+        <servlet-class>ru.napadovskiu.servlets.FileUploadServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>FileUploadServlet</servlet-name>
+        <url-pattern>/uploadFile</url-pattern>
     </servlet-mapping>
 
 

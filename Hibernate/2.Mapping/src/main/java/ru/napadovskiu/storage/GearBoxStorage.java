@@ -1,8 +1,11 @@
 package ru.napadovskiu.storage;
 
 
+import org.apache.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.query.Query;
+import ru.napadovskiu.entities.Engine;
 import ru.napadovskiu.entities.GearBox;
 
 import java.util.List;
@@ -12,6 +15,12 @@ import java.util.function.Function;
  *
  */
 public class GearBoxStorage implements Storage<GearBox> {
+
+    /**
+     *
+     */
+    private static final Logger LOGGER = Logger.getLogger(GearBoxStorage.class);
+
 
     /**
      *
@@ -98,6 +107,21 @@ public class GearBoxStorage implements Storage<GearBox> {
     @Override
     public GearBox get(int id) {
         return this.tx(session -> (GearBox) session.get(GearBox.class, id));
+
+    }
+
+    @Override
+    public GearBox getByName(String name) {
+        return this.tx(session -> {
+            GearBox gearBox = null;
+            Query query = session.createQuery("FROM ru.napadovskiu.entities.GearBox WHERE gear_name =:name");
+            query.setParameter("name", name);
+            List<GearBox> gearBoxList = query.getResultList();
+            if (!gearBoxList.isEmpty()) {
+                gearBox = gearBoxList.get(0);
+            }
+            return gearBox;
+        });
 
     }
 

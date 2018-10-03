@@ -12,121 +12,108 @@
 <head>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/css/bootstrap-select.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <%--<meta name="viewport" content="width=device-width, initial-scale=1">--%>
+    <%--<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">--%>
+
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/js/bootstrap-select.min.js"></script>
+
     <script src="//code.jquery.com/jquery-1.10.2.js"></script>
     <script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
 
     <script>
-        $(document).ready(function () {
-            $(function () {
-                $("#country").change( function () {
+        $(document).ready(function (){
+            $("#select_engine").empty();
+            var nameQuery = {
+                "namePart": "engine"
+            }
+            $.ajax ({
+                url: "jsonServlet",
+                type: "get",
+                data: nameQuery,
+                success: function (data) {
+                    var engineType = $("#select_engine");
+                    engineType.append("<option value=\"\" disabled selected>Choose your option</option>");
+                    $.each(data, function (i, value) {
+                        engineType.append($("<option></option>").val(value.engineName).html(value.engineName));
+                    });
+                }
+            });
+            $("#select_GearBox").empty();
+            var nameQuery = {
+                "namePart": "gearBox"
+            }
+            $.ajax({
+                url: "jsonServlet",
+                type: "get",
+                data: nameQuery,
+                success: function (data) {
+                    var gearBox = $("#select_GearBox");
+                    gearBox.append("<option value=\"\" disabled selected>Choose your option</option>");
+                    $.each(data, function (i, value) {
+                        gearBox.append($("<option></option>").val(value.gearBoxName).html(value.gearBoxName));
+                    });
+                }
 
+            });
+            $("#select_Transmission").empty();
+            var nameQuery = {
+                "namePart": "transmission"
+            }
+            $.ajax({
+                url: "jsonServlet",
+                type: "get",
+                data: nameQuery,
+                success: function (data) {
+                    var trans = $("#select_Transmission");
+                    trans.append("<option value=\"\" disabled selected>Choose your option</option>");
+                    $.each(data, function (i, value) {
+                        trans.append($("<option></option>").val(value.transName).html(value.transName));
+                    });
+                }
 
-                })
-                // $("#country").autocomplete({
-                //     source:function (request, response) {
-                //         $.ajax({
-                //             url: "countryJson",
-                //             type: "GET",
-                //             data: {
-                //                 term: request.term
-                //             },
-                //             dataType : "json",
-                //             success: function (data) {
-                //                 response(data);
-                //
-                //             }
-                //         });
-                //     }
-                // });
             });
 
         });
-
-    </script>
-    <script> <%@include file="/js/validate.js"%>  </script>
-
-    <script type="text/javascript">
-        $(document).ready(function() {selectCountry()})
     </script>
 
-    <title>Title</title>
+    <title>CreateItem</title>
 </head>
 </body>
 
 <div>
-    <form action="${pageContext.servletContext.contextPath}/create" method="post">
-        <div class = "create">
-            <div class = "name-field">
-                <label> Имя: </label>
-                <input type="text" name ="name"/>
+    <form action="${pageContext.servletContext.contextPath}/createItem" method="post">
+        <br >
+            <div>
+                <label> Название автомобиля: </label>
+                <input class="w3-input w3-border" type="text" name ="car_name"/>
             </div>
-            <div class = "login-field">
-                <label> Логин: </label>
-                <input type="text" name="login"/>
+            <div class = "Engine-field">
+                <label> Тип двигателя: </label>
+                <select id="select_engine" class="w3-select" name="select_engine"></select>
+
             </div>
-            <div class = "email-field">
-                <label> E-mail: </label>
-                <input type="text" name="email"/>
+            <div class = "GearBox-field">
+                <label> Коробка передач: </label>
+                <select id="select_GearBox" class="w3-select" name="select_GearBox"></select>
             </div>
-            <div class = "role-field">
-                <label> Роль: </label>
-                <select name="role">
-                    <option value="user">User</option>
-                    <option value="Admin">Admin</option>
-                </select>
+            <div class = "Transmission-field">
+                <label> Ходовая часть: </label>
+                <select id="select_Transmission" class="w3-select" name="select_Transmission"></select>
             </div>
 
-            <div class="password-field">
-                <label> Password:</label>
-                <input type="password" name="password"/>
+            <br>
+            <div class="w3-btn w3-black">
+                <input name="createButton" class="w3-btn w3-black" type="submit" value="Новая заявка" onclick="return validate(this.form)"/>
             </div>
-            <div class="check-password">
-                <label> Password again:</label>
-                <input type="password" name="passwordCheck"/>
-            </div>
-            <%--<div>--%>
-                <%--<label> Country</label>--%>
-                <%--<input type="text" name="country" id ="country" />--%>
-            <%--</div>--%>
-            <div class="form-group col-md-6">
-                <label>Country</label>
-                <%--<select id="select_country" class="form-control" name="country" onfocus="selectCountry()" onchange="selectCity()"></select>--%>
-                <select id="select_country" class="form-control" name="country" onfocus="selectCountry()"></select>
-            </div>
-
-            <%--<div class = "country-field">--%>
-                <%--<label for="country">Country</label>--%>
-                <%--<select class="selectCountry" name="country" id ="country" required></select>--%>
-            <%--</div>--%>
-            <%--<div class = "city-field">--%>
-                <%--<label for="city">City</label>--%>
-                <%--<select class="selectCity" name="city" id ="city" required></select>--%>
-            <%--</div>--%>
-
-            <%--<div class="col-md-5">--%>
-                <%--+                            <label for="country">Country</label>--%>
-                <%--+                            <select class="selectpicker" name="country" id="country" required></select>--%>
-                <%--+                        </div>--%>
-            <%--+                        <div class="col-md-4">--%>
-            <%--+                            <label for="city">City</label>--%>
-            <%--+                            <select class="selectpicker" name="city" id="city" required></select>--%>
-            <%--+                        </div>--%>
-
-
-            <div class="button-create">
-                <input name="createButton"  type="submit" value="create user" onclick="return validate(this.form)"/>
-            </div>
-
-
-        </div>
     </form>
-    <div class="button-back">
+    <div class="w3-btn w3-black">
         <form Name ="back" action="${pageContext.servletContext.contextPath}/" method="get">
-            <input type="submit" value="<-back">
+            <input type="submit" class="w3-btn w3-black" value="<-back">
         </form>
     </div>
 </div>

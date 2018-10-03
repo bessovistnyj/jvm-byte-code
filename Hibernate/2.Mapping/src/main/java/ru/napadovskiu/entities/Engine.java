@@ -2,23 +2,17 @@ package ru.napadovskiu.entities;
 
 import javax.persistence.*;
 
-@Entity
-@Table(name = "engine")
 public class Engine {
 
 
     /**
      *
      */
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    @Column (name = "eng_id")
     private int engineId;
 
     /**
      *
      */
-    @Column (name = "eng_name")
     private String engineName;
 
     /**
@@ -27,6 +21,16 @@ public class Engine {
      */
     public Engine(int engineId) {
         this.engineId = engineId;
+    }
+
+    /**
+     *
+     * @param engineId
+     * @param engineName
+     */
+    public Engine(int engineId, String engineName) {
+        this.engineId = engineId;
+        this.engineName = engineName;
     }
 
     /**
@@ -66,4 +70,6 @@ public class Engine {
     public void setEngineName(String engineName) {
         this.engineName = engineName;
     }
+
+
 }

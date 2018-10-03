@@ -1,24 +1,22 @@
 package ru.napadovskiu.entities;
 
-import javax.persistence.*;
 
-@Entity
-@Table (name = "users")
 public class User {
 
 
-    @Id
-    @GeneratedValue (strategy = GenerationType.SEQUENCE)
-    @Column (name = "user_id")
     private int userId;
 
-    @Column (name = "user_name")
     private String userName;
 
-    @Column (name = "user_password")
     private String userPassword;
 
      public User() {
+    }
+
+    public User(int userId, String userName, String userPassword) {
+        this.userId = userId;
+        this.userName = userName;
+        this.userPassword = userPassword;
     }
 
     public User(int userId) {

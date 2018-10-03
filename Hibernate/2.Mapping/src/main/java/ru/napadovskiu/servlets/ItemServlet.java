@@ -1,5 +1,7 @@
 package ru.napadovskiu.servlets;
 
+import ru.napadovskiu.entities.Item;
+import ru.napadovskiu.storage.ItemStorage;
 import ru.napadovskiu.storage.UserStorage;
 
 import javax.servlet.ServletException;
@@ -20,6 +22,7 @@ public class ItemServlet extends HttpServlet {
      */
     private final UserStorage userStorage = UserStorage.getInstance();
 
+    private final ItemStorage itemStorage = ItemStorage.getInstance();
     /**
      *
      * @param req
@@ -33,11 +36,8 @@ public class ItemServlet extends HttpServlet {
         if (session.getAttribute("login") != null) {
             String login = (String) session.getAttribute("login");
             String password = (String) session.getAttribute("password");
-//            User userAdmin = usersStore.selectUser(login, password);
-//            List<MusicType> musicType =  userAdmin.getMusicType();
-//            if (userAdmin.getRole().getUser_role().equals("Admin")) {
-//                session.setAttribute("userRole", "Admin");
-//            }
+            List<Item> items = itemStorage.getAll();
+            req.setAttribute("advertisements", items);
             req.getRequestDispatcher("/WEB-INF/views/items.jsp").forward(req, resp);
         } else {
             req.getRequestDispatcher("WEB-INF/views/loginView.jsp").forward(req, resp);

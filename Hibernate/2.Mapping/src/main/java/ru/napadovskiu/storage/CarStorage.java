@@ -3,8 +3,9 @@ package ru.napadovskiu.storage;
 
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.query.Query;
 import ru.napadovskiu.entities.Car;
-
+import org.apache.log4j.Logger;
 
 import java.util.List;
 import java.util.function.Function;
@@ -13,6 +14,8 @@ import java.util.function.Function;
  *
  */
 public class CarStorage implements Storage<Car> {
+
+    private static final Logger LOGGER = Logger.getLogger(CarStorage.class);
 
     /**
      *
@@ -99,6 +102,22 @@ public class CarStorage implements Storage<Car> {
         return this.tx(session -> (Car) session.get(Car.class, id));
 
     }
+
+
+    @Override
+    public Car getByName(String name) {
+        return this.tx(session -> {
+            Car car = null;
+            Query query = session.createQuery("FROM ru.napadovskiu.entities.Car WHERE car_name =:name");
+            query.setParameter("name", name);
+            List<Car> carList = query.getResultList();
+            if (!carList.isEmpty()) {
+                car = carList.get(0);
+            }
+            return car;
+        });
+    }
+
 
     /**
      *

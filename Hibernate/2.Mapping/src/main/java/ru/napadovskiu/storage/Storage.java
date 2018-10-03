@@ -30,6 +30,14 @@ public interface Storage<T> {
      */
     T get(final int id);
 
+
+    /**
+     *
+     * @param name
+     * @return
+     */
+    T getByName(final String name);
+
     /**
      *
      * @return

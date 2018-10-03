@@ -1,8 +1,10 @@
 package ru.napadovskiu.storage;
 
+import org.apache.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
+import ru.napadovskiu.entities.GearBox;
 import ru.napadovskiu.entities.Item;
 
 import java.util.HashSet;
@@ -11,6 +13,11 @@ import java.util.Set;
 import java.util.function.Function;
 
 public class ItemStorage implements Storage<Item> {
+
+    /**
+     *
+     */
+    private static final Logger LOGGER = Logger.getLogger(ItemStorage.class);
 
 
     /**
@@ -36,7 +43,7 @@ public class ItemStorage implements Storage<Item> {
 
 
     private <T> T tx(final Function<Session, T> command) {
-        final Session session = HibernateFactory.getInstance().openSession();
+       final Session session = HibernateFactory.getInstance().openSession();
         final Transaction tx = session.beginTransaction();
         try {
             return command.apply(session);
@@ -100,6 +107,20 @@ public class ItemStorage implements Storage<Item> {
 
     }
 
+    @Override
+    public Item getByName(String name) {
+        return this.tx(session -> {
+            Item item = null;
+            Query query = session.createQuery("FROM items WHERE item_name =:name");
+            query.setParameter("name", name);
+            List<Item> itemList = query.getResultList();
+            if (!itemList.isEmpty()) {
+                item = itemList.get(0);
+            }
+            return item;
+        });
+    }
+
     /**
      *
      * @return
@@ -107,7 +128,7 @@ public class ItemStorage implements Storage<Item> {
     @Override
     public List<Item> getAll() {
         return this.tx(session -> {
-            List<Item> list = session.createQuery("from ru.napadovskiu.entities.Item").list();
+            List<Item> list = session.createQuery("from ru.napadovskiu.entities.Item").getResultList();
             return list;
         });
 

@@ -1,15 +1,10 @@
 package ru.napadovskiu.entities;
 
-import javax.persistence.*;
 import java.sql.Timestamp;
 
-@Entity
-@Table(name = "items")
+
 public class Item {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    @Column (name = "item_id")
     private int itemId;
 
     private String description;
@@ -31,6 +26,15 @@ public class Item {
 
     public int getItemId() {
         return itemId;
+    }
+
+    public Item(int itemId, String description, Car car, boolean closed, User user, Timestamp date) {
+        this.itemId = itemId;
+        this.description = description;
+        this.car = car;
+        this.closed = closed;
+        this.user = user;
+        this.date = date;
     }
 
     public void setItemId(int itemId) {
@@ -76,6 +80,5 @@ public class Item {
     public void setDate(Timestamp date) {
         this.date = date;
     }
-
 
 }

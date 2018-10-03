@@ -1,5 +1,10 @@
 package ru.napadovskiu.entities;
 
+import javax.persistence.Column;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
 public class Transmission {
 
 
@@ -25,6 +30,12 @@ public class Transmission {
      */
     public Transmission(int transId) {
         this.transId = transId;
+    }
+
+
+    public Transmission(int transId, String transName) {
+        this.transId = transId;
+        this.transName = transName;
     }
 
     /**
@@ -58,4 +69,5 @@ public class Transmission {
     public void setTransName(String transName) {
         this.transName = transName;
     }
+
 }

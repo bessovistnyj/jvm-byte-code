@@ -3,16 +3,10 @@ package ru.napadovskiu.entities;
 
 import javax.persistence.*;
 
-@Entity
-@Table(name = "images")
 public class Images {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    @Column (name = "image_id")
     private int imageId;
 
-    @Column (name = "path")
     private String imagePath;
 
     public Images() {
@@ -37,4 +31,5 @@ public class Images {
     public void setImagePath(String imagePath) {
         this.imagePath = imagePath;
     }
+
 }

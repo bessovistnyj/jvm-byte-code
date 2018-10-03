@@ -6,7 +6,6 @@
         <property name="userName" column="user_name"/>
         <property name="userPassword" column="user_password"/>
 
-
     </class>
 
 </hibernate-mapping>

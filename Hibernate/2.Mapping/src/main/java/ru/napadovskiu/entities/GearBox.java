@@ -2,22 +2,16 @@ package ru.napadovskiu.entities;
 
 import javax.persistence.*;
 
-@Entity
-@Table(name = "gearbox")
 public class GearBox {
 
     /**
      *
      */
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    @Column (name = "gear_id")
     private int gearBoxId;
 
     /**
      *
      */
-    @Column (name = "gear_name")
     private String gearBoxName;
 
     /**
@@ -32,6 +26,12 @@ public class GearBox {
      */
     public GearBox(int gearBoxId) {
         this.gearBoxId = gearBoxId;
+    }
+
+
+    public GearBox(int gearBoxId, String gearBoxName) {
+        this.gearBoxId = gearBoxId;
+        this.gearBoxName = gearBoxName;
     }
 
     /**
@@ -66,4 +66,5 @@ public class GearBox {
     public String getGearBoxName() {
         return gearBoxName;
     }
+
 }

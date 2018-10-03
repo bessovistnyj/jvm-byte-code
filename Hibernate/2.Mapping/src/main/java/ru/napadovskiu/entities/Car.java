@@ -3,50 +3,36 @@ package ru.napadovskiu.entities;
 import javax.persistence.*;
 
 
-@Entity
-@Table (name = "car")
 public class Car {
 
     /**
      *
      */
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    @Column(name = "car_id")
     private int carId;
 
     /**
      *
      */
-    @Column(name = "car_name")
     private String carName;
 
     /**
      *
      */
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn (name = "eng_id")
     private Engine engine;
 
     /**
      *
      */
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn (name = "gear_id")
     private GearBox gearBox;
 
     /**
      *
      */
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn (name = "image_id")
     private Images images;
 
     /**
      *
      */
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn (name = "tr_id")
     private Transmission transmission;
 
     /**
@@ -70,6 +56,16 @@ public class Car {
      */
     public int getCarId() {
         return carId;
+    }
+
+
+    public Car(int carId, String carName, Engine engine, GearBox gearBox, Images images, Transmission transmission) {
+        this.carId = carId;
+        this.carName = carName;
+        this.engine = engine;
+        this.gearBox = gearBox;
+        this.images = images;
+        this.transmission = transmission;
     }
 
     /**
@@ -159,4 +155,5 @@ public class Car {
     public void setImages(Images images) {
         this.images = images;
     }
+
 }

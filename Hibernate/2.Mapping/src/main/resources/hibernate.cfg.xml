@@ -6,11 +6,16 @@
         <property name="connection.username">postgres</property>
         <property name="connection.password">12341234</property>
         <property name="dialect">org.hibernate.dialect.PostgreSQL94Dialect</property>
+        <property name="show_sql">true</property>
+        <property name ="hibernate.enable_lazy_load_no_trans">true</property>
 
 
         <mapping resource="ru/napadovskiu/entities/Car.hbm.xml"/>
         <mapping resource="ru/napadovskiu/entities/GearBox.hbm.xml"/>
         <mapping resource="ru/napadovskiu/entities/Engine.hbm.xml"/>
         <mapping resource="ru/napadovskiu/entities/Transmission.hbm.xml"/>
+        <mapping resource="ru/napadovskiu/entities/Image.hbm.xml"/>
+        <mapping resource="ru/napadovskiu/entities/Item.hbm.xml"/>
+        <mapping resource="ru/napadovskiu/entities/User.hbm.xml"/>
     </session-factory>
 </hibernate-configuration>

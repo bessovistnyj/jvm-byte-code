@@ -13,6 +13,8 @@ import ru.napadovskiu.entities.Transmission;
  */
 public class HibernateFactory {
 
+
+
     /**
      *
      */

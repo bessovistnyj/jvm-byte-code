@@ -1,8 +1,10 @@
 package ru.napadovskiu.storage;
 
+import org.apache.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
+import ru.napadovskiu.entities.Transmission;
 import ru.napadovskiu.entities.User;
 
 import java.util.List;
@@ -10,6 +12,11 @@ import java.util.function.Function;
 
 public class UserStorage implements Storage<User> {
 
+
+    /**
+     *
+     */
+    private static final Logger LOGGER = Logger.getLogger(UserStorage.class);
 
     /**
      *
@@ -95,6 +102,21 @@ public class UserStorage implements Storage<User> {
     @Override
     public User get(int id) {
         return this.tx(session -> (User) session.get(User.class, id));
+
+    }
+
+    @Override
+    public User getByName(String name) {
+        return this.tx(session -> {
+            User user = null;
+            Query query = session.createQuery("FROM ru.napadovskiu.entities.User WHERE user_name =:name");
+            query.setParameter("name", name);
+            List<User> userList = query.getResultList();
+            if (!userList.isEmpty()) {
+                user = userList.get(0);
+            }
+            return user;
+        });
 
     }
 

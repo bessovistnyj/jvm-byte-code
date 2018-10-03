@@ -15,41 +15,12 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/js/bootstrap-select.min.js"></script>
     <script src="//code.jquery.com/jquery-1.10.2.js"></script>
     <script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 
-    <script>
-        $(document).ready(function () {
-            $.ajax({
-                url: "ItemsJson",
-                type: "get",
-                success: function (data) {
-                    var newRows = "";
-                    $.each(data, function (i, value) {
-                        newRows = "<tr><td>" + value.car + "</td>" +
-                            "<td>" + value.transmission + "</td>" +
-                            "<td>" + value.engine + "</td>" +
-                            "<td>" + value.gearBox + "</td>" +
-                            "<td>" + value.car.images + "</td>" +
-                            "<td>" + value.closed + "</td>" +
-                            "<td>" + value.date + "</td></tr>";
-                        $("#bodyTable").append(newRows);
-                        newRows = "";
-                    });
-                }
-            });
-        });
-        </script>
 </head>
 <body>
 <div class="mainDiv">
-    <%--<div>--%>
-    <%--<div>--%>
-    <%--<p>Search:</p>--%>
-    <%--</div>--%>
-    <%--<div>--%>
-    <%--<input id="searchRow" type="text" placeholder="Search..">--%>
-    <%--</div>--%>
-    <%--</div>--%>
-    <%--<br><br>--%>
     <table id="usersHeader">
         <caption>Items</caption>
         <thead>
@@ -58,20 +29,34 @@
             <th scope="col">Transmission</th>
             <th scope="col">Engine</th>
             <th scope="col">GearBox</th>
-            <th scope="col">Foto</th>
+            <%--<th scope="col">Foto</th>--%>
             <th scope="col">Sold</th>
             <th scope="col">DateOfCreate</th>
-            <th>editButon</th>
+            <th></th>
             <th></th>
         </tr>
         <tbody id="bodyTable">
-
+        <c:set var="userID"><c:out value="${userID}" /></c:set>
+        <c:forEach items="${advertisements}" var="advertisement">
+            <tr>
+                <td><c:out value="${advertisement.description}"></c:out></td>
+                <td><c:out value="${advertisement.car.transmission.transName}"></c:out></td>
+                <td><c:out value="${advertisement.car.engine.engineName}"></c:out></td>
+                <td><c:out value="${advertisement.car.gearBox.gearBoxName}"></c:out></td>
+                <td><c:out value="${advertisement.closed}"></c:out></td>
+                <td><c:out value="${advertisement.date}"></c:out></td>
+                <td><form action="${pageContext.servletContext.contextPath}/editItem" method="get">
+                    <input type="hidden" name="id" value=<c:out value="${advertisement.itemId}"></c:out>>
+                    <input type="submit" class="sub" name="Edit" value="Просмотр"></form>
+                </td>
+            </tr>
+        </c:forEach>
         </tbody>
         </thead>
     </table>
     <div>
-        <form action="${pageContext.servletContext.contextPath}/create" method="get">
-            <input type="submit" value="Add new user">
+        <form action="${pageContext.servletContext.contextPath}/createItem" method="get">
+            <input type="submit" value="Добавить новую заявку">
         </form>
     </div>
 
