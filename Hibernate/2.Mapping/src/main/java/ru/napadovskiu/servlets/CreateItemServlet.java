@@ -1,92 +1,73 @@
 package ru.napadovskiu.servlets;
 
+import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.fileupload.disk.DiskFileItemFactory;
+import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import ru.napadovskiu.entities.*;
-import ru.napadovskiu.storage.*;
+import ru.napadovskiu.services.CreateItem;
+import ru.napadovskiu.storage.ItemStorage;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.File;
 import java.io.IOException;
-import java.sql.Timestamp;
-
+import java.util.List;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
 
 /**
  *
  */
 public class CreateItemServlet extends HttpServlet {
 
-    /**
-     *
-     */
-    private ItemStorage itemStorage = ItemStorage.getInstance();
+    private final CreateItem createItem = CreateItem.getInstance();
 
-    private CarStorage carStorage = CarStorage.getInstance();
+    private static final long serialVersionUID = 1L;
 
-    private EngineStorage engineStorage = EngineStorage.getInstance();
+    // location to store file uploaded
+    private static final String UPLOAD_DIRECTORY = "upload";
 
-    private TransStorage transStorage = TransStorage.getInstance();
+    // upload settings
+    private static final int MEMORY_THRESHOLD   = 1024 * 1024 * 3;  // 3MB
 
-    private GearBoxStorage gearBoxStorage = GearBoxStorage.getInstance();
+    private static final int MAX_FILE_SIZE      = 1024 * 1024 * 40; // 40MB
 
-    /**
-     *
-     * @param transName
-     * @return
-     */
-    private Transmission getTransmission(String transName) {
-        Transmission transmission = transStorage.getByName(transName);
-        if (transmission == null) {
-            Transmission trans = new Transmission();
-            trans.setTransName(transName);
-            transStorage.add(trans);
-            transmission = transStorage.getByName(trans.getTransName());
+    private static final int MAX_REQUEST_SIZE   = 1024 * 1024 * 50; // 50MB
+
+    private final ConcurrentMap<String, String> fields = new ConcurrentHashMap<>();
+
+    private final ItemStorage itemStorage = ItemStorage.getInstance();
+
+
+    private void takeFoto(List<FileItem>  formItems) throws Exception {
+
+        String uploadPath = getServletContext().getRealPath("")+ File.separator + UPLOAD_DIRECTORY;
+
+        File uploadDir = new File(uploadPath);
+        if (!uploadDir.exists()) {
+            uploadDir.mkdir();
         }
 
-        return transmission;
-    }
-
-    private GearBox getGearBox(String gearBoxName) {
-        GearBox gearBox = gearBoxStorage.getByName(gearBoxName);
-        if (gearBox == null) {
-            GearBox tmpGearBox = new GearBox();
-            tmpGearBox.setGearBoxName(gearBoxName);
-            gearBoxStorage.add(tmpGearBox);
-            gearBox = gearBoxStorage.getByName(tmpGearBox.getGearBoxName());
+        if (formItems != null && formItems.size() > 0) {
+            for (FileItem item : formItems) {
+                if (!item.isFormField()) {
+                    String fileName = new File(item.getName()).getName();
+                    String filePath = uploadPath + File.separator + fileName;
+                    File storeFile = new File(filePath);
+                    item.write(storeFile);
+                    fields.put("foto", storeFile.getAbsolutePath());
+                } else {
+                    fields.put(item.getFieldName(),item.getString("UTF-8"));
+                }
+            }
         }
 
-        return gearBox;
-    }
-
-    private Engine getEngine(String engineName) {
-        Engine engine = engineStorage.getByName(engineName);
-        if (engine == null) {
-            Engine tmpEngine = new Engine();
-            tmpEngine.setEngineName(engineName);
-            engineStorage.add(tmpEngine);
-            engine = engineStorage.getByName(engineName);
-        }
-
-        return engine;
     }
 
 
-    private Item createItem(String carName, String gearBoxName, String transName, String engineName) {
-        Transmission transmission = getTransmission(transName);
-        GearBox gearBox = getGearBox(gearBoxName);
-        Engine engine = getEngine(engineName);
-        Car newCar = new Car();
-        newCar.setCarName(carName);
-        newCar.setGearBox(gearBox);
-        newCar.setTransmission(transmission);
-        newCar.setEngine(engine);
-        Item newItem = new Item();
-        newItem.setDescription(carName);
-        newItem.setCar(newCar);
-        newItem.setDate(new Timestamp(System.currentTimeMillis()));
-        return newItem;
-    }
 
     /**
      *
@@ -102,6 +83,7 @@ public class CreateItemServlet extends HttpServlet {
         rd.forward(req, resp);
     }
 
+
     /**
      *
      * @param req
@@ -111,30 +93,39 @@ public class CreateItemServlet extends HttpServlet {
      */
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        Boolean result = true;
+        boolean result = true;
 
-        String car_name = req.getParameter("car_name");
-        String engine_name = req.getParameter("select_engine");
-        String gearBox_name = req.getParameter("select_GearBox");
-        String trans_name = req.getParameter("select_Transmission");
-        Item newItem = createItem(car_name, gearBox_name,trans_name,engine_name);
+
+
+        DiskFileItemFactory factory = new DiskFileItemFactory();
+
+        factory.setSizeThreshold(MEMORY_THRESHOLD);
+
+        factory.setRepository(new File(System.getProperty("java.io.tmpdir")));
+
+        ServletFileUpload upload = new ServletFileUpload(factory);
+
+        upload.setFileSizeMax(MAX_FILE_SIZE);
+
+        upload.setSizeMax(MAX_REQUEST_SIZE);
+
+
+        try {
+            List<FileItem> formItems = upload.parseRequest(req);
+            takeFoto(formItems);
+        } catch (Exception ex) {
+            req.setAttribute("pathFile","");
+        }
+
+        Item newItem = createItem.createItem(fields.get("car_name"),fields.get("select_GearBox"),fields.get("select_Transmission"),fields.get("select_engine"),fields.get("foto"));
         if (newItem == null) {
             result = false;
         }
 
         if (result) {
+            List<Item> items = itemStorage.getAll();
+            req.setAttribute("advertisements", items);
             req.getRequestDispatcher("/WEB-INF/views/items.jsp").forward(req, resp);
-        } else {
-
         }
-
-
-
-//        transStorage.
-
-
-
-
-
    }
 }

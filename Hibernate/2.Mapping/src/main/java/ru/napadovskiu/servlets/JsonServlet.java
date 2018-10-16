@@ -1,11 +1,14 @@
 package ru.napadovskiu.servlets;
 
 import com.google.gson.Gson;
-import ru.napadovskiu.entities.Engine;
-import ru.napadovskiu.entities.GearBox;
-import ru.napadovskiu.entities.Transmission;
+import com.google.gson.GsonBuilder;
+import ru.napadovskiu.entities.*;
+import ru.napadovskiu.services.CarSerializer;
+import ru.napadovskiu.services.ItemSerializer;
+import ru.napadovskiu.services.UserSerializer;
 import ru.napadovskiu.storage.EngineStorage;
 import ru.napadovskiu.storage.GearBoxStorage;
+import ru.napadovskiu.storage.ItemStorage;
 import ru.napadovskiu.storage.TransStorage;
 
 import javax.servlet.ServletException;
@@ -27,9 +30,13 @@ public class JsonServlet extends HttpServlet {
 
     private final TransStorage transStorage = TransStorage.getInstance();
 
+    private final ItemStorage itemStorage = ItemStorage.getInstance();
+
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.setContentType("text/json");
+
         String queryName = req.getParameter("namePart");
         String json = null;
         if (queryName.equals("engine") ) {
@@ -39,6 +46,14 @@ public class JsonServlet extends HttpServlet {
             List<GearBox> list = gearBoxStorage.getAll();
             json = new Gson().toJson(list);
 
+        } else if (queryName.equals("allTable")) {
+            Gson gson = new GsonBuilder()
+                    .setPrettyPrinting()
+                    .registerTypeAdapter(Item.class, new ItemSerializer())
+                    .registerTypeAdapter(Car.class, new CarSerializer())
+                    .registerTypeAdapter(User.class, new UserSerializer())
+                    .create();
+            json = gson.toJson(itemStorage.getAll());
         } else {
             List<Transmission> list = transStorage.getAll();
             json = new Gson().toJson(list);
@@ -49,17 +64,4 @@ public class JsonServlet extends HttpServlet {
         resp.getWriter().write(json);
     }
 
-    @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-//        resp.setContentType("text/json");
-//        int userId = Integer.parseInt(req.getParameter("userId"));
-//
-//        List<MusicType> listMusicType = musicStore.getAllMusicTypeByUser(userId);
-//        String json = new Gson().toJson(listMusicType);
-//
-//        resp.setContentType("application/json");
-//        resp.setCharacterEncoding("UTF-8");
-//        resp.getWriter().write(json);
-
-    }
 }

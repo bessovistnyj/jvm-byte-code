@@ -38,6 +38,15 @@
     </servlet-mapping>
 
     <servlet>
+        <servlet-name>JsonUser</servlet-name>
+        <servlet-class>ru.napadovskiu.servlets.JsonUser</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>JsonUser</servlet-name>
+        <url-pattern>/userServlet</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
         <servlet-name>EditItem</servlet-name>
         <servlet-class>ru.napadovskiu.servlets.EditItemServlets</servlet-class>
     </servlet>
@@ -60,11 +69,9 @@
         <servlet-name>FileUploadServlet</servlet-name>
         <servlet-class>ru.napadovskiu.servlets.FileUploadServlet</servlet-class>
     </servlet>
-
     <servlet-mapping>
         <servlet-name>FileUploadServlet</servlet-name>
         <url-pattern>/uploadFile</url-pattern>
     </servlet-mapping>
-
 
 </web-app>

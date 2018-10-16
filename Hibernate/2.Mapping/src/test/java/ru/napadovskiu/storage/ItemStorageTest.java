@@ -1,13 +1,9 @@
 package ru.napadovskiu.storage;
 
 import org.junit.Test;
-import ru.napadovskiu.entities.Car;
-import ru.napadovskiu.entities.GearBox;
 import ru.napadovskiu.entities.Item;
-import ru.napadovskiu.entities.User;
 
 import java.sql.Timestamp;
-import java.util.List;
 
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.*;

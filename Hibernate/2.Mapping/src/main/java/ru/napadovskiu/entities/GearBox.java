@@ -1,6 +1,5 @@
 package ru.napadovskiu.entities;
 
-import javax.persistence.*;
 
 public class GearBox {
 

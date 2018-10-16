@@ -1,8 +1,6 @@
 package ru.napadovskiu.servlets;
 
-import ru.napadovskiu.entities.User;
 import ru.napadovskiu.storage.UserStorage;
-
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -43,11 +41,12 @@ public class AuthController extends HttpServlet {
         String login = req.getParameter("login");
         String password = req.getParameter("password");
 
-        if (userStorage.getInstance().isCredentials(login, password)) {
+        if (userStorage.isCredentials(login, password)) {
             HttpSession session = req.getSession();
             synchronized (session) {
                 session.setAttribute("login", login);
                 session.setAttribute("password", password);
+                session.setAttribute("user", userStorage.getUserByNameAndLogin(login, password));
             }
             resp.sendRedirect(String.format("%s/", req.getContextPath()));
         } else {

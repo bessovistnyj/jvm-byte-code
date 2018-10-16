@@ -105,6 +105,22 @@ public class UserStorage implements Storage<User> {
 
     }
 
+    public User getUserByNameAndLogin(String login, String password) {
+        return this.tx(session -> {
+            User user = null;
+            Query query = session.createQuery("FROM ru.napadovskiu.entities.User WHERE user_name =:name AND user_password =:password");
+            query.setParameter("name", login);
+            query.setParameter("password", password);
+            List<User> userList = query.getResultList();
+            if (!userList.isEmpty()) {
+                user = userList.get(0);
+            }
+            return user;
+        });
+
+    }
+
+
     @Override
     public User getByName(String name) {
         return this.tx(session -> {

@@ -1,6 +1,5 @@
 package ru.napadovskiu.entities;
 
-import javax.persistence.*;
 
 
 public class Car {
@@ -58,7 +57,15 @@ public class Car {
         return carId;
     }
 
-
+    /**
+     *
+     * @param carId
+     * @param carName
+     * @param engine
+     * @param gearBox
+     * @param images
+     * @param transmission
+     */
     public Car(int carId, String carName, Engine engine, GearBox gearBox, Images images, Transmission transmission) {
         this.carId = carId;
         this.carName = carName;

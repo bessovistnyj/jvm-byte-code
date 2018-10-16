@@ -36,8 +36,6 @@ public class ItemServlet extends HttpServlet {
         if (session.getAttribute("login") != null) {
             String login = (String) session.getAttribute("login");
             String password = (String) session.getAttribute("password");
-            List<Item> items = itemStorage.getAll();
-            req.setAttribute("advertisements", items);
             req.getRequestDispatcher("/WEB-INF/views/items.jsp").forward(req, resp);
         } else {
             req.getRequestDispatcher("WEB-INF/views/loginView.jsp").forward(req, resp);
