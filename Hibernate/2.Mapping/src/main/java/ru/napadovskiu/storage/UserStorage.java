@@ -27,7 +27,7 @@ public class UserStorage implements Storage<User> {
     /**
      *
      */
-    public UserStorage() {
+    private UserStorage() {
     }
 
     /**

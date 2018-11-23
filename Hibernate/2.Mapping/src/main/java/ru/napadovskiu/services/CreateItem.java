@@ -20,14 +20,14 @@ public class CreateItem {
     /**
      *
      */
-    public CreateItem() {
+    private CreateItem() {
     }
 
     /**
      *
      * @return
      */
-    public static CreateItem getInstance() {
+    public static final CreateItem getInstance() {
         return INSTANCE;
     }
 
@@ -36,32 +36,32 @@ public class CreateItem {
     /**
      *
      */
-    private ItemStorage itemStorage = ItemStorage.getInstance();
+    private final ItemStorage itemStorage = ItemStorage.getInstance();
 
     /**
      *
      */
-    private CarStorage carStorage = CarStorage.getInstance();
+    private final CarStorage carStorage = CarStorage.getInstance();
 
     /**
      *
      */
-    private EngineStorage engineStorage = EngineStorage.getInstance();
+    private final EngineStorage engineStorage = EngineStorage.getInstance();
 
     /**
      *
      */
-    private TransStorage transStorage = TransStorage.getInstance();
+    private final TransStorage transStorage = TransStorage.getInstance();
 
     /**
      *
      */
-    private GearBoxStorage gearBoxStorage = GearBoxStorage.getInstance();
+    private final GearBoxStorage gearBoxStorage = GearBoxStorage.getInstance();
 
     /**
      *
      */
-    private ImageStorage imageStorage = ImageStorage.getInstance();
+    private final ImageStorage imageStorage = ImageStorage.getInstance();
 
 
     /**

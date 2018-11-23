@@ -11,14 +11,15 @@
                      column="car_id"
                      cascade="all"
                      class="ru.napadovskiu.entities.Car"
-                     fetch="join"/>
+                     fetch="join" lazy="false"/>
+
 
         <many-to-one name="user"
                      column="user_id"
                      cascade="all"
                      class="ru.napadovskiu.entities.User"
-                     fetch="join"/>
-        
+                     fetch="join" lazy="false"/>
+
     </class>
 
 

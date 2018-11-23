@@ -55,4 +55,7 @@ public interface Storage<T> {
      *
      */
     void close();
+
+
+
 }

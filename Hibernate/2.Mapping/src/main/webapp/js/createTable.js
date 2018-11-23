@@ -3,15 +3,33 @@ $(document).ready(function (){
         url: "userServlet",
         type: "get",
         success: function (items) {
-            createTable(items.userId);
+            createTable(items.userId,"allTable");
         }
     });
 });
 
 
-function createTable (userId){
+function fillSelect(contId, value) {
+    $.ajax({
+        url: "jsonServlet",
+        type: "get",
+        data: {"namePart": "allBodyCar"},
+        success: function (data) {
+            var carName = $("#container");
+            carName.empty();
+            carName.append("<option value=\"\" disabled selected>Choose your option</option>");
+            $.each(data, function (i, value) {
+                carName.append($("<option></option>").val(i).html(value));
+            });
+        }
+    });
+}
+
+
+function createTable (userId,namePart,autoFilter){
     var nameQuery = {
-        "namePart": "allTable"
+        "namePart": namePart,
+        "nameFilter":autoFilter
     }
 
     $.ajax ({

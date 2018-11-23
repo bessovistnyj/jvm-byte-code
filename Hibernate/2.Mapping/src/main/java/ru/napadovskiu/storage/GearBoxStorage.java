@@ -31,7 +31,7 @@ public class GearBoxStorage implements Storage<GearBox> {
     /**
      *
      */
-    public GearBoxStorage() {
+    private GearBoxStorage() {
     }
 
     /**

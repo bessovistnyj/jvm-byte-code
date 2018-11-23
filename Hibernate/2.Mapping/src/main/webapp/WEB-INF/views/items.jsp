@@ -9,6 +9,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
+    <c:set var="userID"><c:out value="${userID}" /></c:set>
     <title>Items</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
@@ -18,39 +19,77 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 
+    <script> <%@include file="/js/createTable.js"%> </script>
+
+    <script language="JavaScript" type="text/javascript">
+
+        function showElem(contId, value) {
+            var container = document.getElementById(contId);
+
+            if (value !=1) {
+                container.style.display = 'none';
+            } else {
+                container.style.display = 'block';
+                fillSelect(contId, value);
+            }
+        }
+    </script>
+
+    <script language="JavaScript" type="text/javascript">
+        
+        function sendFilter() {
+            var filterName = $("#filter option:selected").text();
+            var autoFilter = $("#container option:selected").text();
+            $("#bodyTable").empty();
+            $.ajax ({
+                url: "userServlet",
+                type: "get",
+                success: function (items) {
+                    createTable(items.userId, filterName, autoFilter);
+                }
+            });
+        }
+    
+    </script>
+
+
 </head>
 <body>
+<input id="userId" hidden value="">
 <div class="mainDiv">
+
+    <div class="w3-row-padding">
+        <div class="w3-third">
+            <select class="w3-select w3-border" name="filter" id="filter" onchange="showElem('container', this.value)">
+                <option value="" disabled selected>Choose your option</option>
+                <option value="1">By car</option>
+                <option value="2">With photo</option>
+                <option value="3">Current date</option>
+            </select>
+        </div>
+        <div class="w3-third">
+            <select class="w3-select w3-border" name="option" id="container">
+            </select>
+        </div>
+        <div class="w3-third">
+            <input type="button" value="find" onclick="sendFilter()">
+        </div>
+    </div>
+
     <table id="usersHeader">
         <caption>Items</caption>
+
         <thead>
         <tr>
             <th scope="col">Car</th>
             <th scope="col">Transmission</th>
             <th scope="col">Engine</th>
             <th scope="col">GearBox</th>
-            <%--<th scope="col">Foto</th>--%>
             <th scope="col">Sold</th>
             <th scope="col">DateOfCreate</th>
             <th></th>
-            <th></th>
         </tr>
         <tbody id="bodyTable">
-        <c:set var="userID"><c:out value="${userID}" /></c:set>
-        <c:forEach items="${advertisements}" var="advertisement">
-            <tr>
-                <td><c:out value="${advertisement.description}"></c:out></td>
-                <td><c:out value="${advertisement.car.transmission.transName}"></c:out></td>
-                <td><c:out value="${advertisement.car.engine.engineName}"></c:out></td>
-                <td><c:out value="${advertisement.car.gearBox.gearBoxName}"></c:out></td>
-                <td><c:out value="${advertisement.closed}"></c:out></td>
-                <td><c:out value="${advertisement.date}"></c:out></td>
-                <td><form action="${pageContext.servletContext.contextPath}/editItem" method="get">
-                    <input type="hidden" name="id" value=<c:out value="${advertisement.itemId}"></c:out>>
-                    <input type="submit" class="sub" name="Edit" value="Просмотр"></form>
-                </td>
-            </tr>
-        </c:forEach>
         </tbody>
         </thead>
     </table>

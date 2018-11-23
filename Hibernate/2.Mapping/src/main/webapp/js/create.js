@@ -7,6 +7,7 @@ $(document).ready(function (){
             fillTransmision(items.userId);
             fillGearBox(items.userId);
             fillFotoAndStatus(items.userId);
+            fillFilter();
         }
     });
 });
@@ -33,6 +34,31 @@ function fillEngine (userId) {
         }
     });
 }
+
+
+function fillFilter () {
+    $.ajax({
+        url: "jsonServlet",
+        type: "get",
+        data: {"namePart": "allBodyCar"},
+        success: function (data) {
+            // var engineType = $("#select_engine");
+            // var engineName = "${editItem.car.engine.engineName}";
+            // engineType.append("<option value=\"\" disabled selected>Choose your option</option>");
+            // $.each(data, function (i, value) {
+            //     if (engineName != value.engineName) {
+            //         engineType.append($("<option></option>").val(value.engineName).html(value.engineName));
+            //     } else {
+            //         engineType.append($("<option> </option>").val(value.engineName).html(value.engineName).attr("selected", true));
+            //     }
+            //
+            //
+            // });
+        }
+    });
+}
+
+
 
  function fillGearBox(userId) {
      $.ajax({

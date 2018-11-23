@@ -7,19 +7,19 @@
 
         <many-to-one name="engine"
                      column="eng_id"
-                     class="ru.napadovskiu.entities.Engine"/>
+                     class="ru.napadovskiu.entities.Engine" lazy="false"/>
 
         <many-to-one name="gearBox"
                      column="gear_id"
-                     class="ru.napadovskiu.entities.GearBox"/>
+                     class="ru.napadovskiu.entities.GearBox" lazy="false"/>
 
         <many-to-one name="transmission"
                      column="tr_id"
-                     class="ru.napadovskiu.entities.Transmission"/>
+                     class="ru.napadovskiu.entities.Transmission" lazy="false"/>
 
         <many-to-one name="images"
                      column="image_id"
-                     class="ru.napadovskiu.entities.Images"/>
+                     class="ru.napadovskiu.entities.Images" lazy="false"/>
 
 
     </class>

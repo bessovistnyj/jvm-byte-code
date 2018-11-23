@@ -26,7 +26,7 @@ public class CarStorage implements Storage<Car> {
     /**
      *
      */
-    public CarStorage() {
+    private CarStorage() {
     }
 
     /**
@@ -127,6 +127,12 @@ public class CarStorage implements Storage<Car> {
     public List<Car> getAll() {
         return this.tx(session -> session.createQuery("from ru.napadovskiu.entities.Car").list());
     }
+
+
+    public List<Car> getAllCarName() {
+        return this.tx(session -> session.createQuery("select car.carName from ru.napadovskiu.entities.Car car").list());
+    }
+
 
     /**
      *

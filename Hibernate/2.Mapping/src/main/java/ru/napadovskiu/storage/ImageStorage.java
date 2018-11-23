@@ -26,7 +26,7 @@ public class ImageStorage implements Storage<Images>{
     /**
      *
      */
-    public ImageStorage() {
+    private ImageStorage() {
     }
 
     /**
@@ -128,6 +128,7 @@ public class ImageStorage implements Storage<Images>{
     public List<Images> getAll() {
         return this.tx(session -> session.createQuery("from ru.napadovskiu.entities.Images").list());
     }
+
 
     /**
      *

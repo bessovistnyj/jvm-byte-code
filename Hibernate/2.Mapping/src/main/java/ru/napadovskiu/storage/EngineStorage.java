@@ -31,7 +31,7 @@ public class EngineStorage implements Storage<Engine> {
     /**
      *
      */
-    public EngineStorage() {
+    private EngineStorage() {
     }
 
     /**

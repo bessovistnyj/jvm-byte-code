@@ -33,7 +33,7 @@ public class TransStorage implements Storage<Transmission> {
     /**
      *
      */
-    public TransStorage() {
+    private TransStorage() {
     }
 
     /**

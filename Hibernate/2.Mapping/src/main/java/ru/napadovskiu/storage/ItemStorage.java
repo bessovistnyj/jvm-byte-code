@@ -111,7 +111,7 @@ public class ItemStorage implements Storage<Item> {
     public Item getByName(String name) {
         return this.tx(session -> {
             Item item = null;
-            Query query = session.createQuery("FROM items WHERE item_name =:name");
+            Query query = session.createQuery("FROM ru.napadovskiu.entities.Item WHERE item.car.car_name =:name");
             query.setParameter("name", name);
             List<Item> itemList = query.getResultList();
             if (!itemList.isEmpty()) {
@@ -120,6 +120,30 @@ public class ItemStorage implements Storage<Item> {
             return item;
         });
     }
+
+
+//    public List<Item> getAllByBodyCar(String carName) {
+//        return this.tx(session -> {
+//            List<Item> list = session.createQuery("from ru.napadovskiu.entities.Item as item where item.car.car_name = carName").getResultList();
+//             return list;
+//        });
+//    }
+//
+
+    public List<Item> getAllByFoto() {
+        return this.tx(session -> {
+            List<Item> list = session.createQuery("from ru.napadovskiu.entities.Item as item where item.car.image_id is not null").getResultList();
+            return list;
+        });
+    }
+
+//    public List<Item> getAllByDate() {
+//        return this.tx(session -> {
+//            List<Item> list = session.createQuery("from ru.napadovskiu.entities.Item as item where item.car.images = 6").getResultList();
+//            return list;
+//        });
+//    }
+
 
     /**
      *
