@@ -51,7 +51,7 @@
 		<module>SQL_JDBC</module>
 		<module>Hibernate</module>
 		<module>ExtraTasks</module>
-
+		<module>Spring</module>
 
 	</modules>
 	
